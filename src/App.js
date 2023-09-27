@@ -11,7 +11,7 @@ function App() {
          <LogIn /> 
     </div>
 </ThemeProvider>
-);
+  );
 }
 
 export default App;
