@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container,Button, Spinner, Alert } from 'react-bootstrap';
-import { BiCheckCircle } from 'react-icons/bi';
+import { BiCheckCircle } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
 import { setVerificationStatus } from '../store/auth'; // Import the action
 
@@ -14,10 +14,14 @@ const EmailVerify = () => {
 
 
    const sendEmailVerification = () => {
-    setShowSpinner(true); // Show the spinner
+       // Show the spinner
+        
+       setShowSpinner(true);
+       
     setVerificationMessage(
       'A verification email has been sent to your registered email address. Please check your email for the verification link. Thank you.'
     );
+    
 
     // Send email verification request to Firebase
     const idToken = localStorage.getItem('token');
@@ -39,6 +43,7 @@ const EmailVerify = () => {
       })
       .then(() => {
         console.log('Verification email sent successfully');
+          setShowSpinner(false);
         dispatch(setVerificationStatus('pending')); // Set status back to pending
         setTimeout(() => {
           // Check email verification status after a delay
@@ -53,10 +58,11 @@ const EmailVerify = () => {
   };
 
   const checkEmailVerificationStatus = () => {
-    // Verify the email verification status using Firebase
+      // Verify the email verification status using Firebase
+    
     const idToken = localStorage.getItem('token');
 
-    fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDoq-H5WEJsZH-kVxJfOdBkOJ5i9U-8150', {
+    fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBj8h0OYKwQY8xN_uzWw2Crp801EclmMJg', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +78,7 @@ const EmailVerify = () => {
         return response.json();
       })
       .then((data) => {
-        const user = data.users[0];
+          const user = data.users[0];
         if (user.emailVerified) {
           dispatch(setVerificationStatus('verified')); // Set status to verified
           setTimeout(() => {
@@ -106,12 +112,12 @@ const EmailVerify = () => {
               <Spinner animation="border" variant= "primary" />
               <p style={{marginTop: '20px' }}>Sending verification email...</p>
             </div>
-          ) : (
-            <div>
+          ) : (<div>
+                      
               {verificationStatus === 'verified' && (
                 <div className="text-center">
-                    <BiCheckCircle size={150} color={darkMode ? "white" : "blue"} />
-                  <p style={{ marginTop: '20px' }}>Email verified!</p>
+                    <BiCheckCircle size={150} color= "blue" />
+                  <h1 style={{ marginTop: '20px' }}>Email verified!</h1>
                 </div>
               )}
               {verificationStatus === 'not-verified' && (

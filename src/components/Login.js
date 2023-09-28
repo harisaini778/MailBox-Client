@@ -4,6 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import loginimg from "../assets/login.jpg";
 import { FaLock } from "react-icons/fa";
 import { FaKey } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 
 const LogIn = () => {
@@ -12,10 +13,11 @@ const LogIn = () => {
     const [isLoading, setIsLoading] = useState(false);
   const [isExisting, setIsExisting] = useState(false);
   const [matchPassword, setMatchPassword] = useState(true);
+  const navigate = useNavigate();
     
-    const enteredEmail = useRef(null);
-    const enteredPassword = useRef(null);
-    const confirmPassword = useRef(null);
+    const enteredEmail = useRef();
+    const enteredPassword = useRef();
+    const confirmPassword = useRef();
   
 
   console.log("form submitted 1"); 
@@ -69,7 +71,7 @@ const submitFormHandler = (e) => {
           enteredPassword.current.value = "";
           localStorage.setItem("token", data.idToken);
           localStorage.setItem("email", email);
-        //   navigate("/Home");
+          navigate("/EmailVerify");
           if (isLogIn) {
             alert("Log in successful");
           } else {
@@ -119,24 +121,24 @@ const submitFormHandler = (e) => {
                         <div className="modal show" style={{ position: "initial", display: "block",width: isSmaller ? "auto" : "380px" }}>
                             <Modal.Dialog>
                                 <Modal.Header style={{ fontWeight: "bolder" }}
-                                    className="m-auto mb-2">
+                                    className="mx-auto mb-2">
                                     {isExisting || isLogIn ? <div><h1>LogIn<span className="m-2"><FaKey size={24}/></span></h1></div> : <div><h1>SignUp<span className="m-2"><FaLock size={24}/></span></h1></div>}
                                 </Modal.Header>
                                 <Modal.Body>
                                    <Form onSubmit={submitFormHandler}>
-                                  <Form.Group as={Col} className="mb-2">
+                                  <Form.Group as={Col} className="mb-2" style={{textAlign:"center",fontSize:"1.2rem"}}>
                                 <Form.Label style={{ fontWeight: "bold" }}>
                                Email Id
                               </Form.Label>
                              <Form.Control type="email" ref={enteredEmail} />
                            </Form.Group>
-                         <Form.Group as={Col} className="mb-2">
+                         <Form.Group as={Col} className="mb-2" style={{textAlign:"center",fontSize:"1.2rem"}}>
                                   <Form.Label style={{ fontWeight: "bold" }}>
                                 Password
                             </Form.Label>
                             <Form.Control type="password" ref={enteredPassword} />
                           </Form.Group>
-                      {!isLogIn && <Form.Group as={Col} className="mb-2">
+                      {!isLogIn && <Form.Group as={Col} className="mb-2" style={{textAlign:"center",fontSize:"1.2rem"}}>
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Confirm Password
                         </Form.Label>
@@ -146,14 +148,14 @@ const submitFormHandler = (e) => {
                                         <div className="d-grid">
                                            <Button
                                           className="mb-2"
-                                         style={{ fontWeight: "bold", fontSize: "1.1rem" }}
+                                         style={{ fontWeight: "bold", fontSize: "1.2rem" }}
                                         type="submit"
                             onClick={() => console.log("Button clicked")} // Add this for debugging
                           >
                             {isLogIn || isExisting ? <div>LogIn</div> : <div>SignUp</div>}
                             </Button>
                                         </div>
-                                        <div className="m-2">
+                                        <div className="m-2 mx-auto">
                                             {isLoading && <div>
                                             <Spinner animation="grow" variant="danger" />
                                             <Spinner animation="grow" variant="warning" />
@@ -162,7 +164,7 @@ const submitFormHandler = (e) => {
                                     </Stack>
                                   </Form>
                                     <Container>
-                                        <div className="m-auto text-primary">Forget Password ?</div>
+                                        <div className="text-primary" style={{textAlign:"center",fontSize:"1.1rem"}} >Forget Password ?</div>
                                     </Container>
                                 </Modal.Body>
                                 <Modal.Footer className="m-auto m-2 text-primary">

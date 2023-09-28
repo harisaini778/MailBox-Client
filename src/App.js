@@ -1,16 +1,17 @@
 import LogIn from './components/Login';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import './App.css';
-import { ThemeProvider } from 'react-bootstrap';
+import EmailVerify from './components/EmailVerify';
 
 function App() {
   return (
-<ThemeProvider
-  breakpoints= {['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-  minBreakpoint="xxs">
-    <div className="App">
-         <LogIn /> 
-    </div>
-</ThemeProvider>
+         <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/LogIn" />} />
+           <Route path="/LogIn" element={<LogIn />} />
+          <Route path="/EmailVerify" element={<EmailVerify />} />
+        </Routes>
+      </Router>
   );
 }
 
