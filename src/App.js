@@ -5,7 +5,7 @@ import { ThemeProvider } from 'react-bootstrap';
 function App() {
   return (
 <ThemeProvider
-  breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+  breakpoints= {['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
   minBreakpoint="xxs">
     <div className="App">
          <LogIn /> 
