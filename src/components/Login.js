@@ -1,6 +1,7 @@
 import { useState,useRef } from "react";
-import { Container, Modal, Button, Form,Stack, Spinner } from "react-bootstrap";
+import { Container, Modal, Button, Form,Stack, Spinner,Image } from "react-bootstrap";
 import { Row, Col } from "react-bootstrap";
+import loginimg from "../assets/login.jpg";
 const LogIn = () => {
 
     const [isLogIn, setIsLogIn] = useState(false);
@@ -75,11 +76,20 @@ const submitFormHandler = (e) => {
     minHeight: '100vh',
   };
 
+    const isSmaller = window.innerWidth <= 576;
     return (
-        <div>
+        <div style={{overflowX:"hidden",minHeight:"100vh"}}>
             <Container>
+
                 <Row style={containerStyle}>
-                    <Col xl={4} lg={4} sm={12} xs={12}>
+                    <Col xl={8} lg={8} sm={12} xs={12}>
+                    <Image src={loginimg}
+                            alt="Image alt text"
+                           width={isSmaller ? "350px" : "600px" } 
+                           height={isSmaller ? "350px" : "600px" } 
+                    className="rounded"/>
+                    </Col>
+                    <Col xl={4} lg={4} sm={4} xs={12}>
                         <div className="modal show" style={{ position: "initial", display: "block" }}>
                             <Modal.Dialog>
                                 <Modal.Header style={{ fontWeight: "bolder", fontSize: "2rem" }}
