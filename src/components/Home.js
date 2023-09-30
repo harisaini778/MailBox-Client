@@ -7,11 +7,12 @@ import { FaSearch,FaImages,FaFile,FaMoneyBill,FaTags,FaPlane } from "react-icons
 const Home = () => {
 
 
-    return (<div>
+    return (<div style={{minHeight:"100vh",overflowX:"hidden"}}>
         <Navbar variant="dark" className="bg-primary">
             <Container>
                 <Navbar.Brand>
-                    <h2>Hemrix Mail</h2>
+                    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet"/>
+                    <h1 style={{fontFamily:"Dancing Script,cursive",fontSize:"2.9rem"}}>Hemrix Mail!</h1>    
                 </Navbar.Brand>
                 <div className="w-75">
             <Form inline>
