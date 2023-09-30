@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Form, Container, Row, Col, InputGroup, Dropdown,Button } from 'react-bootstrap';
 import { MdDelete, MdDrafts, MdSend, MdArrowBack } from 'react-icons/md';
 import ReactQuill from 'react-quill';
@@ -43,29 +43,25 @@ function ComposeMail() {
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState("");
 
+
+ useEffect(() => {
     const emailId = localStorage.getItem("email");
+    const parts = emailId.split("@");
+    const Name = parts[0];
+    setUserName(Name);
+    localStorage.setItem("userName", Name); // Update local storage with the correct username
+  }, []);
+     
 
-
-  //const userId = "123"
-
-    const extractUserName = () => {
-        if (emailId.includes("@")) {
-            const parts = emailId.split("@");
-            const userName = parts[0];
-            setUserName(userName);
-            localStorage.setItem("userName", userName);
-        } else {
-            setUserName("Invalid Email")
-        }
-    }
 
     const handleSendClick = () => {
 
-     extractUserName();
+    
+      console.log("userName is : ", userName);
         
     console.log('Sending email with message:', message);
 
-      fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}.json`,
+      fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}.json`,
           {
               method: "POST",
               headers: {
@@ -122,7 +118,7 @@ const handleDeleteClick = (dataId) => {
 };
 
 const deleteEmail = (dataId) => {
-  fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}/${dataId}.json`, {
+  fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}/${dataId}.json`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -151,8 +147,22 @@ const deleteEmail = (dataId) => {
 
 
 
-  const handleSaveDraftClick = () => {
+  const handleSaveDraftClick = (dataId) => {
     console.log('Saving email as draft');
+
+    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}/${dataId}.json`, {
+      method : "GET",
+      headers: {
+        "Content-Type" : "application/json"
+      }
+    }).then((response) => {
+      //console.log("data saved in draft :", response.json());
+      return response.json();
+    }).then((data) => {
+      console.log("data saved in the draft is : ", data);
+    }).catch((error) => {
+      console.log("error when clicked save to draft :", error);
+    })
   };
 
   return (
@@ -225,7 +235,7 @@ const deleteEmail = (dataId) => {
  <Button variant="light" onClick={() => handleDeleteClick(dataId)}>
   <MdDelete /> Delete
 </Button>
-            <Button variant="light">
+            <Button variant="light" onClick={()=>handleSaveDraftClick(dataId)}>
               <MdDrafts /> Save as Draft
             </Button>
             <Button variant="primary" onClick={handleSendClick}>
