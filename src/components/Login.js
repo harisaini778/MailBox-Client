@@ -71,6 +71,8 @@ const submitFormHandler = (e) => {
           enteredPassword.current.value = "";
           localStorage.setItem("token", data.idToken);
           localStorage.setItem("email", email);
+          //localStorage.setItem("id", data.localId);
+          console.log("response is : ", data);
           navigate("/EmailVerify");
           if (isLogIn) {
             alert("Log in successful");
