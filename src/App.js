@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import './App.css';
 import EmailVerify from './components/EmailVerify';
 import ComposeMail from './components/ComposeMail';
+import Home from './components/Home';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           <Route path="/" element={<Navigate to="/LogIn" />} />
            <Route path="/LogIn" element={<LogIn />} />
         <Route path="/EmailVerify" element={<EmailVerify />} />
+         <Route path="/Home" element={<Home />} />
         <Route path="/ComposeMail" element={<ComposeMail />} />
         </Routes>
       </Router>

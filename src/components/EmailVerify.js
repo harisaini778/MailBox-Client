@@ -82,7 +82,7 @@ const EmailVerify = () => {
         if (user.emailVerified) {
           dispatch(setVerificationStatus('verified')); // Set status to verified
           setTimeout(() => {
-            navigate('/ComposeMail'); // Navigate after verification
+            navigate('/Home'); // Navigate after verification
           }, 2000); // Wait for 2 seconds before navigating
         } else {
           dispatch(setVerificationStatus('not-verified')); // Set status to not-verified

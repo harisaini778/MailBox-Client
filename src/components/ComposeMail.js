@@ -51,6 +51,8 @@ function ComposeMail() {
     setUserName(Name);
     localStorage.setItem("userName", Name); // Update local storage with the correct username
   }, []);
+
+
      
 
 
@@ -147,23 +149,50 @@ const deleteEmail = (dataId) => {
 
 
 
-  const handleSaveDraftClick = (dataId) => {
-    console.log('Saving email as draft');
+  const handleSaveDraftClick = () => {
 
     fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}/${dataId}.json`, {
-      method : "GET",
+      method: 'GET',
       headers: {
-        "Content-Type" : "application/json"
-      }
-    }).then((response) => {
-      //console.log("data saved in draft :", response.json());
-      return response.json();
-    }).then((data) => {
-      console.log("data saved in the draft is : ", data);
-    }).catch((error) => {
-      console.log("error when clicked save to draft :", error);
+        'Content-Type': 'application/json',
+      },
     })
-  };
+      .then((response) => response.json())
+      .then((data) => {
+        setTo(data.to);
+        setCCBCCOption(data.ccBccOption);
+        setCcBccValue(data.ccBccValue);
+        setSubject(data.subject);
+        setMessage(data.message);
+      })
+      .catch((error) => {
+        console.error('Error fetching draft:', error);
+      });
+
+
+    console.log('Saving email as draft');
+
+  //   fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}/${dataId}.json`, {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       to,
+  //       ccBccOption,
+  //       ccBccValue,
+  //       subject,
+  //       message,
+  //     })
+  //   }).then((response) => {
+  //     return response.json();
+  //   }).then((data) => {
+  //     console.log("data edited :", data);
+  //     alert("Your mail has been saved to draft successfully!");
+  //   }).catch((error) => {
+  //     console.log("error while editing the darft box : ", error);
+  //   });
+   };
 
   return (
     <Container className="mt-3">
@@ -235,7 +264,7 @@ const deleteEmail = (dataId) => {
  <Button variant="light" onClick={() => handleDeleteClick(dataId)}>
   <MdDelete /> Delete
 </Button>
-            <Button variant="light" onClick={()=>handleSaveDraftClick(dataId)}>
+            <Button variant="light" onClick={handleSaveDraftClick}>
               <MdDrafts /> Save as Draft
             </Button>
             <Button variant="primary" onClick={handleSendClick}>
