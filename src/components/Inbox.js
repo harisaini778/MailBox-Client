@@ -1,0 +1,55 @@
+import React from "react";
+import { useState,useEffect } from "react";
+import "./Inbox.css";
+import { Container, Row, Col,Stack } from "react-bootstrap";
+import { FaUser,FaTag,FaComments } from "react-icons/fa";
+
+const Inbox = () => {
+
+const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
+    
+    useEffect(() => {
+    const handleResize = () => {
+      setIsSmaller(window.innerWidth <= 576);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+    }, []);
+
+    return (
+        <div className="mt-3">
+      <Container>
+        <Row >
+          <Col sm={3} lg={2} style={{width: isSmaller ? "auto" : "auto"}}>
+                        <Stack direction="horizontal" gap="2" className="heading_hover">
+                            <span ><FaUser/></span>
+                            <h style={{ textAlign: "center",fontSize: isSmaller ? "1rem" : "1.2rem" }}
+                        > Primary</h> 
+            </Stack>
+          </Col>
+          <Col  sm={3} lg={2} style={{width: isSmaller ? "auto" : "auto"}}>
+                        <Stack direction="horizontal"  gap="2" className="heading_hover">
+                            <span><FaTag/></span>
+                            <h style={{ textAlign: "center",fontSize: isSmaller ? "1rem" : "1.2rem",
+                            }}
+                            > Promotions</h>  
+            </Stack>
+          </Col>
+          <Col  sm={3} lg={2} style={{width: isSmaller ? "auto" : "auto"}} >
+                            <Stack direction="horizontal" gap="2" className="heading_hover">
+                            <span><FaComments/></span>
+                            <h style={{ textAlign: "center", fontSize: isSmaller ?  "1rem" : "1.2rem" }}
+                           >Social</h>  
+            </Stack>
+
+          </Col>
+        </Row>
+      </Container>
+    </div>);
+
+}
+export default Inbox;

@@ -3,6 +3,7 @@ import { Form, Container, Row, Col, InputGroup, Dropdown,Button } from 'react-bo
 import { MdDelete, MdDrafts, MdSend, MdArrowBack } from 'react-icons/md';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useNavigate } from 'react-router-dom';
 //import { v4 as uuidv4 } from "uuid";
 
 // Define custom modules for the Quill toolbar
@@ -42,6 +43,8 @@ function ComposeMail() {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState("");
+  const navigate = useNavigate();
+
 
 
  useEffect(() => {
@@ -52,7 +55,9 @@ function ComposeMail() {
     localStorage.setItem("userName", Name); // Update local storage with the correct username
   }, []);
 
-
+  const handleHomeRender = () => {
+    navigate("/Home");
+  }
      
 
 
@@ -198,7 +203,8 @@ const deleteEmail = (dataId) => {
     <Container className="mt-3">
       <Row className="mb-2">
         <Col>
-          <Button variant="light" className="d-flex align-items-center">
+          <Button variant="light" className="d-flex align-items-center" onClick={handleHomeRender}
+          >
             <MdArrowBack /> Back to Inbox
           </Button>
         </Col>

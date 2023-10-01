@@ -1,0 +1,6 @@
+.heading_hover{
+    transition: 0.3s ease;
+}
+.heading_hover:hover{
+    border-bottom: 4px solid blue;
+}

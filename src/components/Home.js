@@ -4,6 +4,7 @@ import { Stack,Badge,Dropdown,Offcanvas} from "react-bootstrap";
 import { FaSearch, FaImages, FaFile, FaMoneyBill, FaTags, FaPlane} from "react-icons/fa";
 import { BsList } from "react-icons/bs";
 import Mail from "./Mail";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const toggleShow = () => setShow(!show);
+    const navigate = useNavigate();
   
     useEffect(() => {
     const handleResize = () => {
@@ -23,7 +25,11 @@ const Home = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+    }, []);
+    
+    const handleComposeRender = () => {
+        navigate("/ComposeMail");
+    }
    
 
     return (<div style={{minHeight:"100vh",overflowX:"hidden"}}>
@@ -63,7 +69,7 @@ const Home = () => {
         <div>
             <Container fluid>
                 {isSmaller ? <Row>
-                    <Col sm={12} className="justify-content-center">
+                    <Col className="justify-content-center">
                         <Stack>
                             <div>
                                 <Offcanvas show={show} onHide={toggleShow}>
@@ -76,7 +82,7 @@ const Home = () => {
                                         <Container>
                                             <div className="d-grid">
                                                 <Button variant="primary" size="md"
-                                                    className="m-3">
+                                                    className="m-3" onClick={handleComposeRender}>
                                                     Compose
                                                 </Button>
                                             </div>
@@ -169,7 +175,7 @@ const Home = () => {
                             </div>
                         </Stack>   
                     </Col>
-                    <Col sm={12} className="justify-content-center">
+                    <Col className="justify-content-center">
                   <Mail/>
                     </Col>
 
@@ -181,7 +187,7 @@ const Home = () => {
                                 <Container>
                                     <div className="d-grid">
                                         <Button variant="primary" size="md"
-                                            className="m-3">
+                                            className="m-3" onClick={handleComposeRender}>
                                             Compose
                                         </Button>
                                     </div>
