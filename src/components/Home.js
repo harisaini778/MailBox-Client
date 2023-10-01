@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { Form, Navbar, Nav, Button, InputGroup, Row, Col, Container } from "react-bootstrap";
 import { Stack,Badge,Dropdown,Offcanvas} from "react-bootstrap";
-import { FaSearch, FaImages, FaFile, FaMoneyBill, FaTags, FaPlane } from "react-icons/fa";
+import { FaSearch, FaImages, FaFile, FaMoneyBill, FaTags, FaPlane} from "react-icons/fa";
 import { BsList } from "react-icons/bs";
 import Mail from "./Mail";
 
@@ -46,15 +46,15 @@ const Home = () => {
                       type="search"
                       style={{width:isSmaller? "70vw" : "40vw"}}
                     />
-                    <InputGroup.Text className="p-1">
+                    <InputGroup.Text className="justify-content-center" style={{width:isSmaller? "auto" : "5vw"}}> 
                       {isSmaller && <Button onClick={toggleShow} variant="light">
-                        <BsList />
+                        <BsList size={20} />
                       </Button>}
-                      <FaSearch />
+                        <FaSearch  size={isSmaller ?  20 : 26} />
                     </InputGroup.Text>
                   </InputGroup>
                 </Form>
-              </div>
+                    </div>                 
           </Navbar.Collapse>
 
 
@@ -63,10 +63,9 @@ const Home = () => {
         <div>
             <Container fluid>
                 {isSmaller ? <Row>
-                    <Col>
+                    <Col sm={12} className="justify-content-center">
                         <Stack>
                             <div>
-          
                                 <Offcanvas show={show} onHide={toggleShow}>
                                     <Offcanvas.Header closeButton onClose={handleClose}>
                                         <Offcanvas.Title>
@@ -168,13 +167,15 @@ const Home = () => {
                                     </Offcanvas.Body>
                                 </Offcanvas>
                             </div>
-
-                        </Stack>
-                        <Mail />
+                        </Stack>   
                     </Col>
+                    <Col sm={12} className="justify-content-center">
+                  <Mail/>
+                    </Col>
+
                 </Row> :
                     <Row>
-                        <Col xs={5} sm={5} lg={2} x-lg={2}
+                        <Col lg={2} x-lg={2}
                             className="bg-light" style={{ minHeight: "100vh" }}>
                             <div>
                                 <Container>
@@ -270,7 +271,7 @@ const Home = () => {
                                 </div>
                             </div>
                         </Col>
-                        <Col lg={10} xs={7} sm={7} x-lg={10}>
+                        <Col lg={10} x-lg={10}>
                             <Mail />
                         </Col>
                     </Row>}

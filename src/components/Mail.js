@@ -8,15 +8,15 @@ const Mail = () => {
 
 
     return (<div>
-        <Container>
+        <Container className="mt-3">
             <Row>
-                <Col className="me-auto">
-                    <Stack direction="horizontal" gap="4"> 
+                <Col xs={12} sm={12} lg={6} x-lg={6} className="justify-content-center">
+                    <Stack direction="horizontal" gap="3" className="justify-content-center m-1"> 
                         <div>
                             <Form>
                                 <Form.Check
                                     type="checkbox"
-                                    label="Check this checkbox"
+                                    label="Select All"
                                     id="checkboxId"
                                 />
                             </Form>
@@ -29,25 +29,23 @@ const Mail = () => {
                         </div>
                     </Stack>
                 </Col>
-                <Col className="ms-auto">
-                 <div>
-                            <Pagination>
+                <Col xs={12} sm={12} lg={6} x-lg={6} className="justify-content-center">
+                 <Container>
+                            <Pagination className="justify-content-center m-1">
                                 <Pagination.First />
                                 <Pagination.Prev />
                                 <Pagination.Item>{1}</Pagination.Item>
                                 <Pagination.Ellipsis></Pagination.Ellipsis>
 
-                                <Pagination.Item>{10}</Pagination.Item>
-                                <Pagination.Item>{11}</Pagination.Item>
-                                <Pagination.Item active>{12}</Pagination.Item>
-                                <Pagination.Item disabled>{13}</Pagination.Item>
+                                <Pagination.Item active >{5}</Pagination.Item>
+                                <Pagination.Item disabled>{6}</Pagination.Item>
                                 
                                 <Pagination.Ellipsis></Pagination.Ellipsis>
-                                <Pagination.Item>{20}</Pagination.Item>
+                                <Pagination.Item>{10}</Pagination.Item>
                                 <Pagination.Next />
                                 <Pagination.Last/>
                             </Pagination>
-                        </div>
+                        </Container>
                 </Col>
             </Row>
         </Container>
