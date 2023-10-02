@@ -1,0 +1,42 @@
+import React from "react";
+import { Container, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
+import { MdDelete, MdSnooze, MdArchive, MdMarkEmailRead } from "react-icons/md";
+
+const Overlay = () => {
+  const icons = [
+    { icon: <MdDelete />, name: "Delete" },
+    { icon: <MdSnooze />, name: "Snooze" },
+    { icon: <MdArchive />, name: "Archive" },
+    { icon: <MdMarkEmailRead />, name: "Mark as Read" },
+  ];
+
+  const iconList = icons.map((iconData, index) => (
+    <OverlayTrigger
+      key={index}
+      placement="bottom"
+      overlay={<Tooltip id={`tooltip-${index}`}>{iconData.name}</Tooltip>}
+    >
+      <div style={{ marginRight: "10px" }}>{iconData.icon}</div>
+    </OverlayTrigger>
+  ));
+
+  return (
+    <Container>
+      <OverlayTrigger
+        trigger="click"
+        placement="left"
+        overlay={
+          <Popover id="popover-positioned-left">
+            <Popover.Body>
+              <div style={{ display: "flex" }}>{iconList}</div>
+            </Popover.Body>
+          </Popover>
+        }
+      >
+        <button className="btn btn-secondary">Open Popover</button>
+      </OverlayTrigger>
+    </Container>
+  );
+};
+
+export default Overlay;
