@@ -5,16 +5,24 @@ import { FaSearch, FaImages, FaFile, FaMoneyBill, FaTags, FaPlane} from "react-i
 import { BsList } from "react-icons/bs";
 import Mail from "./Mail";
 import { useNavigate } from "react-router-dom";
+import { useMessageContext } from "./MessageContextProvider";
 
 
 const Home = () => {
   
-      const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
+    const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const toggleShow = () => setShow(!show);
     const navigate = useNavigate();
   
+    const ctx = useMessageContext();
+    const message = ctx.messages;
+    const inboxCount = message.length;
+    const starred = ctx.messages.filter((message) => message.starred);
+    const starredCount = starred.length;
+
+
     useEffect(() => {
     const handleResize = () => {
       setIsSmaller(window.innerWidth <= 576);
@@ -89,16 +97,18 @@ const Home = () => {
                                         </Container>
                                         <Stack gap={4}>
                                             <Stack direction="horizontal">
-                                                <div className="me-auto m-1">Inbox</div>
-                                                <Badge className="ms-auto m-1">0</Badge>
+                                                <div className="me-auto m-1" onClick={ctx.inboxMessagesDisplayHandler}
+                                                >Inbox</div>
+                                                <Badge className="ms-auto m-1">{inboxCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
                                                 <div className="me-auto m-1">Unread</div>
                                                 <Badge className="ms-auto m-1">0</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
-                                                <div className="me-auto m-1">Starred</div>
-                                                <Badge className="ms-auto m-1">0</Badge>
+                                                <div className="me-auto m-1"
+                                                onClick={ctx.starMessagesDisplayHandler}>Starred</div>
+                                                <Badge className="ms-auto m-1">{starredCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
                                                 <div className="me-auto m-1">Drafts</div>
@@ -194,16 +204,19 @@ const Home = () => {
                                 </Container>
                                 <Stack gap={4}>
                                     <Stack direction="horizontal">
-                                        <div className="me-auto m-1">Inbox</div>
-                                        <Badge className="ms-auto m-1">0</Badge>
+                                        <div className="me-auto m-1" onClick={ctx.inboxMessagesDisplayHandler}
+                                        >
+                                            Inbox</div>
+                                        <Badge className="ms-auto m-1">{inboxCount }</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
                                         <div className="me-auto m-1">Unread</div>
                                         <Badge className="ms-auto m-1">0</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
-                                        <div className="me-auto m-1">Starred</div>
-                                        <Badge className="ms-auto m-1">0</Badge>
+                                        <div className="me-auto m-1" onClick={ctx.starMessagesDisplayHandler}
+                                        >Starred</div>
+                                        <Badge className="ms-auto m-1">{starredCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
                                         <div className="me-auto m-1">Drafts</div>

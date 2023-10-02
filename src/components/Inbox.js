@@ -4,11 +4,15 @@ import "./Inbox.css";
 import { Container, Row, Col,Stack } from "react-bootstrap";
 import { FaUser,FaTag,FaComments } from "react-icons/fa";
 import InboxContent from "./InboxContent";
+import StarredMessages from "./StarredMessages";
+import { useMessageContext } from "./MessageContextProvider";
 
 
 const Inbox = () => {
 
-const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
+  const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
+  
+  const ctx = useMessageContext();
     
     useEffect(() => {
     const handleResize = () => {
@@ -51,7 +55,8 @@ const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
           </Col>
         </Row>
         </Container>
-        <InboxContent/>
+       {ctx.inboxIsClicked &&  <InboxContent/>} 
+        {ctx.starredIsClicked && <StarredMessages/>}
     </div>);
 
 }
