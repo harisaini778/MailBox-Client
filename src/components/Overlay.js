@@ -1,8 +1,9 @@
 import React from "react";
 import { Container, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { MdDelete, MdSnooze, MdArchive, MdMarkEmailRead } from "react-icons/md";
+import { BsList } from "react-icons/bs";
 
-const Overlay = () => {
+const OverlayDetails = () => {
   const icons = [
     { icon: <MdDelete />, name: "Delete" },
     { icon: <MdSnooze />, name: "Snooze" },
@@ -33,10 +34,10 @@ const Overlay = () => {
           </Popover>
         }
       >
-        <button className="btn btn-secondary">Open Popover</button>
+        <button className="btn btn-light"><BsList/></button>
       </OverlayTrigger>
     </Container>
   );
 };
 
-export default Overlay;
+export default OverlayDetails;

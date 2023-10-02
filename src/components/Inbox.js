@@ -27,18 +27,18 @@ const Inbox = () => {
     }, []);
 
     return (
-        <div className="m-3">
-      <Container className="m-2">
-        <Row >
+        <div>
+      <Container>
+        <Row className={isSmaller && "justify-content-center"}>
           <Col sm={3} lg={2} style={{width: isSmaller ? "auto" : "auto"}}>
-                        <Stack direction="horizontal" gap="2" className="heading_hover">
+                        <Stack direction="horizontal" gap="3" className="heading_hover">
                             <span ><FaUser/></span>
                             <h style={{ textAlign: "center",fontSize: isSmaller ? "1rem" : "1.2rem" }}
                         > Primary</h> 
             </Stack>
           </Col>
           <Col  sm={3} lg={2} style={{width: isSmaller ? "auto" : "auto"}}>
-                        <Stack direction="horizontal"  gap="2" className="heading_hover">
+                        <Stack direction="horizontal"  gap="3" className="heading_hover">
                             <span><FaTag/></span>
                             <h style={{ textAlign: "center",fontSize: isSmaller ? "1rem" : "1.2rem",
                             }}
@@ -46,7 +46,7 @@ const Inbox = () => {
             </Stack>
           </Col>
           <Col  sm={3} lg={2} style={{width: isSmaller ? "auto" : "auto"}} >
-                            <Stack direction="horizontal" gap="2" className="heading_hover">
+                            <Stack direction="horizontal" gap="3" className="heading_hover">
                             <span><FaComments/></span>
                             <h style={{ textAlign: "center", fontSize: isSmaller ?  "1rem" : "1.2rem" }}
                            >Social</h>  

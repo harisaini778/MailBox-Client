@@ -9,7 +9,7 @@ const Mail = () => {
 
 
     return (<div>
-        <Container className="m-3">
+        <Container className="mt-2 mb-2">
             <Row>
                 <Col xs={12} sm={12} lg={4} x-lg={4} className="justify-content-center">
                     <Stack direction="horizontal" gap="4" className="justify-content-center m-1">

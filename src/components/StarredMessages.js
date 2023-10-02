@@ -8,7 +8,7 @@ const StarredMessages = () => {
   const starredMessages = ctx.messages.filter((message) => message.starred);
 
   return (
-    <Container>
+    <Container className="mt-3">
       <ListGroup>
         {starredMessages.map((message) => (
           <ListGroup.Item key={message.id} className={message.unread ? 'unread' : ''}>
