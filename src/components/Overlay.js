@@ -1,11 +1,20 @@
+// OverlayDetails.js
 import React from "react";
 import { Container, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { MdDelete, MdSnooze, MdArchive, MdMarkEmailRead } from "react-icons/md";
 import { BsList } from "react-icons/bs";
+import { useMessageContext } from "./MessageContextProvider";
 
-const OverlayDetails = () => {
+const OverlayDetails = ({ messageId }) => {
+  const ctx = useMessageContext();
+
+  const handleDelete = () => {
+    // Call the delete handler from the context provider
+    ctx.deletedMessagesHandler(messageId);
+  };
+
   const icons = [
-    { icon: <MdDelete />, name: "Delete" },
+    { icon: <MdDelete onClick={handleDelete} />, name: "Delete" },
     { icon: <MdSnooze />, name: "Snooze" },
     { icon: <MdArchive />, name: "Archive" },
     { icon: <MdMarkEmailRead />, name: "Mark as Read" },
@@ -34,7 +43,9 @@ const OverlayDetails = () => {
           </Popover>
         }
       >
-        <button className="btn btn-light"><BsList/></button>
+        <button className="btn btn-light">
+          <BsList />
+        </button>
       </OverlayTrigger>
     </Container>
   );

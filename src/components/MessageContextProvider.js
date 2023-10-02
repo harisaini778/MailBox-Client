@@ -62,20 +62,25 @@ const toggleStarredHandler = (id) => {
   );
 };
 
+const deletedMessagesHandler = (id) => {
+  setAllMessages((prevMessages) =>
+    prevMessages.filter((message) => message.id !== id)
+  );
 
-  const deletedMessagesHandler = (id) => {
-    const deletedMessage = allMessages.find((message) => message.id === id);
+  // Remove the deleted message from starredMessages if it exists
+  setStarredMessages((prevStarredMessages) =>
+    prevStarredMessages.filter((msg) => msg.id !== id)
+  );
 
-    if (deletedMessage) {
-      setAllMessages((prevMessages) =>
-        prevMessages.filter((message) => message.id !== id)
-      );
-      setDeletedMessages((prevDeletedMessages) => [
-        ...prevDeletedMessages,
-        deletedMessage,
-      ]);
-    }
-  };
+  // Add the deleted message to deletedMessages if it exists
+  const deletedMessage = allMessages.find((message) => message.id === id);
+  if (deletedMessage) {
+    setDeletedMessages((prevDeletedMessages) => [
+      ...prevDeletedMessages,
+      deletedMessage,
+    ]);
+  }
+};
 
   const markAsSpamHandler = (id) => {
     const spamMessage = allMessages.find((message) => message.id === id);

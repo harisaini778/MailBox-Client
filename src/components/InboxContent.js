@@ -64,7 +64,7 @@ const InboxContent = () => {
               </Col>}
 
               <Col>
-                <OverlayDetails/>
+                <OverlayDetails messageId={message.id} />
               </Col>
             </Row>
           </ListGroup.Item>
