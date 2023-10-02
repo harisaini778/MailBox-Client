@@ -1,9 +1,10 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState,useEffect} from "react";
 import "./Inbox.css";
 import { Container, Row, Col,Stack } from "react-bootstrap";
 import { FaUser,FaTag,FaComments } from "react-icons/fa";
 import InboxContent from "./InboxContent";
+
 
 const Inbox = () => {
 

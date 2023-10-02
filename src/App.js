@@ -4,10 +4,12 @@ import './App.css';
 import EmailVerify from './components/EmailVerify';
 import ComposeMail from './components/ComposeMail';
 import Home from './components/Home';
+import MessageContextProvider from './components/MessageContextProvider';
 
 function App() {
   return (
-         <Router>
+    <MessageContextProvider>
+               <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/LogIn" />} />
            <Route path="/LogIn" element={<LogIn />} />
@@ -16,6 +18,8 @@ function App() {
         <Route path="/ComposeMail" element={<ComposeMail />} />
         </Routes>
       </Router>
+    </MessageContextProvider>
+
   );
 }
 

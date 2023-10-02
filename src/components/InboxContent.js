@@ -1,22 +1,15 @@
 import React, { useState } from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import { FaStar, FaRegStar } from "react-icons/fa";
-import messages from "./Messages";
+import { useMessageContext } from "./MessageContextProvider";
 
 const InboxContent = () => {
-  const [message, setMessage] = useState([...messages]);
 
+  const ctx = useMessageContext();
 
-    const toggleStarred = (id) => {
-        setMessage((prevMessages) =>
-            prevMessages.map((message) =>
-                message.id === id ? { ...message, starred: !message.starred } : message
-            )
-        );
-    }
-   
- 
+  const message = ctx.messages;
 
+  
   return (
     <Container>
       <ListGroup>
@@ -26,7 +19,7 @@ const InboxContent = () => {
               <Col xs={1}>
                 <input type="checkbox" />
               </Col>
-              <Col xs={1} onClick={() => toggleStarred(message.id)}>
+              <Col xs={1} onClick={() => ctx.toggleStarredHandler(message.id)}>
                 {message.starred ? <FaStar /> : <FaRegStar />}
               </Col>
               <Col xs={3}>
