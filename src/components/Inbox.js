@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import "./Inbox.css";
 import { Container, Row, Col,Stack } from "react-bootstrap";
 import { FaUser,FaTag,FaComments } from "react-icons/fa";
+import InboxContent from "./InboxContent";
 
 const Inbox = () => {
 
@@ -21,8 +22,8 @@ const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
     }, []);
 
     return (
-        <div className="mt-3">
-      <Container>
+        <div className="m-3">
+      <Container className="m-2">
         <Row >
           <Col sm={3} lg={2} style={{width: isSmaller ? "auto" : "auto"}}>
                         <Stack direction="horizontal" gap="2" className="heading_hover">
@@ -48,7 +49,8 @@ const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
 
           </Col>
         </Row>
-      </Container>
+        </Container>
+        <InboxContent/>
     </div>);
 
 }
