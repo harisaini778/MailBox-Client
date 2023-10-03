@@ -8,6 +8,7 @@ import StarredMessages from "./StarredMessages";
 import DeletedMessages from "./DeletedMessages";
 import { useMessageContext } from "./MessageContextProvider";
 import SpamMessages from "./SpamMessages";
+import ArchieveMessages from "./ArchieveMessages";
 
 
 const Inbox = () => {
@@ -60,7 +61,8 @@ const Inbox = () => {
        {ctx.inboxIsClicked &&  <InboxContent/>} 
         {ctx.starredIsClicked && <StarredMessages />}
         {ctx.deletedIsClicked && <DeletedMessages />}
-        {ctx.spamIsClicked && <SpamMessages/>}
+        {ctx.spamIsClicked && <SpamMessages />}
+         {ctx.archieveIsClicked && <ArchieveMessages/>}
     </div>);
 
 }
