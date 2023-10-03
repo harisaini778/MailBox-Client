@@ -1,7 +1,7 @@
 // SentMessages.js
 
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container,ListGroup,Row,Col,Stack } from 'react-bootstrap';
 import { useMessageContext } from './MessageContextProvider';
 
 const SentMessages = () => {
@@ -9,19 +9,33 @@ const SentMessages = () => {
   const messages = Object.values(ctx.sentMessages);
 
   return (
-    <Container>
-      <h1>Sent Messages</h1>
-      {/* Render your list of sent messages here */}
-      <ul>
-        {messages.map((data, index) => (
-          <li key={index}>
-            {/* Render individual message content here */}
-            <p>Subject: {data.subject}</p>
-            <p>To: {data.to}</p>
-            <p>Message: {data.message}</p>
-          </li>
+    <Container className="mt-3">
+      <ListGroup>
+        {messages.map((message) => (
+          <ListGroup.Item key={message.id} className={message.unread ? 'unread' : ''}>
+            <Row>
+              <Col xs={1}>
+                <input type="checkbox" />
+              </Col>
+              <Col xs={3}>
+                {message.to}
+              </Col>
+                    <Col xs={4}>
+                        <Stack direction='horizontal' gap="1">
+                            <span>{message.ccBccOption} : </span>
+                            <span>{message.ccBccValue}</span>
+                        </Stack>        
+              </Col>
+              <Col xs={2}>
+               {message.subject}
+              </Col>
+              <Col xs={1}>
+                {message.message}
+              </Col>
+            </Row>
+          </ListGroup.Item>
         ))}
-      </ul>
+      </ListGroup>
     </Container>
   );
 };
