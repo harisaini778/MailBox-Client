@@ -23,6 +23,8 @@ const Home = () => {
     const starredCount = starred.length;
     const deleted = ctx.deletedMessages;
     const deletedCount = deleted.length;
+    const spam = ctx.spamMessages;
+    const spamCount = spam.length;
 
 
     useEffect(() => {
@@ -125,8 +127,8 @@ const Home = () => {
                                                 <Badge className="ms-auto m-1">0</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
-                                                <div className="me-auto m-1">Spam</div>
-                                                <Badge className="ms-auto m-1">0</Badge>
+                                                <div className="me-auto m-1"  onClick={ctx. spamMessagesDisplayHandler}>Spam</div>
+                                                <Badge className="ms-auto m-1">{spamCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
                                                 <div className="me-auto m-1" onClick={ctx.deletedMessagesDisplayHandler}>Deleted Items</div>
@@ -233,8 +235,8 @@ const Home = () => {
                                         <Badge className="ms-auto m-1">0</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
-                                        <div className="me-auto m-1">Spam</div>
-                                        <Badge className="ms-auto m-1">0</Badge>
+                                        <div className="me-auto m-1" onClick={ctx. spamMessagesDisplayHandler}>Spam</div>
+                                        <Badge className="ms-auto m-1">{spamCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
                                         <div className="me-auto m-1" onClick={ctx.deletedMessagesDisplayHandler}>Deleted Items</div>

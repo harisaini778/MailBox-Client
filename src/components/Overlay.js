@@ -1,8 +1,9 @@
 // OverlayDetails.js
 import React from "react";
 import { Container, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
-import { MdDelete, MdSnooze, MdArchive, MdMarkEmailRead } from "react-icons/md";
+import { MdDelete, MdSnooze, MdArchive, MdMarkEmailRead} from "react-icons/md";
 import { BsList } from "react-icons/bs";
+import { FaFlag } from "react-icons/fa";
 import { useMessageContext } from "./MessageContextProvider";
 
 const OverlayDetails = ({ messageId }) => {
@@ -13,8 +14,13 @@ const OverlayDetails = ({ messageId }) => {
     ctx.deletedMessagesHandler(messageId);
   };
 
+  const markSpam = () => {
+    ctx.markAsSpamHandler(messageId);
+  }
+
   const icons = [
     { icon: <MdDelete onClick={handleDelete} />, name: "Delete" },
+    {icon : <FaFlag onClick={markSpam}/>,name : "Mark as Spam"},
     { icon: <MdSnooze />, name: "Snooze" },
     { icon: <MdArchive />, name: "Archive" },
     { icon: <MdMarkEmailRead />, name: "Mark as Read" },

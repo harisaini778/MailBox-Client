@@ -33,7 +33,11 @@ export const MessageContextProvider = ({ children }) => {
   };
 
   const spamMessagesDisplayHandler = () => {
-    setSpamIsClicked((prevState) => !prevState); // Use 'prevState' here
+    setSpamIsClicked((prevState) => !prevState);
+    setDeletedIsClicked(false);
+    setInboxIsClicked(false);
+    setStarredIsClicked(false);
+    
   };
 
   const inboxMessagesDisplayHandler = () => {
