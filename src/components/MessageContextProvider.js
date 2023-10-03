@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState,useEffect } from "react";
 import messages from "./Messages";
 
 const MessageContext = createContext();
@@ -15,12 +15,41 @@ export const MessageContextProvider = ({ children }) => {
   const [deletedMessages, setDeletedMessages] = useState([]);
   const [spamMessages, setSpamMessages] = useState([]);
   const [archieveMessages, setArchieveMessages] = useState([]);
+  const [sentMessages, setSentMessages] = useState([]);
+
+
+
 
     const [starredIsClicked, setStarredIsClicked] = useState(false);
     const [deletedIsClicked, setDeletedIsClicked] = useState(false);
     const [spamIsClicked, setSpamIsClicked] = useState(false);
     const [inboxIsClicked, setInboxIsClicked] = useState(true);
   const [archieveIsClicked, setArchieveIsClicked] = useState(false);
+    const [sentIsClicked, setSentIsClicked] = useState(false);
+
+
+
+      useEffect(() => {
+    // Fetch sent messages data here and set it in sentMessages state
+    const userName = localStorage.getItem('userName');
+    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}.json`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('sent message data is: ', data);
+        if (data) {
+          setSentMessages(data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
 
   const acrhieveMessagesDisplayHandler = () => {
     setArchieveIsClicked((prevState) => !prevState);
@@ -54,6 +83,15 @@ export const MessageContextProvider = ({ children }) => {
       setInboxIsClicked((prevState) => !prevState); 
     setStarredIsClicked(false);
      setDeletedIsClicked(false);
+  };
+
+    const sentMessagesDisplayHandler = () => {
+      setSentIsClicked((prevState) => !prevState); 
+    setStarredIsClicked(false);
+      setDeletedIsClicked(false);
+      setInboxIsClicked(false);
+    setArchieveIsClicked(false);
+    setSpamIsClicked(false);
   };
 
 
@@ -144,6 +182,10 @@ const deletedMessagesHandler = (id) => {
       )
     );
   };
+  
+
+
+ 
 
   const contextValue = {
     messages: allMessages,
@@ -151,16 +193,19 @@ const deletedMessagesHandler = (id) => {
     deletedMessages,
     archieveMessages,
     spamMessages,
+    sentMessages,
       starredIsClicked,
       deletedIsClicked,
       spamIsClicked,
     inboxIsClicked,
-      archieveIsClicked,
+    archieveIsClicked,
+      sentIsClicked,
       starMessagesDisplayHandler,
       deletedMessagesDisplayHandler,
       spamMessagesDisplayHandler,
     inboxMessagesDisplayHandler,
-      acrhieveMessagesDisplayHandler,
+    acrhieveMessagesDisplayHandler,
+      sentMessagesDisplayHandler,
     markAsReadHandler,
     markAsUnreadHandler,
     markAsSpamHandler,

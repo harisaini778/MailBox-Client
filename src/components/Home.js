@@ -27,6 +27,8 @@ const Home = () => {
     const spamCount = spam.length;
     const archieve = ctx.archieveMessages;
     const archieveCount = archieve.length;
+    const sent = Object.values(ctx.sentMessages);
+    const sentCount = sent.length;
 
 
     useEffect(() => {
@@ -121,8 +123,8 @@ const Home = () => {
                                                 <Badge className="ms-auto m-1">0</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
-                                                <div className="me-auto m-1">Sent</div>
-                                                <Badge className="ms-auto m-1">0</Badge>
+                                                <div className="me-auto m-1" onClick={ctx.sentMessagesDisplayHandler}>Sent</div>
+                                                <Badge className="ms-auto m-1">{sentCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
                                                 <div className="me-auto m-1" onClick={ctx.acrhieveMessagesDisplayHandler}>Archieve</div>
@@ -229,8 +231,8 @@ const Home = () => {
                                         <Badge className="ms-auto m-1">0</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
-                                        <div className="me-auto m-1">Sent</div>
-                                        <Badge className="ms-auto m-1">0</Badge>
+                                        <div className="me-auto m-1" onClick={ctx.sentMessagesDisplayHandler}>Sent</div>
+                                        <Badge className="ms-auto m-1">{sentCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
                                         <div className="me-auto m-1"  onClick={ctx.acrhieveMessagesDisplayHandler}>Archieve</div>
