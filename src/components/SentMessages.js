@@ -1,13 +1,27 @@
-// SentMessages.js
-
 import React from 'react';
+import { useState,useEffect } from 'react';
 import { Container,ListGroup,Row,Col,Stack } from 'react-bootstrap';
 import { useMessageContext } from './MessageContextProvider';
 import "./SentMessages.css";
 
 const SentMessages = () => {
+
+    const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
+
   const ctx = useMessageContext();
     const messages = Object.values(ctx.sentMessages);
+
+    useEffect(() => {
+    const handleResize = () => {
+      setIsSmaller(window.innerWidth <= 576);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+    }, []);
     
 function stripHtmlTags(html) {
   const tempDiv = document.createElement('div');
@@ -21,22 +35,22 @@ function stripHtmlTags(html) {
         {messages.map((message) => (
           <ListGroup.Item key={message.id} className={message.unread ? 'unread' : ''}>
             <Row>
-              <Col xs={1}>
+              <Col>
                 <input type="checkbox" />
               </Col>
-              <Col xs={3} style={{fontWeight:"bold"}} className='truncate-text-sent'>
+              <Col style={{fontWeight:"bold"}} className='truncate-text-sent'>
                To : {message.to}
               </Col>
-                    <Col xs={4}>
+                    {!isSmaller && <Col>
                         <Stack direction='horizontal' gap="1">
                             <span>{message.ccBccOption} : </span>
                             <span>{message.ccBccValue}</span>
-                        </Stack>        
-              </Col>
-              <Col xs={2} style={{fontWeight:"bold"}} className='truncate-text-sent'>
+                        </Stack>
+                    </Col>}
+              <Col style={{fontWeight:"bold"}} className='truncate-text-sent'>
                {message.subject}
               </Col>
-              <Col xs={1} className='truncate-text-sent'>
+              <Col className='truncate-text-sent'>
                {stripHtmlTags(message.message)};
               </Col>
             </Row>
