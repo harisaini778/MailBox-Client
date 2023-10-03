@@ -18,11 +18,15 @@ const OverlayDetails = ({ messageId }) => {
     ctx.markAsSpamHandler(messageId);
   }
 
+  const archieveHandler = () => {
+    ctx.archieveMessagesHandler(messageId);
+  }
+
   const icons = [
     { icon: <MdDelete onClick={handleDelete} />, name: "Delete" },
     {icon : <FaFlag onClick={markSpam}/>,name : "Mark as Spam"},
     { icon: <MdSnooze />, name: "Snooze" },
-    { icon: <MdArchive />, name: "Archive" },
+    { icon: <MdArchive onClick={archieveHandler}/>, name: "Archive" },
     { icon: <MdMarkEmailRead />, name: "Mark as Read" },
   ];
 

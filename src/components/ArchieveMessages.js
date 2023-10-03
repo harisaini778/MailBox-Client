@@ -10,7 +10,7 @@ const ArchieveMessages = () => {
   return (
     <Container className="mt-3">
       <ListGroup>
-        {spam.map((message) => (
+        {archieve.map((message) => (
           <ListGroup.Item key={message.id} className={message.unread ? 'unread' : ''}>
             <Row>
               <Col xs={1}>

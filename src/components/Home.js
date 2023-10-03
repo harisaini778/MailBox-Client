@@ -25,6 +25,8 @@ const Home = () => {
     const deletedCount = deleted.length;
     const spam = ctx.spamMessages;
     const spamCount = spam.length;
+    const archieve = ctx.archieveMessages;
+    const archieveCount = archieve.length;
 
 
     useEffect(() => {
@@ -123,11 +125,11 @@ const Home = () => {
                                                 <Badge className="ms-auto m-1">0</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
-                                                <div className="me-auto m-1">Archieve</div>
-                                                <Badge className="ms-auto m-1">0</Badge>
+                                                <div className="me-auto m-1" onClick={ctx.acrhieveMessagesDisplayHandler}>Archieve</div>
+                                                <Badge className="ms-auto m-1">{archieveCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
-                                                <div className="me-auto m-1"  onClick={ctx. spamMessagesDisplayHandler}>Spam</div>
+                                                <div className="me-auto m-1"  onClick={ctx.spamMessagesDisplayHandler}>Spam</div>
                                                 <Badge className="ms-auto m-1">{spamCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
@@ -231,11 +233,11 @@ const Home = () => {
                                         <Badge className="ms-auto m-1">0</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
-                                        <div className="me-auto m-1">Archieve</div>
-                                        <Badge className="ms-auto m-1">0</Badge>
+                                        <div className="me-auto m-1"  onClick={ctx.acrhieveMessagesDisplayHandler}>Archieve</div>
+                                        <Badge className="ms-auto m-1">{archieveCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
-                                        <div className="me-auto m-1" onClick={ctx. spamMessagesDisplayHandler}>Spam</div>
+                                        <div className="me-auto m-1" onClick={ctx.spamMessagesDisplayHandler}>Spam</div>
                                         <Badge className="ms-auto m-1">{spamCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">

@@ -166,6 +166,7 @@ const deletedMessagesHandler = (id) => {
     markAsSpamHandler,
     deletedMessagesHandler,
     toggleStarredHandler,
+    archieveMessagesHandler,
   };
 
   return (
