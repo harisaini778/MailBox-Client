@@ -21,6 +21,8 @@ const Home = () => {
     const inboxCount = message.length;
     const starred = ctx.messages.filter((message) => message.starred);
     const starredCount = starred.length;
+    const deleted = ctx.deletedMessages;
+    const deletedCount = deleted.length;
 
 
     useEffect(() => {
@@ -127,8 +129,8 @@ const Home = () => {
                                                 <Badge className="ms-auto m-1">0</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
-                                                <div className="me-auto m-1">Deleted Items</div>
-                                                <Badge className="ms-auto m-1">0</Badge>
+                                                <div className="me-auto m-1" onClick={ctx.deletedMessagesDisplayHandler}>Deleted Items</div>
+                                                <Badge className="ms-auto m-1">{deletedCount}</Badge>
                                             </Stack>
                                         </Stack>
                                         <div className="d-flex justify-content-center">
@@ -235,8 +237,8 @@ const Home = () => {
                                         <Badge className="ms-auto m-1">0</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
-                                        <div className="me-auto m-1">Deleted Items</div>
-                                        <Badge className="ms-auto m-1">0</Badge>
+                                        <div className="me-auto m-1" onClick={ctx.deletedMessagesDisplayHandler}>Deleted Items</div>
+                                        <Badge className="ms-auto m-1">{deletedCount}</Badge>
                                     </Stack>
                                 </Stack>
                                 <div className="d-flex justify-content-center">

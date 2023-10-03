@@ -5,6 +5,7 @@ import { Container, Row, Col,Stack } from "react-bootstrap";
 import { FaUser,FaTag,FaComments } from "react-icons/fa";
 import InboxContent from "./InboxContent";
 import StarredMessages from "./StarredMessages";
+import DeletedMessages from "./DeletedMessages";
 import { useMessageContext } from "./MessageContextProvider";
 
 
@@ -56,7 +57,8 @@ const Inbox = () => {
         </Row>
         </Container>
        {ctx.inboxIsClicked &&  <InboxContent/>} 
-        {ctx.starredIsClicked && <StarredMessages/>}
+        {ctx.starredIsClicked && <StarredMessages />}
+            {ctx.deletedIsClicked && <DeletedMessages/>}
     </div>);
 
 }

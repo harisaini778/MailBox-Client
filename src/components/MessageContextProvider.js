@@ -22,11 +22,14 @@ export const MessageContextProvider = ({ children }) => {
     
       const starMessagesDisplayHandler = () => {
           setStarredIsClicked((prevState) => !prevState); 
-          setInboxIsClicked(false);
+        setInboxIsClicked(false);
+        setDeletedIsClicked(false);
   };
 
   const deletedMessagesDisplayHandler = () => {
-    setDeletedIsClicked((prevState) => !prevState); // Use 'prevState' here
+    setDeletedIsClicked((prevState) => !prevState);
+    setInboxIsClicked(false);
+    setStarredIsClicked(false);// Use 'prevState' here
   };
 
   const spamMessagesDisplayHandler = () => {
@@ -35,7 +38,8 @@ export const MessageContextProvider = ({ children }) => {
 
   const inboxMessagesDisplayHandler = () => {
       setInboxIsClicked((prevState) => !prevState); 
-      setStarredIsClicked(false);
+    setStarredIsClicked(false);
+     setDeletedIsClicked(false);
   };
 
 const toggleStarredHandler = (id) => {
