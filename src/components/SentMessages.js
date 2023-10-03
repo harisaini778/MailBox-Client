@@ -6,7 +6,13 @@ import { useMessageContext } from './MessageContextProvider';
 
 const SentMessages = () => {
   const ctx = useMessageContext();
-  const messages = Object.values(ctx.sentMessages);
+    const messages = Object.values(ctx.sentMessages);
+    
+function stripHtmlTags(html) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+  return tempDiv.textContent || tempDiv.innerText || '';
+}
 
   return (
     <Container className="mt-3">
@@ -30,7 +36,7 @@ const SentMessages = () => {
                {message.subject}
               </Col>
               <Col xs={1}>
-                {message.message}
+               {stripHtmlTags(message.message)};
               </Col>
             </Row>
           </ListGroup.Item>
