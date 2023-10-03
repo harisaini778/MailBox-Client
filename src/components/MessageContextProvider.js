@@ -132,7 +132,7 @@ const deletedMessagesHandler = (id) => {
   const markAsReadHandler = (id) => {
     setAllMessages((prevMessages) =>
       prevMessages.map((message) =>
-        message.id === id ? { ...message, unread: false } : message
+        message.id === id ? { ...message, unread: true } : message
       )
     );
   };

@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { ListGroup, Container, Row, Col, Overlay } from "react-bootstrap";
+import { ListGroup, Container, Row, Col} from "react-bootstrap";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { useMessageContext } from "./MessageContextProvider";
 import OverlayDetails from "./Overlay";
@@ -9,6 +9,9 @@ const InboxContent = () => {
 
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
   const ctx = useMessageContext();
+
+  
+  
 
   const message = ctx.messages;
 
@@ -38,11 +41,11 @@ const InboxContent = () => {
                 {message.starred ? <FaStar /> : <FaRegStar />}
               </Col>
               <Col className="truncate-text">
-                <h style={{fontWeight:"bold"}}>{message.sender}</h>
+                <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>{message.sender}</h>
               </Col>
 
               <Col className="truncate-text">
-                <h style={{fontWeight:"bold"}}>{message.subject}</h>
+                <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>{message.subject}</h>
               </Col>
              
               {!isSmaller && <Col className="truncate-text">

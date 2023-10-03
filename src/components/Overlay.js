@@ -22,12 +22,17 @@ const OverlayDetails = ({ messageId }) => {
     ctx.archieveMessagesHandler(messageId);
   }
 
+  const readHandler = () => {
+    ctx.markAsReadHandler(messageId);
+  }
+    
+
   const icons = [
     { icon: <MdDelete onClick={handleDelete} />, name: "Delete" },
     {icon : <FaFlag onClick={markSpam}/>,name : "Mark as Spam"},
     { icon: <MdSnooze />, name: "Snooze" },
     { icon: <MdArchive onClick={archieveHandler}/>, name: "Archive" },
-    { icon: <MdMarkEmailRead />, name: "Mark as Read" },
+    { icon: <MdMarkEmailRead onClick={readHandler} />, name: "Mark as Read" },
   ];
 
   const iconList = icons.map((iconData, index) => (
