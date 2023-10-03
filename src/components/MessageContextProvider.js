@@ -13,13 +13,23 @@ export const MessageContextProvider = ({ children }) => {
   const [allMessages, setAllMessages] = useState([...messages]);
   const [starredMessages, setStarredMessages] = useState([]);
   const [deletedMessages, setDeletedMessages] = useState([]);
-    const [spamMessages, setSpamMessages] = useState([]);
-    
+  const [spamMessages, setSpamMessages] = useState([]);
+  const [archieveMessages, setArchieveMessages] = useState([]);
+
     const [starredIsClicked, setStarredIsClicked] = useState(false);
     const [deletedIsClicked, setDeletedIsClicked] = useState(false);
     const [spamIsClicked, setSpamIsClicked] = useState(false);
-     const [inboxIsClicked, setInboxIsClicked] = useState(true);
-    
+    const [inboxIsClicked, setInboxIsClicked] = useState(true);
+  const [archieveIsClicked, setArchieveIsClicked] = useState(false);
+
+  const acrhieveMessagesDisplayHandler = () => {
+    setArchieveIsClicked((prevState) => !prevState);
+    setSpamIsClicked(false);
+    setDeletedIsClicked(false);
+    setInboxIsClicked(false);
+    setStarredIsClicked(false);
+  }
+  
       const starMessagesDisplayHandler = () => {
           setStarredIsClicked((prevState) => !prevState); 
         setInboxIsClicked(false);
@@ -45,6 +55,24 @@ export const MessageContextProvider = ({ children }) => {
     setStarredIsClicked(false);
      setDeletedIsClicked(false);
   };
+
+
+const archieveMessagesHandler = (id) => {
+  const archieves = allMessages.find((message) => message.id === id);
+
+  if (archieves) {
+    setArchieveMessages((prevArchieveMessages) => [
+      ...prevArchieveMessages,
+      archieves, 
+    ]);
+
+    setAllMessages((prevMessages) => {
+      const updatedMessages = prevMessages.filter((message) => message.id !== id);
+      return updatedMessages;
+    });
+  }
+};
+
 
 const toggleStarredHandler = (id) => {
   setAllMessages((prevMessages) =>
@@ -121,15 +149,18 @@ const deletedMessagesHandler = (id) => {
     messages: allMessages,
     starredMessages,
     deletedMessages,
+    archieveMessages,
     spamMessages,
       starredIsClicked,
       deletedIsClicked,
       spamIsClicked,
-      inboxIsClicked,
+    inboxIsClicked,
+      archieveIsClicked,
       starMessagesDisplayHandler,
       deletedMessagesDisplayHandler,
       spamMessagesDisplayHandler,
-      inboxMessagesDisplayHandler,
+    inboxMessagesDisplayHandler,
+      acrhieveMessagesDisplayHandler,
     markAsReadHandler,
     markAsUnreadHandler,
     markAsSpamHandler,
