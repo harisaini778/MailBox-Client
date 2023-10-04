@@ -68,7 +68,7 @@ function ComposeMail() {
         
     console.log('Sending email with message:', message);
 
-      fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}.json`,
+      fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}.json`,
           {
               method: "POST",
               headers: {
@@ -125,7 +125,7 @@ const handleDeleteClick = (dataId) => {
 };
 
 const deleteEmail = (dataId) => {
-  fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}/${dataId}.json`, {
+  fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}/${dataId}.json`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -156,27 +156,51 @@ const deleteEmail = (dataId) => {
 
   const handleSaveDraftClick = () => {
 
-    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}/${dataId}.json`, {
-      method: 'GET',
+    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/draft/${userName}/${dataId}.json`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setTo(data.to);
-        setCCBCCOption(data.ccBccOption);
-        setCcBccValue(data.ccBccValue);
-        setSubject(data.subject);
-        setMessage(data.message);
-      })
-      .catch((error) => {
-        console.error('Error fetching draft:', error);
-      });
-
-
-    console.log('Saving email as draft');
-
+      body: JSON.stringify({
+                  to,
+                  ccBccOption,
+                  ccBccValue,
+                  subject,
+                  message,
+              })
+    }).then(
+              (response) => {
+                  return response.json();
+              }
+      ).then(
+          (data) => {
+              if (data.hasOwnProperty("error")) {
+                  console.log("error : ", data.error.message);
+                  alert(data.error.message);
+                  setTo("");
+                setCCBCCOption("");
+                setCcBccValue("");
+                  setSubject("");
+                  setMessage("");
+              } else {
+                  alert("Message added in the draft successfully!");
+                  setTo("");
+                  setCCBCCOption("");
+                setCcBccValue("");
+                  setSubject("");
+                  setMessage("");
+                console.log("draft data sent to firebase : ", data);
+                localStorage.setItem("dataId", data.name);
+                  // localStorage.removeItem("email");
+                  // localStorage.removeItem("token");
+              }
+            }
+      ).catch(
+          (error) => {
+              console.log("error: ", error);
+              }
+          )
+      
   //   fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}/${dataId}.json`, {
   //     method: "PUT",
   //     headers: {

@@ -32,7 +32,7 @@ export const MessageContextProvider = ({ children }) => {
       useEffect(() => {
     // Fetch sent messages data here and set it in sentMessages state
     const userName = localStorage.getItem('userName');
-    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/${userName}.json`, {
+    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}.json`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
