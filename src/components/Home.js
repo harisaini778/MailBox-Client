@@ -6,6 +6,7 @@ import { BsList } from "react-icons/bs";
 import Mail from "./Mail";
 import { useNavigate } from "react-router-dom";
 import { useMessageContext } from "./MessageContextProvider";
+import "./Home.css"
 
 
 const Home = () => {
@@ -106,37 +107,37 @@ const Home = () => {
                                             </div>
                                         </Container>
                                         <Stack gap={4}>
-                                            <Stack direction="horizontal">
+                                            <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1" onClick={ctx.inboxMessagesDisplayHandler}
                                                 >Inbox</div>
                                                 <Badge className="ms-auto m-1">{inboxCount}</Badge>
                                             </Stack>
-                                            <Stack direction="horizontal">
+                                            <Stack direction="horizontal"  className="menu-item">
                                                 <div className="me-auto m-1">Unread</div>
                                                 <Badge className="ms-auto m-1">0</Badge>
                                             </Stack>
-                                            <Stack direction="horizontal">
+                                            <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1"
                                                 onClick={ctx.starMessagesDisplayHandler}>Starred</div>
                                                 <Badge className="ms-auto m-1">{starredCount}</Badge>
                                             </Stack>
-                                            <Stack direction="horizontal">
+                                            <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1" onClick={ctx.draftMessagesDisplayHandler}>Drafts</div>
                                                 <Badge className="ms-auto m-1">{draftCount}</Badge>
                                             </Stack>
-                                            <Stack direction="horizontal">
+                                            <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1" onClick={ctx.sentMessagesDisplayHandler}>Sent</div>
                                                 <Badge className="ms-auto m-1">{sentCount}</Badge>
                                             </Stack>
-                                            <Stack direction="horizontal">
+                                            <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1" onClick={ctx.acrhieveMessagesDisplayHandler}>Archieve</div>
                                                 <Badge className="ms-auto m-1">{archieveCount}</Badge>
                                             </Stack>
-                                            <Stack direction="horizontal">
+                                            <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1"  onClick={ctx.spamMessagesDisplayHandler}>Spam</div>
                                                 <Badge className="ms-auto m-1">{spamCount}</Badge>
                                             </Stack>
-                                            <Stack direction="horizontal">
+                                            <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1" onClick={ctx.deletedMessagesDisplayHandler}>Deleted Items</div>
                                                 <Badge className="ms-auto m-1">{deletedCount}</Badge>
                                             </Stack>
@@ -213,38 +214,38 @@ const Home = () => {
                                     </div>
                                 </Container>
                                 <Stack gap={4}>
-                                    <Stack direction="horizontal">
+                                    <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1" onClick={ctx.inboxMessagesDisplayHandler}
                                         >
                                             Inbox</div>
                                         <Badge className="ms-auto m-1">{inboxCount }</Badge>
                                     </Stack>
-                                    <Stack direction="horizontal">
+                                    <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1">Unread</div>
                                         <Badge className="ms-auto m-1">0</Badge>
                                     </Stack>
-                                    <Stack direction="horizontal">
+                                    <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1" onClick={ctx.starMessagesDisplayHandler}
                                         >Starred</div>
                                         <Badge className="ms-auto m-1">{starredCount}</Badge>
                                     </Stack>
-                                    <Stack direction="horizontal">
+                                    <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1" onClick={ctx.draftMessagesDisplayHandler}>Drafts</div>
                                         <Badge className="ms-auto m-1">{draftCount}</Badge>
                                     </Stack>
-                                    <Stack direction="horizontal">
+                                    <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1" onClick={ctx.sentMessagesDisplayHandler}>Sent</div>
                                         <Badge className="ms-auto m-1">{sentCount}</Badge>
                                     </Stack>
-                                    <Stack direction="horizontal">
+                                    <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1"  onClick={ctx.acrhieveMessagesDisplayHandler}>Archieve</div>
                                         <Badge className="ms-auto m-1">{archieveCount}</Badge>
                                     </Stack>
-                                    <Stack direction="horizontal">
+                                    <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1" onClick={ctx.spamMessagesDisplayHandler}>Spam</div>
                                         <Badge className="ms-auto m-1">{spamCount}</Badge>
                                     </Stack>
-                                    <Stack direction="horizontal">
+                                    <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1" onClick={ctx.deletedMessagesDisplayHandler}>Deleted Items</div>
                                         <Badge className="ms-auto m-1">{deletedCount}</Badge>
                                     </Stack>
