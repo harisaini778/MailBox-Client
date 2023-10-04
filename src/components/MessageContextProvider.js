@@ -28,6 +28,7 @@ export const MessageContextProvider = ({ children }) => {
   const [archieveIsClicked, setArchieveIsClicked] = useState(false);
   const [sentIsClicked, setSentIsClicked] = useState(false);
   const [draftIsClicked, setDraftIsClicked] = useState(false);
+    const [isMessageDetailOpen, setIsMessageDetailOpen] = useState(false);
 
 
 
@@ -223,7 +224,13 @@ const deletedMessagesHandler = (id) => {
     );
   };
   
+const openMessageDetail = () => {
+    setIsMessageDetailOpen(true);
+  };
 
+  const closeMessageDetail = () => {
+    setIsMessageDetailOpen(false);
+  };
 
  
 
@@ -242,6 +249,7 @@ const deletedMessagesHandler = (id) => {
     archieveIsClicked,
     sentIsClicked,
       draftIsClicked,
+      isMessageDetailOpen,
       starMessagesDisplayHandler,
       deletedMessagesDisplayHandler,
       spamMessagesDisplayHandler,
@@ -255,6 +263,8 @@ const deletedMessagesHandler = (id) => {
     deletedMessagesHandler,
     toggleStarredHandler,
     archieveMessagesHandler,
+    openMessageDetail,
+    closeMessageDetail,
   };
 
   return (

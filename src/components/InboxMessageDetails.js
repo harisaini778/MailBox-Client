@@ -4,16 +4,17 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useMessageContext } from "./MessageContextProvider";
 import "./InboxMessageDetail.css"; // Import your custom CSS file for styling
 
+
 const InboxMessageDetails = ({ messageId }) => {
   const ctx = useMessageContext();
-  const message = ctx.messages.find((msg) => msg.id === messageId);
+    const message = ctx.messages.find((msg) => msg.id === messageId);
 
   if (!message) {
     return null; // Message not found, handle this case as needed
   }
 
   const handleBackClick = () => {
-    ctx.closeMessageDetail(); // Implement a function in your context to close the message detail view
+      ctx.closeMessageDetail();
   };
 
   return (

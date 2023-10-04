@@ -1,80 +1,79 @@
-import React, { useState,useEffect } from "react";
-import { ListGroup, Container, Row, Col} from "react-bootstrap";
-import { FaStar, FaRegStar } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import { useMessageContext } from "./MessageContextProvider";
-import OverlayDetails from "./Overlay";
+import { FaStar, FaRegStar } from "react-icons/fa"; // Import your icons
+import OverlayDetails from "./Overlay"; // Import your Overlay component
 import "./InboxContent.css";
+import InboxMessageDetails from "./InboxMessageDetails";
 
 const InboxContent = () => {
-
-  const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const [listIsClicked, setListIsClicked] = useState(false);
   const ctx = useMessageContext();
+  const messages = ctx.messages; // Assuming messages are available from the context
 
-  
-  
+  const handleListItemClick = (messageId) => {
+    setSelectedMessageId(messageId);
+    setListIsClicked((prevState) => !prevState);
+  };
 
-  const message = ctx.messages;
-
-    useEffect(() => {
-    const handleResize = () => {
-      setIsSmaller(window.innerWidth <= 576);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-    }, []);
-
-  
   return (
     <Container className="mt-3">
-      <ListGroup>
-        {message.map((message) => (
-          <ListGroup.Item key={message.id} className={message.unread ? 'unread' : ''}>
+            {selectedMessageId && <InboxMessageDetails messageId={selectedMessageId} />}
+      {!listIsClicked && <ListGroup>
+        {messages.map((message) => (
+          <ListGroup.Item
+            key={message.id}
+            className={message.unread ? "unread" : ""}
+            onClick={() => handleListItemClick(message.id)}
+          >
             <Row>
               <Col xs={1}>
                 <input type="checkbox" />
               </Col>
-              <Col xs={1} onClick={() => ctx.toggleStarredHandler(message.id)}>
-                {message.starred ? <FaStar /> : <FaRegStar />}
+              <Col xs={1}>
+                {message.starred ? (
+                  <FaStar className="starred-icon" />
+                ) : (
+                  <FaRegStar className="starred-icon" />
+                )}
               </Col>
               <Col className="truncate-text">
-                <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>{message.sender}</h>
+                <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>
+                  {message.sender}
+                </h>
               </Col>
-
               <Col className="truncate-text">
-                <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>{message.subject}</h>
+                <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>
+                  {message.subject}
+                </h>
               </Col>
-             
-              {!isSmaller && <Col className="truncate-text">
-                {message.body}
-              </Col>}
-
-             { !isSmaller && <Col>
-              {new Date(message.date).toLocaleTimeString([], {
-               hour: "2-digit",
-               minute: "2-digit",
-               })}
-              </Col>}
-
-
-              {!isSmaller && <Col>
-                {message.labels.map((label) => (
-                  <span key={label} className="label">{label}</span>
-                ))}
-              </Col>}
-
+              {/* Add more columns or information as needed */}
               <Col>
+                {/* Example: Display message date */}
+                {new Date(message.date).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </Col>
+              <Col>
+                {/* Example: Display message labels */}
+                {message.labels.map((label) => (
+                  <span key={label} className="label">
+                    {label}
+                  </span>
+                ))}
+              </Col>
+              <Col>
+                {/* Example: Display overlay button */}
                 <OverlayDetails messageId={message.id} />
               </Col>
             </Row>
           </ListGroup.Item>
         ))}
-      </ListGroup>
+      </ListGroup>}
     </Container>
   );
 };
 
-    export default InboxContent;
+export default InboxContent;
