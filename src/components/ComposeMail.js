@@ -156,7 +156,7 @@ const deleteEmail = (dataId) => {
 
   const handleSaveDraftClick = () => {
 
-    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/draft/${userName}/${dataId}.json`, {
+    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/draft/${userName}.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

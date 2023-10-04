@@ -10,7 +10,7 @@ import { useMessageContext } from "./MessageContextProvider";
 import SpamMessages from "./SpamMessages";
 import ArchieveMessages from "./ArchieveMessages";
 import SentMessages from "./SentMessages";
-
+import DraftMessages from "./DraftMessages";
 
 const Inbox = () => {
 
@@ -64,7 +64,8 @@ const Inbox = () => {
         {ctx.deletedIsClicked && <DeletedMessages />}
         {ctx.spamIsClicked && <SpamMessages />}
         {ctx.archieveIsClicked && <ArchieveMessages />}
-        {ctx.sentIsClicked && <SentMessages/>}
+        {ctx.sentIsClicked && <SentMessages />}
+        {ctx.draftIsClicked && <DraftMessages/>}
     </div>);
 
 }

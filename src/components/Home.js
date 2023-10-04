@@ -29,6 +29,8 @@ const Home = () => {
     const archieveCount = archieve.length;
     const sent = Object.values(ctx.sentMessages);
     const sentCount = sent.length;
+    const draft = Object.values(ctx.savedDraftMessages);
+    const draftCount = draft.length;
 
 
     useEffect(() => {
@@ -119,8 +121,8 @@ const Home = () => {
                                                 <Badge className="ms-auto m-1">{starredCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
-                                                <div className="me-auto m-1">Drafts</div>
-                                                <Badge className="ms-auto m-1">0</Badge>
+                                                <div className="me-auto m-1" onClick={ctx.draftMessagesDisplayHandler}>Drafts</div>
+                                                <Badge className="ms-auto m-1">{draftCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal">
                                                 <div className="me-auto m-1" onClick={ctx.sentMessagesDisplayHandler}>Sent</div>
@@ -227,8 +229,8 @@ const Home = () => {
                                         <Badge className="ms-auto m-1">{starredCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
-                                        <div className="me-auto m-1">Drafts</div>
-                                        <Badge className="ms-auto m-1">0</Badge>
+                                        <div className="me-auto m-1" onClick={ctx.draftMessagesDisplayHandler}>Drafts</div>
+                                        <Badge className="ms-auto m-1">{draftCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal">
                                         <div className="me-auto m-1" onClick={ctx.sentMessagesDisplayHandler}>Sent</div>

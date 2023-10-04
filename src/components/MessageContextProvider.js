@@ -105,11 +105,16 @@ export const MessageContextProvider = ({ children }) => {
   const inboxMessagesDisplayHandler = () => {
       setInboxIsClicked((prevState) => !prevState); 
     setStarredIsClicked(false);
-     setDeletedIsClicked(false);
+    setDeletedIsClicked(false);
+    setDraftIsClicked(false);
+    setArchieveIsClicked(false);
+    setSpamIsClicked(false);
+    setSentIsClicked(false);
   };
 
     const sentMessagesDisplayHandler = () => {
       setSentIsClicked((prevState) => !prevState); 
+      setDraftIsClicked(false);
     setStarredIsClicked(false);
       setDeletedIsClicked(false);
       setInboxIsClicked(false);
@@ -119,7 +124,8 @@ export const MessageContextProvider = ({ children }) => {
 
 
   const draftMessagesDisplayHandler = () => {
-    setDraftIsClicked((prevState) => !prevState);
+    
+      setDraftIsClicked((prevState) => !prevState); 
       setSentIsClicked(false); 
     setStarredIsClicked(false);
       setDeletedIsClicked(false);
@@ -228,18 +234,21 @@ const deletedMessagesHandler = (id) => {
     archieveMessages,
     spamMessages,
     sentMessages,
+    savedDraftMessages,
       starredIsClicked,
       deletedIsClicked,
       spamIsClicked,
     inboxIsClicked,
     archieveIsClicked,
-      sentIsClicked,
+    sentIsClicked,
+      draftIsClicked,
       starMessagesDisplayHandler,
       deletedMessagesDisplayHandler,
       spamMessagesDisplayHandler,
     inboxMessagesDisplayHandler,
     acrhieveMessagesDisplayHandler,
-      sentMessagesDisplayHandler,
+    sentMessagesDisplayHandler,
+      draftMessagesDisplayHandler,
     markAsReadHandler,
     markAsUnreadHandler,
     markAsSpamHandler,
