@@ -1,0 +1,23 @@
+/* MessageDetail.css */
+
+.message-detail {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+}
+
+.back-button {
+    margin-bottom: 10px;
+}
+
+.message-sender {
+    font-size: 14px;
+    color: #777;
+}
+
+.message-body {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
