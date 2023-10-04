@@ -16,6 +16,7 @@ export const MessageContextProvider = ({ children }) => {
   const [spamMessages, setSpamMessages] = useState([]);
   const [archieveMessages, setArchieveMessages] = useState([]);
   const [sentMessages, setSentMessages] = useState([]);
+  const [savedDraftMessages, setSavedDraftMessages] = useState([]);
 
 
 
@@ -25,7 +26,8 @@ export const MessageContextProvider = ({ children }) => {
     const [spamIsClicked, setSpamIsClicked] = useState(false);
     const [inboxIsClicked, setInboxIsClicked] = useState(true);
   const [archieveIsClicked, setArchieveIsClicked] = useState(false);
-    const [sentIsClicked, setSentIsClicked] = useState(false);
+  const [sentIsClicked, setSentIsClicked] = useState(false);
+  const [draftIsClicked, setDraftIsClicked] = useState(false);
 
 
 
@@ -43,6 +45,27 @@ export const MessageContextProvider = ({ children }) => {
         console.log('sent message data is: ', data);
         if (data) {
           setSentMessages(data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+       useEffect(() => {
+    // Fetch sent messages data here and set it in sentMessages state
+    const userName = localStorage.getItem('userName');
+    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/draft/${userName}.json`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('draft message data is: ', data);
+        if (data) {
+          setSavedDraftMessages(data);
         }
       })
       .catch((error) => {
@@ -87,6 +110,17 @@ export const MessageContextProvider = ({ children }) => {
 
     const sentMessagesDisplayHandler = () => {
       setSentIsClicked((prevState) => !prevState); 
+    setStarredIsClicked(false);
+      setDeletedIsClicked(false);
+      setInboxIsClicked(false);
+    setArchieveIsClicked(false);
+    setSpamIsClicked(false);
+  };
+
+
+  const draftMessagesDisplayHandler = () => {
+    setDraftIsClicked((prevState) => !prevState);
+      setSentIsClicked(false); 
     setStarredIsClicked(false);
       setDeletedIsClicked(false);
       setInboxIsClicked(false);
