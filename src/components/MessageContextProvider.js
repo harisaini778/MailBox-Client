@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState,useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import messages from "./Messages";
 
 const MessageContext = createContext();
@@ -8,8 +8,6 @@ export const useMessageContext = () => {
 };
 
 export const MessageContextProvider = ({ children }) => {
-
-
   const [allMessages, setAllMessages] = useState([...messages]);
   const [starredMessages, setStarredMessages] = useState([]);
   const [deletedMessages, setDeletedMessages] = useState([]);
@@ -18,252 +16,131 @@ export const MessageContextProvider = ({ children }) => {
   const [sentMessages, setSentMessages] = useState([]);
   const [savedDraftMessages, setSavedDraftMessages] = useState([]);
   const [unreadMessages, setUnReadMessages] = useState([]);
-
-
-
-
-    const [starredIsClicked, setStarredIsClicked] = useState(false);
-    const [deletedIsClicked, setDeletedIsClicked] = useState(false);
-    const [spamIsClicked, setSpamIsClicked] = useState(false);
-    const [inboxIsClicked, setInboxIsClicked] = useState(true);
+  const [starredIsClicked, setStarredIsClicked] = useState(false);
+  const [deletedIsClicked, setDeletedIsClicked] = useState(false);
+  const [spamIsClicked, setSpamIsClicked] = useState(false);
+  const [inboxIsClicked, setInboxIsClicked] = useState(true);
   const [archieveIsClicked, setArchieveIsClicked] = useState(false);
   const [sentIsClicked, setSentIsClicked] = useState(false);
   const [draftIsClicked, setDraftIsClicked] = useState(false);
   const [isMessageDetailOpen, setIsMessageDetailOpen] = useState(false);
   const [unreadIsClicked, setUnreadIsClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-
-
-      useEffect(() => {
-    // Fetch sent messages data here and set it in sentMessages state
+  useEffect(() => {
     const userName = localStorage.getItem('userName');
-    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}.json`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}.json`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
         console.log('sent message data is: ', data);
         if (data) {
           setSentMessages(data);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error);
-      });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
-       useEffect(() => {
-    // Fetch sent messages data here and set it in sentMessages state
+  useEffect(() => {
     const userName = localStorage.getItem('userName');
-    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/draft/${userName}.json`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/draft/${userName}.json`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
         console.log('draft message data is: ', data);
         if (data) {
           setSavedDraftMessages(data);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error);
-      });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
-
-  const acrhieveMessagesDisplayHandler = () => {
-    setArchieveIsClicked((prevState) => !prevState);
-    setInboxIsClicked(false); 
+  const resetAllClickStates = () => {
+    setInboxIsClicked(false);
     setIsMessageDetailOpen(false);
     setStarredIsClicked(false);
-    setDeletedIsClicked(false);
-    setDraftIsClicked(false);
-    setSpamIsClicked(false);
-    setSentIsClicked(false);
-  }
-  
-  const starMessagesDisplayHandler = () => {
-        
-    setStarredIsClicked((prevState)=>!prevState);
-    setInboxIsClicked(false); 
-    setIsMessageDetailOpen(false);
     setDeletedIsClicked(false);
     setDraftIsClicked(false);
     setArchieveIsClicked(false);
     setSpamIsClicked(false);
     setSentIsClicked(false);
+    setUnreadIsClicked(false);
   };
 
-  const deletedMessagesDisplayHandler = () => {
-    setDeletedIsClicked((prevState)=>!prevState);
-    setInboxIsClicked(false); 
-    setIsMessageDetailOpen(false);
-    setStarredIsClicked(false);
-    setDraftIsClicked(false);
-    setArchieveIsClicked(false);
-    setSpamIsClicked(false);
-    setSentIsClicked(false);
+  const toggleDisplayHandler = (stateSetter) => {
+    resetAllClickStates();
+    stateSetter(true);
   };
-
-  const spamMessagesDisplayHandler = () => {
-    setSpamIsClicked((prevState)=>!prevState);
-    setInboxIsClicked(false); 
-    setIsMessageDetailOpen(false);
-    setStarredIsClicked(false);
-    setDeletedIsClicked(false);
-    setDraftIsClicked(false);
-    setArchieveIsClicked(false);
-    setSentIsClicked(false);
-    
-  };
-
-  const inboxMessagesDisplayHandler = () => {
-    setInboxIsClicked((prevState) => !prevState); 
-    setIsMessageDetailOpen(false);
-    setStarredIsClicked(false);
-    setDeletedIsClicked(false);
-    setDraftIsClicked(false);
-    setArchieveIsClicked(false);
-    setSpamIsClicked(false);
-    setSentIsClicked(false);
-  };
-
-  const sentMessagesDisplayHandler = () => {
-    setSentIsClicked((prevState)=>!prevState);
-    setInboxIsClicked(false); 
-    setIsMessageDetailOpen(false);
-    setStarredIsClicked(false);
-    setDeletedIsClicked(false);
-    setDraftIsClicked(false);
-    setArchieveIsClicked(false);
-    setSpamIsClicked(false);
-  };
-
-
-  const draftMessagesDisplayHandler = () => {
-
-    setDraftIsClicked((prevState)=>!prevState);
-    setInboxIsClicked(false); 
-    setIsMessageDetailOpen(false);
-    setStarredIsClicked(false);
-    setDeletedIsClicked(false);
-    setArchieveIsClicked(false);
-    setSpamIsClicked(false);
-    setSentIsClicked(false);
-  };
-
-  const unreadMessagesDisplayHandler =  () => {
-    
-    setUnreadIsClicked((prevState) => !prevState);
-    setDraftIsClicked(false);
-    setInboxIsClicked(false); 
-    setIsMessageDetailOpen(false);
-    setStarredIsClicked(false);
-    setDeletedIsClicked(false);
-    setArchieveIsClicked(false);
-    setSpamIsClicked(false);
-    setSentIsClicked(false);
-  }
-
-const archieveMessagesHandler = (id) => {
-  const archieves = allMessages.find((message) => message.id === id);
-
-  if (archieves) {
-    setArchieveMessages((prevArchieveMessages) => [
-      ...prevArchieveMessages,
-      archieves, 
-    ]);
-
-    setAllMessages((prevMessages) => {
-      const updatedMessages = prevMessages.filter((message) => message.id !== id);
-      return updatedMessages;
-    });
-  }
-};
-
 
   const toggleStarredHandler = (id) => {
-  setAllMessages((prevMessages) =>
-    prevMessages.map((message) => {
-      if (message.id === id) {
-        const updatedMessage = { ...message, starred: !message.starred };
-
-        if (updatedMessage.starred) {
-          setStarredMessages((prevStarredMessages) => [
-            ...prevStarredMessages,
-            updatedMessage,
-          ]);
-        } else {
-          setStarredMessages((prevStarredMessages) =>
-            prevStarredMessages.filter((msg) => msg.id !== id)
-          );
+    setAllMessages((prevMessages) => {
+      const updatedMessages = prevMessages.map((message) => {
+        if (message.id === id) {
+          const updatedMessage = { ...message, starred: !message.starred };
+          if (updatedMessage.starred) {
+            setStarredMessages((prevStarredMessages) => [...prevStarredMessages, updatedMessage]);
+          } else {
+            setStarredMessages((prevStarredMessages) => prevStarredMessages.filter((msg) => msg.id !== id));
+          }
+          return updatedMessage;
         }
+        return message;
+      });
+      return updatedMessages;
+    });
+  };
 
-        return updatedMessage;
-      }
-      return message;
-    })
-  );
-};
-
-const deletedMessagesHandler = (id) => {
-  setAllMessages((prevMessages) =>
-    prevMessages.filter((message) => message.id !== id)
-  );
-
-  // Remove the deleted message from starredMessages if it exists
-  setStarredMessages((prevStarredMessages) =>
-    prevStarredMessages.filter((msg) => msg.id !== id)
-  );
-
-  // Add the deleted message to deletedMessages if it exists
-  const deletedMessage = allMessages.find((message) => message.id === id);
-  if (deletedMessage) {
-    setDeletedMessages((prevDeletedMessages) => [
-      ...prevDeletedMessages,
-      deletedMessage,
-    ]);
-  }
-};
+  const deletedMessagesHandler = (id) => {
+    setAllMessages((prevMessages) => prevMessages.filter((message) => message.id !== id));
+    setStarredMessages((prevStarredMessages) => prevStarredMessages.filter((msg) => msg.id !== id));
+    const deletedMessage = allMessages.find((message) => message.id === id);
+    if (deletedMessage) {
+      setDeletedMessages((prevDeletedMessages) => [...prevDeletedMessages, deletedMessage]);
+    }
+  };
 
   const markAsSpamHandler = (id) => {
     const spamMessage = allMessages.find((message) => message.id === id);
-
     if (spamMessage) {
-      setAllMessages((prevMessages) =>
-        prevMessages.filter((message) => message.id !== id)
-      );
+      setAllMessages((prevMessages) => prevMessages.filter((message) => message.id !== id));
       setSpamMessages((prevSpamMessages) => [...prevSpamMessages, spamMessage]);
     }
   };
 
   const markAsReadHandler = (id) => {
     setAllMessages((prevMessages) =>
-      prevMessages.map((message) =>
-        message.id === id ? { ...message, unread: true } : message
-      )
+      prevMessages.map((message) => (message.id === id ? { ...message, unread: true } : message))
     );
   };
 
-  const markAsUnreadHandler = (id) => {
-    const allUnread = allMessages.find((message) => message.id === id);
-    if (allUnread) {
-      setUnReadMessages(allUnread);
-    }
-  };
-  
-const messageDetailDisplayHandler = () => {
-    setIsMessageDetailOpen((prevState)=>!prevState);
-  };
+  useEffect(() => {
+    const unreadMessages = allMessages.filter((message) => !message.unread);
+    setUnReadMessages(unreadMessages);
+  }, [allMessages]);
 
-
- 
+  const messageDetailDisplayHandler = () => {
+    setIsMessageDetailOpen((prevState) => !prevState);
+  };
 
   const contextValue = {
     messages: allMessages,
@@ -274,36 +151,41 @@ const messageDetailDisplayHandler = () => {
     sentMessages,
     savedDraftMessages,
     unreadMessages,
-      starredIsClicked,
-      deletedIsClicked,
-      spamIsClicked,
+    starredIsClicked,
+    deletedIsClicked,
+    spamIsClicked,
     inboxIsClicked,
     archieveIsClicked,
     sentIsClicked,
-      draftIsClicked,
+    draftIsClicked,
     isMessageDetailOpen,
-      unreadIsClicked,
+    unreadIsClicked,
     setInboxIsClicked,
-      unreadMessagesDisplayHandler,
-      starMessagesDisplayHandler,
-      deletedMessagesDisplayHandler,
-      spamMessagesDisplayHandler,
-    inboxMessagesDisplayHandler,
-    acrhieveMessagesDisplayHandler,
-    sentMessagesDisplayHandler,
-      draftMessagesDisplayHandler,
+    unreadMessagesDisplayHandler: () => toggleDisplayHandler(setUnreadIsClicked),
+    starMessagesDisplayHandler: () => toggleDisplayHandler(setStarredIsClicked),
+    deletedMessagesDisplayHandler: () => toggleDisplayHandler(setDeletedIsClicked),
+    spamMessagesDisplayHandler: () => toggleDisplayHandler(setSpamIsClicked),
+    inboxMessagesDisplayHandler: () => toggleDisplayHandler(setInboxIsClicked),
+    acrhieveMessagesDisplayHandler: () => toggleDisplayHandler(setArchieveIsClicked),
+    sentMessagesDisplayHandler: () => toggleDisplayHandler(setSentIsClicked),
+    draftMessagesDisplayHandler: () => toggleDisplayHandler(setDraftIsClicked),
     markAsReadHandler,
-    markAsUnreadHandler,
     markAsSpamHandler,
     deletedMessagesHandler,
     toggleStarredHandler,
-    archieveMessagesHandler,
+    archieveMessagesHandler: (id) => {
+      const archieves = allMessages.find((message) => message.id === id);
+      if (archieves) {
+        setArchieveMessages((prevArchieveMessages) => [...prevArchieveMessages, archieves]);
+        setAllMessages((prevMessages) => prevMessages.filter((message) => message.id !== id));
+      }
+    },
     messageDetailDisplayHandler,
   };
 
   return (
     <MessageContext.Provider value={contextValue}>
-      {children}
+      {isLoading ? <div>Loading...</div> : children}
     </MessageContext.Provider>
   );
 };

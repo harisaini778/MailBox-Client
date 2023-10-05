@@ -35,6 +35,37 @@ const Home = () => {
     const unread = ctx.unreadMessages;
     const unreadCount = unread.length;
 
+    const inboxDisplayHandler = () => {
+        ctx.inboxMessagesDisplayHandler();
+    }
+
+    const unreadDisplayHandler = () => {
+        ctx.unreadMessagesDisplayHandler();
+    }
+
+    const starDisplayHandler = () => {
+        ctx.starMessagesDisplayHandler();
+    }
+
+    const draftDisplayHandler = () => {
+        ctx.draftMessagesDisplayHandler();
+    }
+
+    const sentDisplayHandler = () => {
+        ctx.sentMessagesDisplayHandler();
+    }
+
+    const archieveDisplayHandler = () => {
+        ctx.acrhieveMessagesDisplayHandler();
+    }
+
+    const spamDisplayHandler = () => {
+        ctx.spamMessagesDisplayHandler();
+    }
+
+    const deleteDisplayHandler = () => {
+        ctx.deletedMessagesDisplayHandler();
+    }
 
     useEffect(() => {
     const handleResize = () => {
@@ -110,37 +141,37 @@ const Home = () => {
                                         </Container>
                                         <Stack gap={4}>
                                             <Stack direction="horizontal" className="menu-item">
-                                                <div className="me-auto m-1" onClick={ctx.inboxMessagesDisplayHandler}
+                                                <div className="me-auto m-1" onClick={inboxDisplayHandler}
                                                 >Inbox</div>
                                                 <Badge className="ms-auto m-1">{inboxCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal"  className="menu-item">
-                                                <div className="me-auto m-1" onClick={ctx.unreadMessagesDisplayHandler} >Unread</div>
+                                                <div className="me-auto m-1" onClick={unreadDisplayHandler} >Unread</div>
                                                 <Badge className="ms-auto m-1">{unreadCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1"
-                                                onClick={ctx.starMessagesDisplayHandler}>Starred</div>
+                                                onClick={starDisplayHandler}>Starred</div>
                                                 <Badge className="ms-auto m-1">{starredCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal" className="menu-item">
-                                                <div className="me-auto m-1" onClick={ctx.draftMessagesDisplayHandler}>Drafts</div>
+                                                <div className="me-auto m-1" onClick={draftDisplayHandler}>Drafts</div>
                                                 <Badge className="ms-auto m-1">{draftCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal" className="menu-item">
-                                                <div className="me-auto m-1" onClick={ctx.sentMessagesDisplayHandler}>Sent</div>
+                                                <div className="me-auto m-1" onClick={sentDisplayHandler}>Sent</div>
                                                 <Badge className="ms-auto m-1">{sentCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal" className="menu-item">
-                                                <div className="me-auto m-1" onClick={ctx.acrhieveMessagesDisplayHandler}>Archieve</div>
+                                                <div className="me-auto m-1" onClick={archieveDisplayHandler}>Archieve</div>
                                                 <Badge className="ms-auto m-1">{archieveCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal" className="menu-item">
-                                                <div className="me-auto m-1"  onClick={ctx.spamMessagesDisplayHandler}>Spam</div>
+                                                <div className="me-auto m-1"  onClick={spamDisplayHandler}>Spam</div>
                                                 <Badge className="ms-auto m-1">{spamCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal" className="menu-item">
-                                                <div className="me-auto m-1" onClick={ctx.deletedMessagesDisplayHandler}>Deleted Items</div>
+                                                <div className="me-auto m-1" onClick={deleteDisplayHandler}>Deleted Items</div>
                                                 <Badge className="ms-auto m-1">{deletedCount}</Badge>
                                             </Stack>
                                         </Stack>
@@ -217,38 +248,38 @@ const Home = () => {
                                 </Container>
                                 <Stack gap={4}>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1" onClick={ctx.inboxMessagesDisplayHandler}
+                                        <div className="me-auto m-1" onClick={inboxDisplayHandler}
                                         >
                                             Inbox</div>
                                         <Badge className="ms-auto m-1">{inboxCount }</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1" onClick={ctx.unreadMessagesDisplayHandler} >Unread</div>
+                                        <div className="me-auto m-1" onClick={unreadDisplayHandler}  >Unread</div>
                                         <Badge className="ms-auto m-1">{unreadCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1" onClick={ctx.starMessagesDisplayHandler}
+                                        <div className="me-auto m-1" onClick={starDisplayHandler}
                                         >Starred</div>
                                         <Badge className="ms-auto m-1">{starredCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1" onClick={ctx.draftMessagesDisplayHandler}>Drafts</div>
+                                        <div className="me-auto m-1" onClick={draftDisplayHandler}>Drafts</div>
                                         <Badge className="ms-auto m-1">{draftCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1" onClick={ctx.sentMessagesDisplayHandler}>Sent</div>
+                                        <div className="me-auto m-1" onClick={sentDisplayHandler}>Sent</div>
                                         <Badge className="ms-auto m-1">{sentCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1"  onClick={ctx.acrhieveMessagesDisplayHandler}>Archieve</div>
+                                        <div className="me-auto m-1"  onClick={archieveDisplayHandler}>Archieve</div>
                                         <Badge className="ms-auto m-1">{archieveCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1" onClick={ctx.spamMessagesDisplayHandler}>Spam</div>
+                                        <div className="me-auto m-1" onClick={spamDisplayHandler}>Spam</div>
                                         <Badge className="ms-auto m-1">{spamCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1" onClick={ctx.deletedMessagesDisplayHandler}>Deleted Items</div>
+                                        <div className="me-auto m-1" onClick={deleteDisplayHandler}>Deleted Items</div>
                                         <Badge className="ms-auto m-1">{deletedCount}</Badge>
                                     </Stack>
                                 </Stack>

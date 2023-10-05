@@ -11,6 +11,7 @@ import SpamMessages from "./SpamMessages";
 import ArchieveMessages from "./ArchieveMessages";
 import SentMessages from "./SentMessages";
 import DraftMessages from "./DraftMessages";
+import UnreadMessages from "./UnreadMessgaes";
 
 const Inbox = () => {
 
@@ -65,7 +66,8 @@ const Inbox = () => {
         {ctx.spamIsClicked && <SpamMessages />}
         {ctx.archieveIsClicked && <ArchieveMessages />}
         {ctx.sentIsClicked && <SentMessages />}
-        {ctx.draftIsClicked && <DraftMessages/>}
+        {ctx.draftIsClicked && <DraftMessages />}
+        {ctx.unreadIsClicked && <UnreadMessages/>}
     </div>);
 
 }
