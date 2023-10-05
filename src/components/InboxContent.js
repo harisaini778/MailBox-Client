@@ -1,80 +1,96 @@
 import React, { useState, useEffect } from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import { useMessageContext } from "./MessageContextProvider";
-import { FaStar, FaRegStar } from "react-icons/fa"; // Import your icons
-import OverlayDetails from "./Overlay"; // Import your Overlay component
+import { FaStar, FaRegStar } from "react-icons/fa"; 
+import OverlayDetails from "./Overlay"; 
 import "./InboxContent.css";
 import InboxMessageDetails from "./InboxMessageDetails";
 
+
 const InboxContent = () => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
- // const [listIsClicked, setListIsClicked] = useState(false);
   const ctx = useMessageContext();
-  const messages = ctx.messages; // Assuming messages are available from the context
+  const messages = ctx.messages; 
 
   const handleListItemClick = (messageId) => {
     setSelectedMessageId(messageId);
-    //setListIsClicked((prevState) => !prevState);
     ctx.messageDetailDisplayHandler();
+  };
+
+  const toggleStar = (messageId, event) => {
+    event.stopPropagation(); 
+    ctx.toggleStarredHandler(messageId);
+  };
+
+  const preventListGroupClick = (event) => {
+    event.stopPropagation(); 
   };
 
   return (
     <Container className="mt-3">
-            {selectedMessageId && ctx.isMessageDetailOpen && <InboxMessageDetails messageId={selectedMessageId} />}
-      {!ctx.isMessageDetailOpen && <ListGroup>
-        {messages.map((message) => (
-          <ListGroup.Item
-            key={message.id}
-            className={message.unread ? "unread" : ""}
-            onClick={() => handleListItemClick(message.id)}
-          >
-            <Row>
-              <Col xs={1}>
-                <input type="checkbox" />
-              </Col>
-              <Col xs={1}>
-                {message.starred ? (
-                  <FaStar className="starred-icon" onClick={() => ctx.toggleStarredHandler(message.id)}/>
-                ) : (
-                  <FaRegStar className="starred-icon" />
-                )}
-              </Col>
-              <Col className="truncate-text">
-                <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>
-                  {message.sender}
-                </h>
-              </Col>
-              <Col className="truncate-text">
-                <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>
-                  {message.subject}
-                </h>
-              </Col>
-              {/* Add more columns or information as needed */}
-              <Col>
-                {/* Example: Display message date */}
-                {new Date(message.date).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </Col>
-              <Col>
-                {/* Example: Display message labels */}
-                {message.labels.map((label) => (
-                  <span key={label} className="label">
-                    {label}
-                  </span>
-                ))}
-              </Col>
-              <Col>
-                {/* Example: Display overlay button */}
-                <OverlayDetails messageId={message.id} />
-              </Col>
-            </Row>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>}
+      {selectedMessageId && ctx.isMessageDetailOpen && (
+        <InboxMessageDetails messageId={selectedMessageId} />
+      )}
+      {!ctx.isMessageDetailOpen && (
+        <ListGroup className="message-list" >
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={message.unread ? "unread list-item" : "list-item"}
+              onClick={() => handleListItemClick(message.id)}
+            >
+              <Row>
+                <Col xs={1}>
+                  <input type="checkbox" />
+                </Col>
+                <Col xs={1}>
+                  <div
+                    onClick={(event) => toggleStar(message.id, event)}
+                    className="star-icon-container"
+                  >
+                    {message.starred ? (
+                      <FaStar className="starred-icon" />
+                    ) : (
+                      <FaRegStar className="starred-icon" />
+                    )}
+                  </div>
+                </Col>
+                <Col className="truncate-text">
+                  <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>
+                    {message.sender}
+                  </h>
+                </Col>
+                <Col className="truncate-text">
+                  <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>
+                    {message.subject}
+                  </h>
+                </Col>
+                <Col>
+                  {new Date(message.date).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </Col>
+                <Col>
+                  {message.labels.map((label) => (
+                    <span key={label} className="label">
+                      {label}
+                    </span>
+                  ))}
+                </Col>
+                <Col>
+                  <div onClick={(event)=>preventListGroupClick(event)}>
+                    <OverlayDetails messageId={message.id} />
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          ))}
+        </ListGroup>
+      )}
     </Container>
   );
 };
 
 export default InboxContent;
+

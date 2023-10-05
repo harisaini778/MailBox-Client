@@ -3,3 +3,28 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* Add these styles to your CSS file */
+.message-list {
+  border: 1px solid #ccc;
+  /* Add a border around the list */
+  padding: 10px;
+  /* Add padding to each list item */
+  margin: 10px;
+  /* Add margin between list items */
+}
+
+.list-item {
+    cursor: pointer;
+      /* Change cursor to pointer when hovering over list items */
+      border-bottom: 1px solid #ccc;
+      /* Add a border bottom to each list item */
+      padding: 5px;
+      margin : 5px;
+}
+
+.star-icon-container {
+  cursor: pointer;
+  /* Change cursor to pointer when hovering over the star icon */
+}
+
+/* Add any other custom styles as needed */
