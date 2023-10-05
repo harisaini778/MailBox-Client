@@ -8,9 +8,25 @@ import InboxMessageDetails from "./InboxMessageDetails";
 
 
 const InboxContent = () => {
+
+  const [isSmaller, setIsSmaller] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const ctx = useMessageContext();
   const messages = ctx.messages; 
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmaller(window.innerWidth <= 576);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+    }, []);
+    
 
   const handleListItemClick = (messageId) => {
     setSelectedMessageId(messageId);
@@ -25,6 +41,7 @@ const InboxContent = () => {
   const preventListGroupClick = (event) => {
     event.stopPropagation(); 
   };
+
 
   return (
     <Container className="mt-3">
@@ -43,7 +60,7 @@ const InboxContent = () => {
                 <Col xs={1}>
                   <input type="checkbox" />
                 </Col>
-                <Col xs={1}>
+                {!isSmaller && <Col xs={1}>
                   <div
                     onClick={(event) => toggleStar(message.id, event)}
                     className="star-icon-container"
@@ -54,7 +71,7 @@ const InboxContent = () => {
                       <FaRegStar className="starred-icon" />
                     )}
                   </div>
-                </Col>
+                </Col>}
                 <Col className="truncate-text">
                   <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>
                     {message.sender}
@@ -65,19 +82,19 @@ const InboxContent = () => {
                     {message.subject}
                   </h>
                 </Col>
-                <Col>
+                {!isSmaller && <Col>
                   {new Date(message.date).toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
                   })}
-                </Col>
-                <Col>
+                </Col>}
+                {!isSmaller && <Col>
                   {message.labels.map((label) => (
                     <span key={label} className="label">
                       {label}
                     </span>
                   ))}
-                </Col>
+                </Col>}
                 <Col>
                   <div onClick={(event)=>preventListGroupClick(event)}>
                     <OverlayDetails messageId={message.id} />
