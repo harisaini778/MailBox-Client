@@ -17,6 +17,7 @@ export const MessageContextProvider = ({ children }) => {
   const [archieveMessages, setArchieveMessages] = useState([]);
   const [sentMessages, setSentMessages] = useState([]);
   const [savedDraftMessages, setSavedDraftMessages] = useState([]);
+  const [unreadMessages, setUnReadMessages] = useState([]);
 
 
 
@@ -28,7 +29,8 @@ export const MessageContextProvider = ({ children }) => {
   const [archieveIsClicked, setArchieveIsClicked] = useState(false);
   const [sentIsClicked, setSentIsClicked] = useState(false);
   const [draftIsClicked, setDraftIsClicked] = useState(false);
-    const [isMessageDetailOpen, setIsMessageDetailOpen] = useState(false);
+  const [isMessageDetailOpen, setIsMessageDetailOpen] = useState(false);
+  const [unreadIsClicked, setUnreadIsClicked] = useState(false);
 
 
 
@@ -156,6 +158,18 @@ export const MessageContextProvider = ({ children }) => {
     setSentIsClicked(false);
   };
 
+  const unreadMessagesDisplayHandler =  () => {
+    
+    setUnreadIsClicked((prevState) => !prevState);
+    setDraftIsClicked(false);
+    setInboxIsClicked(false); 
+    setIsMessageDetailOpen(false);
+    setStarredIsClicked(false);
+    setDeletedIsClicked(false);
+    setArchieveIsClicked(false);
+    setSpamIsClicked(false);
+    setSentIsClicked(false);
+  }
 
 const archieveMessagesHandler = (id) => {
   const archieves = allMessages.find((message) => message.id === id);
@@ -238,11 +252,10 @@ const deletedMessagesHandler = (id) => {
   };
 
   const markAsUnreadHandler = (id) => {
-    setAllMessages((prevMessages) =>
-      prevMessages.map((message) =>
-        message.id === id ? { ...message, unread: true } : message
-      )
-    );
+    const allUnread = allMessages.find((message) => message.id === id);
+    if (allUnread) {
+      setUnReadMessages(allUnread);
+    }
   };
   
 const messageDetailDisplayHandler = () => {
@@ -260,6 +273,7 @@ const messageDetailDisplayHandler = () => {
     spamMessages,
     sentMessages,
     savedDraftMessages,
+    unreadMessages,
       starredIsClicked,
       deletedIsClicked,
       spamIsClicked,
@@ -267,8 +281,10 @@ const messageDetailDisplayHandler = () => {
     archieveIsClicked,
     sentIsClicked,
       draftIsClicked,
-      isMessageDetailOpen,
-      setInboxIsClicked,
+    isMessageDetailOpen,
+      unreadIsClicked,
+    setInboxIsClicked,
+      unreadMessagesDisplayHandler,
       starMessagesDisplayHandler,
       deletedMessagesDisplayHandler,
       spamMessagesDisplayHandler,

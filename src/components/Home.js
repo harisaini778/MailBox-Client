@@ -32,6 +32,8 @@ const Home = () => {
     const sentCount = sent.length;
     const draft = Object.values(ctx.savedDraftMessages);
     const draftCount = draft.length;
+    const unread = ctx.unreadMessages;
+    const unreadCount = unread.length;
 
 
     useEffect(() => {
@@ -113,8 +115,8 @@ const Home = () => {
                                                 <Badge className="ms-auto m-1">{inboxCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal"  className="menu-item">
-                                                <div className="me-auto m-1">Unread</div>
-                                                <Badge className="ms-auto m-1">0</Badge>
+                                                <div className="me-auto m-1" onClick={ctx.unreadMessagesDisplayHandler} >Unread</div>
+                                                <Badge className="ms-auto m-1">{unreadCount}</Badge>
                                             </Stack>
                                             <Stack direction="horizontal" className="menu-item">
                                                 <div className="me-auto m-1"
@@ -221,8 +223,8 @@ const Home = () => {
                                         <Badge className="ms-auto m-1">{inboxCount }</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
-                                        <div className="me-auto m-1">Unread</div>
-                                        <Badge className="ms-auto m-1">0</Badge>
+                                        <div className="me-auto m-1" onClick={ctx.unreadMessagesDisplayHandler} >Unread</div>
+                                        <Badge className="ms-auto m-1">{unreadCount}</Badge>
                                     </Stack>
                                     <Stack direction="horizontal" className="menu-item">
                                         <div className="me-auto m-1" onClick={ctx.starMessagesDisplayHandler}
