@@ -77,29 +77,47 @@ export const MessageContextProvider = ({ children }) => {
 
   const acrhieveMessagesDisplayHandler = () => {
     setArchieveIsClicked((prevState) => !prevState);
-    setSpamIsClicked(false);
-    setDeletedIsClicked(false);
-    setInboxIsClicked(false);
+    setInboxIsClicked(false); 
+    setIsMessageDetailOpen(false);
     setStarredIsClicked(false);
+    setDeletedIsClicked(false);
+    setDraftIsClicked(false);
+    setSpamIsClicked(false);
+    setSentIsClicked(false);
   }
   
-      const starMessagesDisplayHandler = () => {
-          setStarredIsClicked((prevState) => !prevState); 
-        setInboxIsClicked(false);
-        setDeletedIsClicked(false);
+  const starMessagesDisplayHandler = () => {
+        
+    setStarredIsClicked((prevState)=>!prevState);
+    setInboxIsClicked(false); 
+    setIsMessageDetailOpen(false);
+    setDeletedIsClicked(false);
+    setDraftIsClicked(false);
+    setArchieveIsClicked(false);
+    setSpamIsClicked(false);
+    setSentIsClicked(false);
   };
 
   const deletedMessagesDisplayHandler = () => {
-    setDeletedIsClicked((prevState) => !prevState);
-    setInboxIsClicked(false);
-    setStarredIsClicked(false);// Use 'prevState' here
+    setDeletedIsClicked((prevState)=>!prevState);
+    setInboxIsClicked(false); 
+    setIsMessageDetailOpen(false);
+    setStarredIsClicked(false);
+    setDraftIsClicked(false);
+    setArchieveIsClicked(false);
+    setSpamIsClicked(false);
+    setSentIsClicked(false);
   };
 
   const spamMessagesDisplayHandler = () => {
-    setSpamIsClicked((prevState) => !prevState);
-    setDeletedIsClicked(false);
-    setInboxIsClicked(false);
+    setSpamIsClicked((prevState)=>!prevState);
+    setInboxIsClicked(false); 
+    setIsMessageDetailOpen(false);
     setStarredIsClicked(false);
+    setDeletedIsClicked(false);
+    setDraftIsClicked(false);
+    setArchieveIsClicked(false);
+    setSentIsClicked(false);
     
   };
 
@@ -114,26 +132,28 @@ export const MessageContextProvider = ({ children }) => {
     setSentIsClicked(false);
   };
 
-    const sentMessagesDisplayHandler = () => {
-      setSentIsClicked((prevState) => !prevState); 
-      setDraftIsClicked(false);
+  const sentMessagesDisplayHandler = () => {
+    setSentIsClicked((prevState)=>!prevState);
+    setInboxIsClicked(false); 
+    setIsMessageDetailOpen(false);
     setStarredIsClicked(false);
-      setDeletedIsClicked(false);
-      setInboxIsClicked(false);
+    setDeletedIsClicked(false);
+    setDraftIsClicked(false);
     setArchieveIsClicked(false);
     setSpamIsClicked(false);
   };
 
 
   const draftMessagesDisplayHandler = () => {
-    
-      setDraftIsClicked((prevState) => !prevState); 
-      setSentIsClicked(false); 
+
+    setDraftIsClicked((prevState)=>!prevState);
+    setInboxIsClicked(false); 
+    setIsMessageDetailOpen(false);
     setStarredIsClicked(false);
-      setDeletedIsClicked(false);
-      setInboxIsClicked(false);
+    setDeletedIsClicked(false);
     setArchieveIsClicked(false);
     setSpamIsClicked(false);
+    setSentIsClicked(false);
   };
 
 
@@ -154,7 +174,7 @@ const archieveMessagesHandler = (id) => {
 };
 
 
-const toggleStarredHandler = (id) => {
+  const toggleStarredHandler = (id) => {
   setAllMessages((prevMessages) =>
     prevMessages.map((message) => {
       if (message.id === id) {

@@ -34,7 +34,7 @@ const InboxContent = () => {
               </Col>
               <Col xs={1}>
                 {message.starred ? (
-                  <FaStar className="starred-icon" />
+                  <FaStar className="starred-icon" onClick={() => ctx.toggleStarredHandler(message.id)}/>
                 ) : (
                   <FaRegStar className="starred-icon" />
                 )}
