@@ -14,7 +14,8 @@ const InboxMessageDetails = ({ messageId }) => {
   }
 
   const handleBackClick = () => {
-      ctx.closeMessageDetail();
+    ctx.messageDetailDisplayHandler();
+    //ctx.setInboxIsClicked(true);
   };
 
   return (

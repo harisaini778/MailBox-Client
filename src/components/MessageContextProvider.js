@@ -104,7 +104,8 @@ export const MessageContextProvider = ({ children }) => {
   };
 
   const inboxMessagesDisplayHandler = () => {
-      setInboxIsClicked((prevState) => !prevState); 
+    setInboxIsClicked((prevState) => !prevState); 
+    setIsMessageDetailOpen(false);
     setStarredIsClicked(false);
     setDeletedIsClicked(false);
     setDraftIsClicked(false);
@@ -224,13 +225,10 @@ const deletedMessagesHandler = (id) => {
     );
   };
   
-const openMessageDetail = () => {
-    setIsMessageDetailOpen(true);
+const messageDetailDisplayHandler = () => {
+    setIsMessageDetailOpen((prevState)=>!prevState);
   };
 
-  const closeMessageDetail = () => {
-    setIsMessageDetailOpen(false);
-  };
 
  
 
@@ -250,6 +248,7 @@ const openMessageDetail = () => {
     sentIsClicked,
       draftIsClicked,
       isMessageDetailOpen,
+      setInboxIsClicked,
       starMessagesDisplayHandler,
       deletedMessagesDisplayHandler,
       spamMessagesDisplayHandler,
@@ -263,8 +262,7 @@ const openMessageDetail = () => {
     deletedMessagesHandler,
     toggleStarredHandler,
     archieveMessagesHandler,
-    openMessageDetail,
-    closeMessageDetail,
+    messageDetailDisplayHandler,
   };
 
   return (

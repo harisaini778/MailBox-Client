@@ -8,19 +8,20 @@ import InboxMessageDetails from "./InboxMessageDetails";
 
 const InboxContent = () => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
-  const [listIsClicked, setListIsClicked] = useState(false);
+ // const [listIsClicked, setListIsClicked] = useState(false);
   const ctx = useMessageContext();
   const messages = ctx.messages; // Assuming messages are available from the context
 
   const handleListItemClick = (messageId) => {
     setSelectedMessageId(messageId);
-    setListIsClicked((prevState) => !prevState);
+    //setListIsClicked((prevState) => !prevState);
+    ctx.messageDetailDisplayHandler();
   };
 
   return (
     <Container className="mt-3">
-            {selectedMessageId && <InboxMessageDetails messageId={selectedMessageId} />}
-      {!listIsClicked && <ListGroup>
+            {selectedMessageId && ctx.isMessageDetailOpen && <InboxMessageDetails messageId={selectedMessageId} />}
+      {!ctx.isMessageDetailOpen && <ListGroup>
         {messages.map((message) => (
           <ListGroup.Item
             key={message.id}
