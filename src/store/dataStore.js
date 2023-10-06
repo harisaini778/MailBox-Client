@@ -13,7 +13,8 @@ const initialState = {
   isMessageDetailOpen: false,
   unreadMessages: [],
     inboxIsClicked: false,
-  starIsClicked : false,
+    starIsClicked: false,
+  archieveIsClicked : false,
 };
 
 const dataStore = createSlice({
@@ -123,9 +124,16 @@ const dataStore = createSlice({
       toggleInboxIsClicked: (state) => {
           state.inboxIsClicked = !state.inboxIsClicked;
           state.starIsClicked = false;
+          state.archieveIsClicked = false;
     },
       toggleStarIsClicked: (state) => {
           state.starIsClicked = !state.starIsClicked;
+          state.inboxIsClicked = false;
+          state.archieveIsClicked = false;
+      },
+      toggleArchieveIsClicked: (state) => {
+          state.archieveIsClicked = !state.archieveIsClicked;
+          state.starIsClicked = false;
           state.inboxIsClicked = false;
     },
     toggleUnreadMessages: (state) => {
@@ -144,8 +152,10 @@ export const {
   markAsRead,
   markAsUnread,
     archiveMessage,
+    archiveMessages,
     inboxIsClicked,
-  starIsClicked,
+    starIsClicked,
+   archieveIsClicked,
   toggleStarredMessages,
   toggleDeletedMessages,
   toggleSpamMessages,
@@ -156,6 +166,8 @@ export const {
   toggleMessageDetail,
   toggleUnreadMessages,
     toggleInboxIsClicked,
-  toggleStarIsClicked,
+    toggleStarIsClicked,
+    toggleArchieveIsClicked,
+  
 } = dataStore.actions;
 export default dataStore.reducer;

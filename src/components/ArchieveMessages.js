@@ -2,14 +2,13 @@ import React from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-
-const ArchieveMessages = () => {
-    const archieve = useSelector((state) => state.app.archiveMessages);
+const ArchiveMessages = () => {
+  const archive = useSelector((state) => state.dataStore.archiveMessages);
 
   return (
     <Container className="mt-3">
       <ListGroup>
-        {archieve.map((message) => (
+        {archive.map((message) => (
           <ListGroup.Item key={message.id} className={message.unread ? 'unread' : ''}>
             <Row>
               <Col xs={1}>
@@ -37,5 +36,4 @@ const ArchieveMessages = () => {
   );
 };
 
-export default ArchieveMessages;
-
+export default ArchiveMessages;

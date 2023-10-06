@@ -6,6 +6,7 @@ import { FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import InboxContent from "./InboxContent";
 import StarredMessages from "./StarredMessages";
+import ArchiveMessages from "./ArchieveMessages";
 
 
 
@@ -14,6 +15,7 @@ const Inbox = () => {
 
   const inboxIsClicked = useSelector((state) => state.dataStore.inboxIsClicked);
   const starIsClicked = useSelector((state) => state.dataStore.starIsClicked);
+  const archieveIsClicked = useSelector((state) => state.dataStore.archieveIsClicked);
   // const starredIsClicked = useSelector((state) => state.dataStore.starredIsClicked);
   // const deletedIsClicked = useSelector((state) => state.dataStore.deletedIsClicked);
   // const spamIsClicked = useSelector((state) => state.dataStore.spamIsClicked);
@@ -64,6 +66,7 @@ const Inbox = () => {
       </Container>
       {inboxIsClicked && <InboxContent />}
       {starIsClicked && <StarredMessages />}
+      {archieveIsClicked && <ArchiveMessages/>}
       {/* {deletedIsClicked && <DeletedMessages />}
       {spamIsClicked && <SpamMessages />}
       {archiveIsClicked && <ArchieveMessages />}
