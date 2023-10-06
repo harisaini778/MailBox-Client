@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import messages from "../components/Messages";
 
 const initialState = {
@@ -17,14 +18,53 @@ const initialState = {
   archieveIsClicked : false,
     spamIsClicked: false,
     deleteIsClicked: false,
+    sentIsClicked : false,
 };
+
+export const fetchSentMessages = createAsyncThunk(
+  "dataStore/fetchSentMessages",
+  async (userName, thunkAPI) => {
+    try {
+      const response = await fetch(
+        `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}.json`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch sent messages");
+      }
+      const data = await response.json();
+        return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const fetchDraftMessages = createAsyncThunk(
+  "dataStore/fetchDraftMessages",
+  async (userName, thunkAPI) => {
+    try {
+      const response = await fetch(
+        `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/draft/${userName}.json`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch draft messages");
+      }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+
 
 const dataStore = createSlice({
   name: "dataStore",
   initialState,
   reducers: {
     setSentMessages: (state, action) => {
-      state.sentMessages = action.payload;
+      state.dataStore.sentMessages = action.payload;
     },
     setDraftMessages: (state, action) => {
       state.draftMessages = action.payload;
@@ -129,6 +169,7 @@ const dataStore = createSlice({
           state.archieveIsClicked = false;
           state.spamIsClicked = false;
           state.deleteIsClicked = false;
+          state.sentIsClicked = false;
     },
       toggleStarIsClicked: (state) => {
           state.starIsClicked = !state.starIsClicked;
@@ -136,6 +177,7 @@ const dataStore = createSlice({
           state.archieveIsClicked = false;
           state.spamIsClicked = false;
           state.deleteIsClicked = false;
+          state.sentIsClicked = false;
       },
       toggleArchieveIsClicked: (state) => {
           state.archieveIsClicked = !state.archieveIsClicked;
@@ -143,6 +185,7 @@ const dataStore = createSlice({
           state.inboxIsClicked = false;
           state.spamIsClicked = false;
           state.deleteIsClicked = false;
+          state.sentIsClicked = false;
           
       },
        toggleSpamIsClicked: (state) => {
@@ -151,9 +194,27 @@ const dataStore = createSlice({
            state.inboxIsClicked = false;
            state.archieveIsClicked = false;
            state.deleteIsClicked = false;
+           state.sentIsClicked = false;
       },
       toggleDeleteIsClicked: (state) => {
           state.deleteIsClicked = !state.deleteIsClicked; 
+          state.spamIsClicked = false;
+          state.starIsClicked = false;
+           state.inboxIsClicked = false;
+          state.archieveIsClicked = false;
+          state.sentIsClicked = false;
+      },
+          toggleDeleteIsClicked: (state) => {
+          state.deleteIsClicked = !state.deleteIsClicked; 
+          state.spamIsClicked = false;
+          state.starIsClicked = false;
+           state.inboxIsClicked = false;
+              state.archieveIsClicked = false;
+              state.sentIsClicked = false;
+      },
+      toggleSentIsClicked: (state) => {
+          state.sentIsClicked = !state.sentIsClicked;
+          state.deleteIsClicked = false; 
           state.spamIsClicked = false;
           state.starIsClicked = false;
            state.inboxIsClicked = false;
@@ -162,6 +223,15 @@ const dataStore = createSlice({
     toggleUnreadMessages: (state) => {
       state.unreadMessages = [];
     },
+},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchSentMessages.fulfilled, (state, action) => {
+        state.sentMessages = action.payload;
+      })
+      .addCase(fetchDraftMessages.fulfilled, (state, action) => {
+        state.draftMessages = action.payload;
+      });
   },
 });
 
@@ -180,7 +250,8 @@ export const {
     starIsClicked,
    archieveIsClicked,
     spamIsClicked,
-   deleteIsClicked,
+    deleteIsClicked,
+   sentIsClicked,
   toggleStarredMessages,
   toggleDeletedMessages,
   toggleSpamMessages,
@@ -195,6 +266,7 @@ export const {
     toggleArchieveIsClicked,
     toggleSpamIsClicked,
     toggleDeleteIsClicked,
+    toggleSentIsClicked,
   
 } = dataStore.actions;
 export default dataStore.reducer;
