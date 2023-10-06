@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, ListGroup, Row, Col, Stack } from 'react-bootstrap';
-import { useMessageContext } from './MessageContextProvider';
+import { useSelector } from 'react-redux';
 import './DraftMessages.css';
 
 const DraftMessages = () => {
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
 
-  const ctx = useMessageContext();
-  const messages = Object.values(ctx.savedDraftMessages);
+   const messages = useSelector((state) => Object.values(state.app.savedDraftMessages));
 
   useEffect(() => {
     const handleResize = () => {

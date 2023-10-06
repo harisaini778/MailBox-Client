@@ -1,11 +1,10 @@
 import React from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
-import { useMessageContext } from "./MessageContextProvider";
+import { useSelector } from "react-redux";
 
 
 const ArchieveMessages = () => {
-  const ctx = useMessageContext();
-  const archieve = ctx.archieveMessages;
+    const archieve = useSelector((state) => state.app.archiveMessages);
 
   return (
     <Container className="mt-3">

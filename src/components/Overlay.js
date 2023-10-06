@@ -1,37 +1,41 @@
 // OverlayDetails.js
 import React from "react";
 import { Container, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
-import { MdDelete, MdSnooze, MdArchive, MdMarkEmailRead} from "react-icons/md";
+import { MdDelete, MdSnooze, MdArchive, MdMarkEmailRead } from "react-icons/md";
 import { BsList } from "react-icons/bs";
 import { FaFlag } from "react-icons/fa";
-import { useMessageContext } from "./MessageContextProvider";
+import { useDispatch } from "react-redux"; // Import useDispatch
+import {
+  deleteMessage,
+  markAsSpam,
+  archiveMessage,
+  markAsRead,
+} from "../store/dataStore"; // Replace with your actual reducer path
 
 const OverlayDetails = ({ messageId }) => {
-  const ctx = useMessageContext();
+  const dispatch = useDispatch(); // Initialize useDispatch
 
   const handleDelete = () => {
-    // Call the delete handler from the context provider
-    ctx.deletedMessagesHandler(messageId);
+    dispatch(deleteMessage(messageId)); // Dispatch the delete action
   };
 
   const markSpam = () => {
-    ctx.markAsSpamHandler(messageId);
-  }
+    dispatch(markAsSpam(messageId)); // Dispatch the markAsSpam action
+  };
 
-  const archieveHandler = () => {
-    ctx.archieveMessagesHandler(messageId);
-  }
+  const archiveHandler = () => {
+    dispatch(archiveMessage(messageId)); // Dispatch the archiveMessage action
+  };
 
   const readHandler = () => {
-    ctx.markAsReadHandler(messageId);
-  }
-    
+    dispatch(markAsRead(messageId)); // Dispatch the markAsRead action
+  };
 
   const icons = [
     { icon: <MdDelete onClick={handleDelete} />, name: "Delete" },
-    {icon : <FaFlag onClick={markSpam}/>,name : "Mark as Spam"},
+    { icon: <FaFlag onClick={markSpam} />, name: "Mark as Spam" },
     { icon: <MdSnooze />, name: "Snooze" },
-    { icon: <MdArchive onClick={archieveHandler}/>, name: "Archive" },
+    { icon: <MdArchive onClick={archiveHandler} />, name: "Archive" },
     { icon: <MdMarkEmailRead onClick={readHandler} />, name: "Mark as Read" },
   ];
 

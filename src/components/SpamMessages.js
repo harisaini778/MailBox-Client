@@ -1,16 +1,16 @@
 import React from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
-import { useMessageContext } from "./MessageContextProvider";
+import { useSelector } from "react-redux";
 
 
 const SpamMessages = () => {
-  const ctx = useMessageContext();
-  const spam = ctx.spamMessages;
+ 
+   const spamMessages = useSelector((state) => state.app.spamMessages);
 
   return (
     <Container className="mt-3">
       <ListGroup>
-        {spam.map((message) => (
+        {spamMessages.map((message) => (
           <ListGroup.Item key={message.id} className={message.unread ? 'unread' : ''}>
             <Row>
               <Col xs={1}>

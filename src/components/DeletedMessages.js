@@ -1,11 +1,11 @@
 import React from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
-import { useMessageContext } from "./MessageContextProvider";
+import { useSelector } from "react-redux";
 
 
 const DeletedMessages = () => {
-const ctx = useMessageContext();
-const deletedItems = ctx.deletedMessages;
+const deletedItems = useSelector((state) => state.app.deletedMessages);
+
 
   return (
     <Container className="mt-3">
