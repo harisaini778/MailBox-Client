@@ -10,6 +10,7 @@ import { toggleInboxIsClicked } from "../store/dataStore";
 import { toggleStarIsClicked } from "../store/dataStore";
 import { toggleArchieveIsClicked } from "../store/dataStore";
 import { toggleSpamIsClicked } from "../store/dataStore";
+import { toggleDeleteIsClicked } from "../store/dataStore";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const Home = () => {
   const starMessages = useSelector((state) => state.dataStore.starredMessages);
   const archieveMessages = useSelector((state) => state.dataStore.archiveMessages);
   const spamMessages = useSelector((state) => state.dataStore.spamMessages);
-
+  const deletedItems = useSelector((state) => state.dataStore.deletedMessages);
   
 
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
@@ -56,6 +57,10 @@ const Home = () => {
 
   const toggleSpam = () => {
     dispatch(toggleSpamIsClicked()); 
+  };
+
+   const toggleDelete = () => {
+    dispatch(toggleDeleteIsClicked()); 
   };
 
   return (
@@ -135,6 +140,12 @@ const Home = () => {
                             </div>
                             <Badge className="ms-auto m-1">{spamMessages.length}</Badge>
                           </Stack>
+                              <Stack direction="horizontal" className="menu-item">
+                            <div className="me-auto m-1" onClick={toggleDelete}>
+                              Deleted
+                            </div>
+                            <Badge className="ms-auto m-1">{deletedItems.length}</Badge>
+                          </Stack>
                         </Stack>
                         <div className="d-flex justify-content-center">
                           <Dropdown className="mt-2">
@@ -208,6 +219,12 @@ const Home = () => {
                               Spam
                             </div>
                             <Badge className="ms-auto m-1">{spamMessages.length}</Badge>
+                      </Stack>
+                              <Stack direction="horizontal" className="menu-item">
+                            <div className="me-auto m-1" onClick={toggleDelete}>
+                              Deleted
+                            </div>
+                            <Badge className="ms-auto m-1">{deletedItems.length}</Badge>
                           </Stack>
                   </Stack>
                   <div className="d-flex justify-content-center">

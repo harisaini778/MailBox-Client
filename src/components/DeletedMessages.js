@@ -2,10 +2,8 @@ import React from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-
 const DeletedMessages = () => {
-const deletedItems = useSelector((state) => state.app.deletedMessages);
-
+  const deletedItems = useSelector((state) => state.dataStore.deletedMessages);
 
   return (
     <Container className="mt-3">

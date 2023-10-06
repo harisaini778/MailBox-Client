@@ -8,6 +8,7 @@ import InboxContent from "./InboxContent";
 import StarredMessages from "./StarredMessages";
 import ArchiveMessages from "./ArchieveMessages";
 import SpamMessages from "./SpamMessages";
+import DeletedMessages from "./DeletedMessages";
 
 
 
@@ -18,6 +19,7 @@ const Inbox = () => {
   const starIsClicked = useSelector((state) => state.dataStore.starIsClicked);
   const archieveIsClicked = useSelector((state) => state.dataStore.archieveIsClicked);
   const spamIsClicked = useSelector((state) => state.dataStore.spamIsClicked);
+  const deletedIsClicked = useSelector((state) => state.dataStore.deleteIsClicked);
   // const starredIsClicked = useSelector((state) => state.dataStore.starredIsClicked);
   // const deletedIsClicked = useSelector((state) => state.dataStore.deletedIsClicked);
   // const spamIsClicked = useSelector((state) => state.dataStore.spamIsClicked);
@@ -70,6 +72,7 @@ const Inbox = () => {
       {starIsClicked && <StarredMessages />}
       {archieveIsClicked && <ArchiveMessages />}
       {spamIsClicked && <SpamMessages />}
+      {deletedIsClicked && <DeletedMessages />}
       {/* {deletedIsClicked && <DeletedMessages />}
       {spamIsClicked && <SpamMessages />}
       {archiveIsClicked && <ArchieveMessages />}
