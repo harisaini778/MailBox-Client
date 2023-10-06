@@ -2,10 +2,8 @@ import React from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-
 const SpamMessages = () => {
- 
-   const spamMessages = useSelector((state) => state.app.spamMessages);
+  const spamMessages = useSelector((state) => state.dataStore.spamMessages);
 
   return (
     <Container className="mt-3">
@@ -39,4 +37,3 @@ const SpamMessages = () => {
 };
 
 export default SpamMessages;
-

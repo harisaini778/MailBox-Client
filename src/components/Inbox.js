@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import InboxContent from "./InboxContent";
 import StarredMessages from "./StarredMessages";
 import ArchiveMessages from "./ArchieveMessages";
+import SpamMessages from "./SpamMessages";
 
 
 
@@ -16,6 +17,7 @@ const Inbox = () => {
   const inboxIsClicked = useSelector((state) => state.dataStore.inboxIsClicked);
   const starIsClicked = useSelector((state) => state.dataStore.starIsClicked);
   const archieveIsClicked = useSelector((state) => state.dataStore.archieveIsClicked);
+  const spamIsClicked = useSelector((state) => state.dataStore.spamIsClicked);
   // const starredIsClicked = useSelector((state) => state.dataStore.starredIsClicked);
   // const deletedIsClicked = useSelector((state) => state.dataStore.deletedIsClicked);
   // const spamIsClicked = useSelector((state) => state.dataStore.spamIsClicked);
@@ -66,7 +68,8 @@ const Inbox = () => {
       </Container>
       {inboxIsClicked && <InboxContent />}
       {starIsClicked && <StarredMessages />}
-      {archieveIsClicked && <ArchiveMessages/>}
+      {archieveIsClicked && <ArchiveMessages />}
+      {spamIsClicked && <SpamMessages />}
       {/* {deletedIsClicked && <DeletedMessages />}
       {spamIsClicked && <SpamMessages />}
       {archiveIsClicked && <ArchieveMessages />}

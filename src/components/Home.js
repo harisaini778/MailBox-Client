@@ -9,12 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { toggleInboxIsClicked } from "../store/dataStore";
 import { toggleStarIsClicked } from "../store/dataStore";
 import { toggleArchieveIsClicked } from "../store/dataStore";
+import { toggleSpamIsClicked } from "../store/dataStore";
 
 const Home = () => {
   const dispatch = useDispatch();
   const inboxMessages = useSelector((state) => state.dataStore.inboxMessages);
   const starMessages = useSelector((state) => state.dataStore.starredMessages);
   const archieveMessages = useSelector((state) => state.dataStore.archiveMessages);
+  const spamMessages = useSelector((state) => state.dataStore.spamMessages);
 
   
 
@@ -50,6 +52,10 @@ const Home = () => {
 
    const toggleArchieve = () => {
     dispatch(toggleArchieveIsClicked()); 
+  };
+
+  const toggleSpam = () => {
+    dispatch(toggleSpamIsClicked()); 
   };
 
   return (
@@ -123,6 +129,12 @@ const Home = () => {
                             </div>
                             <Badge className="ms-auto m-1">{archieveMessages.length}</Badge>
                           </Stack>
+                           <Stack direction="horizontal" className="menu-item">
+                            <div className="me-auto m-1" onClick={toggleSpam}>
+                              Spam
+                            </div>
+                            <Badge className="ms-auto m-1">{spamMessages.length}</Badge>
+                          </Stack>
                         </Stack>
                         <div className="d-flex justify-content-center">
                           <Dropdown className="mt-2">
@@ -190,6 +202,12 @@ const Home = () => {
                               Archieve
                             </div>
                             <Badge className="ms-auto m-1">{archieveMessages.length}</Badge>
+                      </Stack>
+                       <Stack direction="horizontal" className="menu-item">
+                            <div className="me-auto m-1" onClick={toggleSpam}>
+                              Spam
+                            </div>
+                            <Badge className="ms-auto m-1">{spamMessages.length}</Badge>
                           </Stack>
                   </Stack>
                   <div className="d-flex justify-content-center">
