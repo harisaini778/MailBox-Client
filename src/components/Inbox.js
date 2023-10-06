@@ -5,6 +5,7 @@ import { Container, Row, Col, Stack } from "react-bootstrap";
 import { FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import InboxContent from "./InboxContent";
+import StarredMessages from "./StarredMessages";
 
 
 
@@ -12,6 +13,7 @@ const Inbox = () => {
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
 
   const inboxIsClicked = useSelector((state) => state.dataStore.inboxIsClicked);
+  const starIsClicked = useSelector((state) => state.dataStore.starIsClicked);
   // const starredIsClicked = useSelector((state) => state.dataStore.starredIsClicked);
   // const deletedIsClicked = useSelector((state) => state.dataStore.deletedIsClicked);
   // const spamIsClicked = useSelector((state) => state.dataStore.spamIsClicked);
@@ -61,12 +63,12 @@ const Inbox = () => {
         </Row>
       </Container>
       {inboxIsClicked && <InboxContent />}
-      {/* {starredIsClicked && <StarredMessages />}
-      {deletedIsClicked && <DeletedMessages />}
+      {starIsClicked && <StarredMessages />}
+      {/* {deletedIsClicked && <DeletedMessages />}
       {spamIsClicked && <SpamMessages />}
       {archiveIsClicked && <ArchieveMessages />}
       {sentIsClicked && <SentMessages />}
-      {draftIsClicked && <DraftMessages />} */}
+      {draftIsClicked && <DraftMessages />}  */}
     </div>
   );
 };

@@ -7,11 +7,12 @@ import { BsList } from "react-icons/bs";
 import Mail from "./Mail";
 import { useNavigate } from "react-router-dom";
 import { toggleInboxIsClicked } from "../store/dataStore";
-import { inboxMessages } from "../store/dataStore";
+import { toggleStarIsClicked } from "../store/dataStore";
 
 const Home = () => {
   const dispatch = useDispatch();
   const inboxMessages = useSelector((state) => state.dataStore.inboxMessages);
+  const starMessages = useSelector((state) => state.dataStore.starredMessages);
 
   
 
@@ -38,7 +39,11 @@ const Home = () => {
   }, []);
 
   const toggleInbox = () => {
-    dispatch(toggleInboxIsClicked()); // Toggle the inboxIsClicked state
+    dispatch(toggleInboxIsClicked()); 
+  };
+
+   const toggleStar = () => {
+    dispatch(toggleStarIsClicked()); 
   };
 
   return (
@@ -100,7 +105,12 @@ const Home = () => {
                             </div>
                             <Badge className="ms-auto m-1">{inboxMessages.length}</Badge>
                           </Stack>
-                          {/* Add other menu items as needed */}
+                            <Stack direction="horizontal" className="menu-item">
+                            <div className="me-auto m-1" onClick={toggleStar}>
+                              Starred
+                            </div>
+                            <Badge className="ms-auto m-1">{starMessages.length}</Badge>
+                          </Stack>
                         </Stack>
                         <div className="d-flex justify-content-center">
                           <Dropdown className="mt-2">
@@ -157,7 +167,12 @@ const Home = () => {
                       </div>
                       <Badge className="ms-auto m-1">{inboxMessages.length}</Badge>
                     </Stack>
-                    {/* Add other menu items as needed */}
+                            <Stack direction="horizontal" className="menu-item">
+                            <div className="me-auto m-1" onClick={toggleStar}>
+                              Starred
+                            </div>
+                            <Badge className="ms-auto m-1">{starMessages.length}</Badge>
+                          </Stack>
                   </Stack>
                   <div className="d-flex justify-content-center">
                     <Dropdown className="mt-2">
