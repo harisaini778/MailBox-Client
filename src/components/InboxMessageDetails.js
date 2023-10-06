@@ -1,21 +1,31 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { FaArrowLeft } from "react-icons/fa";
-import { useMessageContext } from "./MessageContextProvider";
-import "./InboxMessageDetail.css"; // Import your custom CSS file for styling
-
-
+import { useDispatch, useSelector } from "react-redux"; 
+import { useNavigate } from "react-router-dom"; 
+import {
+  markAsRead, 
+  toggleMessageDetail,
+} from "../store/dataStore"; 
+import "./InboxMessageDetail.css"; 
 const InboxMessageDetails = ({ messageId }) => {
-  const ctx = useMessageContext();
-    const message = ctx.messages.find((msg) => msg.id === messageId);
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate(); 
+
+
+  const message = useSelector((state) =>
+    state.dataStore.inboxMessages.find((msg) => msg.id === messageId)
+  );
 
   if (!message) {
-    return null; // Message not found, handle this case as needed
+    return null; 
   }
 
   const handleBackClick = () => {
-    ctx.messageDetailDisplayHandler();
-    //ctx.setInboxIsClicked(true);
+   
+    dispatch(toggleMessageDetail());
+    dispatch(markAsRead(messageId));
+    navigate("/Home"); 
   };
 
   return (
