@@ -7,6 +7,7 @@ const StarredMessages = () => {
   const ctx = useMessageContext();
   const starredMessages = ctx.messages.filter((message) => message.starred);
 
+
   return (
     <Container className="mt-3">
       <ListGroup>
