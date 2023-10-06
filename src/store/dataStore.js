@@ -19,6 +19,7 @@ const initialState = {
     spamIsClicked: false,
     deleteIsClicked: false,
     sentIsClicked : false,
+    draftIsClicked : false,
 };
 
 export const fetchSentMessages = createAsyncThunk(
@@ -170,6 +171,7 @@ const dataStore = createSlice({
           state.spamIsClicked = false;
           state.deleteIsClicked = false;
           state.sentIsClicked = false;
+           state.draftIsClicked = false;
     },
       toggleStarIsClicked: (state) => {
           state.starIsClicked = !state.starIsClicked;
@@ -178,6 +180,7 @@ const dataStore = createSlice({
           state.spamIsClicked = false;
           state.deleteIsClicked = false;
           state.sentIsClicked = false;
+           state.draftIsClicked = false;
       },
       toggleArchieveIsClicked: (state) => {
           state.archieveIsClicked = !state.archieveIsClicked;
@@ -186,6 +189,7 @@ const dataStore = createSlice({
           state.spamIsClicked = false;
           state.deleteIsClicked = false;
           state.sentIsClicked = false;
+           state.draftIsClicked = false;
           
       },
        toggleSpamIsClicked: (state) => {
@@ -195,6 +199,7 @@ const dataStore = createSlice({
            state.archieveIsClicked = false;
            state.deleteIsClicked = false;
            state.sentIsClicked = false;
+            state.draftIsClicked = false;
       },
       toggleDeleteIsClicked: (state) => {
           state.deleteIsClicked = !state.deleteIsClicked; 
@@ -203,6 +208,7 @@ const dataStore = createSlice({
            state.inboxIsClicked = false;
           state.archieveIsClicked = false;
           state.sentIsClicked = false;
+           state.draftIsClicked = false;
       },
           toggleDeleteIsClicked: (state) => {
           state.deleteIsClicked = !state.deleteIsClicked; 
@@ -211,6 +217,7 @@ const dataStore = createSlice({
            state.inboxIsClicked = false;
               state.archieveIsClicked = false;
               state.sentIsClicked = false;
+               state.draftIsClicked = false;
       },
       toggleSentIsClicked: (state) => {
           state.sentIsClicked = !state.sentIsClicked;
@@ -218,8 +225,20 @@ const dataStore = createSlice({
           state.spamIsClicked = false;
           state.starIsClicked = false;
            state.inboxIsClicked = false;
+          state.archieveIsClicked = false;
+          state.draftIsClicked = false;
+      },
+
+      toggleDraftIsClicked: (state) => {
+          state.draftIsClicked = !state.draftIsClicked;
+          state.sentIsClicked = false;
+          state.deleteIsClicked = false; 
+          state.spamIsClicked = false;
+          state.starIsClicked = false;
+           state.inboxIsClicked = false;
             state.archieveIsClicked = false;
-    },
+      },
+      
     toggleUnreadMessages: (state) => {
       state.unreadMessages = [];
     },
@@ -252,6 +271,7 @@ export const {
     spamIsClicked,
     deleteIsClicked,
    sentIsClicked,
+   draftIsClicked,
   toggleStarredMessages,
   toggleDeletedMessages,
   toggleSpamMessages,
@@ -267,6 +287,7 @@ export const {
     toggleSpamIsClicked,
     toggleDeleteIsClicked,
     toggleSentIsClicked,
+    toggleDraftIsClicked,
   
 } = dataStore.actions;
 export default dataStore.reducer;

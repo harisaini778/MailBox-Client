@@ -12,6 +12,7 @@ import { toggleArchieveIsClicked } from "../store/dataStore";
 import { toggleSpamIsClicked } from "../store/dataStore";
 import { toggleDeleteIsClicked } from "../store/dataStore";
 import { toggleSentIsClicked } from "../store/dataStore";
+import { toggleDraftIsClicked } from "../store/dataStore";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const Home = () => {
   const deletedItems = useSelector((state) => state.dataStore.deletedMessages);
   const sentMessages = useSelector((state) => state.dataStore.sentMessages);
   const sent = Object.values(sentMessages);
+  const draftMessages = useSelector((state) => state.dataStore.draftMessages);
+  const draft = Object.values(draftMessages);
 
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
   const [show, setShow] = useState(false);
@@ -67,6 +70,10 @@ const Home = () => {
 
      const toggleSent = () => {
     dispatch(toggleSentIsClicked()); 
+  };
+
+     const toggleDraft = () => {
+    dispatch(toggleDraftIsClicked()); 
   };
 
   return (
@@ -158,6 +165,12 @@ const Home = () => {
                             </div>
                             <Badge className="ms-auto m-1">{sent.length || 0}</Badge>
                           </Stack>
+                            <Stack direction="horizontal" className="menu-item">
+                            <div className="me-auto m-1" onClick={toggleDraft}>
+                              Draft
+                            </div>
+                            <Badge className="ms-auto m-1">{draft.length || 0}</Badge>
+                          </Stack>
                         </Stack>
                         <div className="d-flex justify-content-center">
                           <Dropdown className="mt-2">
@@ -243,6 +256,12 @@ const Home = () => {
                               Sent
                             </div>
                             <Badge className="ms-auto m-1">{sent.length || 0}</Badge>
+                      </Stack>
+                       <Stack direction="horizontal" className="menu-item">
+                            <div className="me-auto m-1" onClick={toggleDraft}>
+                              Draft
+                            </div>
+                            <Badge className="ms-auto m-1">{draft.length || 0}</Badge>
                           </Stack>
                   </Stack>
                   <div className="d-flex justify-content-center">
