@@ -9,12 +9,15 @@ import { toggleMessageDetail } from "../store/dataStore";
 import { toggleStarred } from "../store/dataStore";
 import { searchQuery } from "../store/dataStore";
 import { setSearchQuery } from "../store/dataStore";
+import { selectAll } from "../store/dataStore";
+
 
 
 const InboxContent = () => {
   const [isSmaller, setIsSmaller] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const searchQuery = useSelector((state) => state.dataStore.searchQuery);
+  const selectAll = useSelector((state) => state.dataStore.selectAll);
 
   // Use Redux selectors to get data from the store
   const messages = useSelector((state) => state.dataStore.allMessages);
@@ -73,7 +76,7 @@ const InboxContent = () => {
             >
               <Row>
                 <Col xs={1}>
-                  <input type="checkbox" />
+                  <input type="checkbox" checked={selectAll} />
                 </Col>
                 {!isSmaller && (
                   <Col xs={1}>

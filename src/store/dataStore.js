@@ -3,7 +3,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import messages from "../components/Messages";
 
 const initialState = {
-  searchQuery : "",
+  searchQuery: "",
+  selectAll : false,
   sentMessages: [],
   draftMessages: [],
   allMessages: [...messages], // You can populate this with the initial data
@@ -65,6 +66,9 @@ const dataStore = createSlice({
   name: "dataStore",
   initialState,
   reducers: {
+    setSelectAll: (state) => {
+      state.selectAll = !state.selectAll;
+    },
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
@@ -259,12 +263,14 @@ const dataStore = createSlice({
 });
 
 export const {
+  selectAll,
   searchQuery,
+  setSelectAll,
   setSearchQuery,
   setSentMessages,
   setDraftMessages,
   toggleStarred,
-    deleteMessage,
+  deleteMessage,
   inboxMessages,
   markAsSpam,
   markAsRead,

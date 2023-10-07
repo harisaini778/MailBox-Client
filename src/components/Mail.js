@@ -3,10 +3,16 @@ import { Container, Stack, Row, Col, Form, Pagination } from "react-bootstrap";
 import Refresh from "./Refresh";
 import { FaEllipsisV } from "react-icons/fa";
 import Inbox from "./Inbox";
+import { useDispatch } from "react-redux";
+import { setSelectAll } from "../store/dataStore";
 
 const Mail = () => {
+    
+    const dispatch = useDispatch();
 
-
+    const handleSelectAll = () => {
+        dispatch(setSelectAll(true));
+    }
 
     return (<div>
         <Container className="mt-2 mb-2">
@@ -15,7 +21,7 @@ const Mail = () => {
                     <Stack direction="horizontal" gap="4" className="justify-content-center m-1">
                         <div>
                             <Form>
-                                <Form.Check
+                                <Form.Check onClick={handleSelectAll}
                                     type="checkbox"
                                     label="Select All"
                                     id="checkboxId"
