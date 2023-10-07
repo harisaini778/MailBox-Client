@@ -13,6 +13,8 @@ import { toggleSpamIsClicked } from "../store/dataStore";
 import { toggleDeleteIsClicked } from "../store/dataStore";
 import { toggleSentIsClicked } from "../store/dataStore";
 import { toggleDraftIsClicked } from "../store/dataStore";
+import { setSearchQuery } from "../store/dataStore";
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -25,6 +27,8 @@ const Home = () => {
   const sent = Object.values(sentMessages);
   const draftMessages = useSelector((state) => state.dataStore.draftMessages);
   const draft = Object.values(draftMessages);
+  const searchQuery = useSelector((state) => state.dataStore.searchQuery);
+  
 
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
   const [show, setShow] = useState(false);
@@ -35,6 +39,12 @@ const Home = () => {
   const handleComposeRender = () => {
     navigate("/ComposeMail");
   };
+
+  const handleSearchQueryChange = (e) => {
+    const newSearchQuery = e.target.value;
+    setSearchQuery(newSearchQuery);
+    dispatch(setSearchQuery(newSearchQuery));
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -92,6 +102,8 @@ const Home = () => {
                   <Form.Control
                     placeholder='Find messages, documents, photos or people'
                     type="search"
+                    value={searchQuery}
+                    onChange={handleSearchQueryChange}
                     style={{ width: isSmaller ? "70vw" : "40vw" }}
                   />
                   <InputGroup.Text className="justify-content-center" style={{ width: isSmaller ? "auto" : "5vw" }}>

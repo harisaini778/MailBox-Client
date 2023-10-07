@@ -1,7 +1,7 @@
 import React from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux"; 
-import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import {
   toggleStarred,
   toggleMessageDetail,
@@ -37,8 +37,8 @@ const StarredMessages = () => {
                 <input type="checkbox" />
               </Col>
               <Col xs={1}>
-                <FaRegStar
-                  style={{ color: "yellow" }}
+                <FaStar
+                  style={{ color: "gold",cursor:"pointer" }}
                   onClick={(e) => {
                     e.stopPropagation(); 
                     handleStarClick(message.id); 

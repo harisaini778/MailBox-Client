@@ -7,11 +7,14 @@ import "./InboxContent.css";
 import InboxMessageDetails from "./InboxMessageDetails";
 import { toggleMessageDetail } from "../store/dataStore";
 import { toggleStarred } from "../store/dataStore";
+import { searchQuery } from "../store/dataStore";
+import { setSearchQuery } from "../store/dataStore";
 
 
 const InboxContent = () => {
   const [isSmaller, setIsSmaller] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const searchQuery = useSelector((state) => state.dataStore.searchQuery);
 
   // Use Redux selectors to get data from the store
   const messages = useSelector((state) => state.dataStore.allMessages);
@@ -19,6 +22,7 @@ const InboxContent = () => {
 
   // Use Redux dispatch to dispatch actions
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,8 +38,15 @@ const InboxContent = () => {
 
   const handleListItemClick = (messageId) => {
     setSelectedMessageId(messageId);
+    setSearchQuery("");
     dispatch(toggleMessageDetail());
   };
+
+  const filteredMessages = messages.filter((message) => {
+    return (
+      message.sender.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  })
 
   const toggleStar = (messageId, event) => {
     event.stopPropagation();
@@ -54,7 +65,7 @@ const InboxContent = () => {
       )}
       {!isMessageDetailOpen && (
         <ListGroup className="message-list">
-          {messages.map((message) => (
+          {filteredMessages.map((message) => (
             <div
               key={message.id}
               className={message.unread ? "unread list-item" : "list-item"}
@@ -71,7 +82,7 @@ const InboxContent = () => {
                       className="star-icon-container"
                     >
                       {message.starred ? (
-                        <FaStar className="starred-icon" />
+                        <FaStar className="starred-icon" style={{color:"gold",cursor:"pointer"}}/>
                       ) : (
                         <FaRegStar className="starred-icon" />
                       )}
