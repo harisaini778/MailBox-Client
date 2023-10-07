@@ -18,6 +18,7 @@ const InboxContent = () => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const searchQuery = useSelector((state) => state.dataStore.searchQuery);
   const selectAll = useSelector((state) => state.dataStore.selectAll);
+    const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
 
   // Use Redux selectors to get data from the store
   const messages = useSelector((state) => state.dataStore.allMessages);
@@ -57,6 +58,15 @@ const InboxContent = () => {
     dispatch(toggleStarred(messageId));
   };
 
+  const toggleCheckBox = (messageId, event) => {
+    event.stopPropagation();
+    setSelectedCheckboxes((prevSelectedCheckboxes) => ({
+      ...prevSelectedCheckboxes,
+      [messageId]: !prevSelectedCheckboxes[messageId], // Toggle the checkbox state for the specific message
+    }));
+    
+  }
+
   const preventListGroupClick = (event) => {
     event.stopPropagation();
   };
@@ -76,7 +86,7 @@ const InboxContent = () => {
             >
               <Row>
                 <Col xs={1}>
-                  <input type="checkbox" checked={selectAll} />
+                  <input type="checkbox" checked={selectAll || selectedCheckboxes[message.id] || false} onClick={(event)=>toggleCheckBox(message.id,event)} />
                 </Col>
                 {!isSmaller && (
                   <Col xs={1}>
