@@ -29,11 +29,6 @@ const formats = [
   'align',
 ];
 
-// funtion for generating the unique id
-
-// function generatingUniqueId() {
-//   return uuidv4();
-// }
 
 function ComposeMail() {
 
@@ -43,6 +38,7 @@ function ComposeMail() {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState("");
+  const [currentDateTime, setCurrentDateTime] = useState(null);
   const navigate = useNavigate();
 
 
@@ -53,6 +49,19 @@ function ComposeMail() {
     const Name = parts[0];
     setUserName(Name);
     localStorage.setItem("userName", Name); // Update local storage with the correct username
+  }, []);
+
+  useEffect(() => { 
+    const intervalId = setInterval(() => {
+      return (
+        setCurrentDateTime(new Date())
+      );
+    }, 1000)
+
+    return (
+      clearInterval(intervalId)
+    );
+    
   }, []);
 
   const handleHomeRender = () => {
@@ -82,7 +91,8 @@ function ComposeMail() {
                   ccBccValue,
                   subject,
                   message,
-                  id : uniqueId,
+                  id: uniqueId,
+                  date : currentDateTime,
               })
           }).then(
               (response) => {
@@ -170,7 +180,8 @@ const deleteEmail = (dataId) => {
                   ccBccValue,
                   subject,
                   message,
-                  id  : uniqueId,
+                  id: uniqueId,
+                  date : currentDateTime,
               })
     }).then(
               (response) => {

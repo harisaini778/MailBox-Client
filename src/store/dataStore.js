@@ -270,7 +270,7 @@ export const {
   setSentMessages,
   setDraftMessages,
   toggleStarred,
-  deleteMessage,
+  deleteMessage,git 
   inboxMessages,
   sentMessages,
   markAsSpam,

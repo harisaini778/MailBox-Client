@@ -23,6 +23,14 @@ const SentboxMessagesDetails = ({ messageId,sent }) => {
      console.log("sentbox message is :", message);
   }
 
+  const stripHtmlTags = (html) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    return (
+      tempDiv.innnerText || tempDiv.textContent
+    );
+  }
+
   const handleBackClick = () => {
     dispatch(toggleMessageDetail());
     dispatch(markAsRead(messageId));
@@ -50,7 +58,7 @@ const SentboxMessagesDetails = ({ messageId,sent }) => {
               To: {message.to} -{" "}
               {new Date(message.date).toLocaleString()}
             </p>
-            <div className="message-body">{message.message}</div>
+            <div className="message-body">{stripHtmlTags(message.message)}</div>
           </Col>
         </Row>
       </Container>

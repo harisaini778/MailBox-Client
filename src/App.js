@@ -4,6 +4,7 @@ import './App.css';
 import EmailVerify from './components/EmailVerify';
 import ComposeMail from './components/ComposeMail';
 import Home from './components/Home';
+import SentMessages from './components/SentMessages';
 //import MessageContextProvider from './components/MessageContextProvider';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/EmailVerify" element={<EmailVerify />} />
          <Route path="/Home" element={<Home />} />
         <Route path="/ComposeMail" element={<ComposeMail />} />
+         <Route path="/SentMesssages" element={<SentMessages />} />
         </Routes>
       </Router>
 
