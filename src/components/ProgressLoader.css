@@ -1,0 +1,43 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.loading-content {
+    width: 90vw;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.envelope-icon {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 30%;
+    transition: 0.3s ease;
+    animation: scaleFadeIn 1s ease-in-out;
+}
+
+@keyframes scaleFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.0);
+    }
+}
+
+
+.progress-bar-container {
+    margin-top: 20px;
+}
