@@ -1,0 +1,4 @@
+.truncate-text-sentbox{
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}

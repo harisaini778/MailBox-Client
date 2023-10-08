@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchSentMessages } from '../store/dataStore'; 
 import { toggleMessageDetail } from '../store/dataStore';
 import SentboxMessagesDetails from './SentboxMessagesDetail';
+import "./SentMessages.css";
 
 const SentMessages = () => {
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
@@ -51,10 +52,9 @@ const SentMessages = () => {
         {sent.map((message) => (
     <ListGroup.Item
     key={message.id}
-  className={message.unread ? "unread list-item" : "list-item"}
   onClick={() => handleListItemClick(message.id)}
 >
-  <Row>
+  <Row className=''>
     <Col>
       <input type="checkbox" />
     </Col>

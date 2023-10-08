@@ -51,18 +51,31 @@ function ComposeMail() {
     localStorage.setItem("userName", Name); // Update local storage with the correct username
   }, []);
 
-  useEffect(() => { 
-    const intervalId = setInterval(() => {
-      return (
-        setCurrentDateTime(new Date())
-      );
-    }, 1000)
+  
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     return (
+  //       setCurrentDateTime( currentDateTime => currentDateTime || new Date())
+  //     );
+  //   }, 1000)
 
-    return (
-      clearInterval(intervalId)
-    );
+  //   return (
+  //     clearInterval(intervalId)
+  //   );
     
+  
+  //}, []);
+
+    useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
+
+
+  const isoDateTime = currentDateTime ? currentDateTime.toISOString() : null;
 
   const handleHomeRender = () => {
     navigate("/Home");
@@ -92,7 +105,7 @@ function ComposeMail() {
                   subject,
                   message,
                   id: uniqueId,
-                  date : currentDateTime,
+                  date : isoDateTime,
               })
           }).then(
               (response) => {
@@ -181,7 +194,7 @@ const deleteEmail = (dataId) => {
                   subject,
                   message,
                   id: uniqueId,
-                  date : currentDateTime,
+                  date : isoDateTime,
               })
     }).then(
               (response) => {
