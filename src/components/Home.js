@@ -14,6 +14,7 @@ import { toggleDeleteIsClicked } from "../store/dataStore";
 import { toggleSentIsClicked } from "../store/dataStore";
 import { toggleDraftIsClicked } from "../store/dataStore";
 import { setSearchQuery } from "../store/dataStore";
+import "./Home.css";
 
 
 const Home = () => {
@@ -128,7 +129,9 @@ const Home = () => {
                     <Offcanvas show={show} onHide={toggleShow}>
                       <Offcanvas.Header closeButton onClose={handleClose}>
                         <Offcanvas.Title>
-                          Some Title
+                          <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+                          <h1 style={{ fontFamily: "Dancing Script,cursive", fontSize: "3.0rem" }}
+                          className="text-primary">Hemrix Mail!</h1>
                         </Offcanvas.Title>
                       </Offcanvas.Header>
                       <Offcanvas.Body>
@@ -136,7 +139,7 @@ const Home = () => {
                           <div className="d-grid">
                             <Button variant="primary" size="md"
                               className="m-3" onClick={handleComposeRender}>
-                              Compose
+                              <h1>Compose</h1>
                             </Button>
                           </div>
                         </Container>
