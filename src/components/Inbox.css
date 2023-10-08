@@ -1,6 +1,6 @@
 .heading_hover{
-    transition: 0.3s ease;
+    transition: 0.1s ease;
 }
 .heading_hover:hover{
-    border-bottom: 4px solid blue;
+    border-bottom: 4px solid rgb(96, 96, 255);
 }

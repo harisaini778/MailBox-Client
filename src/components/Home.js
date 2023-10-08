@@ -206,7 +206,31 @@ const Home = () => {
                                   <div className="ms-auto">Documents</div>
                                 </Stack>
                               </Dropdown.Item>
-                              {/* Add other dropdown items as needed */}
+                
+                             <Dropdown.Item>
+                              <Stack direction="horizontal">
+                                 <div className="me-auto ">
+                                   <FaMoneyBill />
+                                  </div>
+                                  <div className="ms-auto">Subscriptions</div>
+                                  </Stack>
+                                   </Dropdown.Item>
+                                    <Dropdown.Item>
+                                     <Stack direction="horizontal">
+                                      <div className="me-auto ">
+                                         <FaTags />
+                                        </div>
+                                      <div className="ms-auto">Deals</div>
+                                      </Stack>
+                                      </Dropdown.Item>
+                                      <Dropdown.Item>
+                                      <Stack direction="horizontal">
+                                      <div className="me-auto ">
+                                        <FaPlane />
+                                       </div>
+                                        <div className="ms-auto">Travel</div>
+                                        </Stack>
+                                      </Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
                         </div>
@@ -282,23 +306,47 @@ const Home = () => {
                         View more
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item>
-                          <Stack direction="horizontal">
-                            <div className="me-auto ">
-                              <FaImages />
-                            </div>
-                            <div className="ms-auto">Photos</div>
-                          </Stack>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Stack direction="horizontal">
-                            <div className="me-auto ">
-                              <FaFile />
-                            </div>
-                            <div className="ms-auto">Documents</div>
-                          </Stack>
-                        </Dropdown.Item>
-                        {/* Add other dropdown items as needed */}
+                                 <Dropdown.Item>
+                                <Stack direction="horizontal">
+                                  <div className="me-auto ">
+                                    <FaImages />
+                                  </div>
+                                  <div className="ms-auto">Photos</div>
+                                </Stack>
+                              </Dropdown.Item>
+                              <Dropdown.Item>
+                                <Stack direction="horizontal">
+                                  <div className="me-auto ">
+                                    <FaFile />
+                                  </div>
+                                  <div className="ms-auto">Documents</div>
+                                </Stack>
+                              </Dropdown.Item>
+                
+                             <Dropdown.Item>
+                              <Stack direction="horizontal">
+                                 <div className="me-auto ">
+                                   <FaMoneyBill />
+                                  </div>
+                                  <div className="ms-auto">Subscriptions</div>
+                                  </Stack>
+                                   </Dropdown.Item>
+                                    <Dropdown.Item>
+                                     <Stack direction="horizontal">
+                                      <div className="me-auto ">
+                                         <FaTags />
+                                        </div>
+                                      <div className="ms-auto">Deals</div>
+                                      </Stack>
+                                      </Dropdown.Item>
+                                      <Dropdown.Item>
+                                      <Stack direction="horizontal">
+                                      <div className="me-auto ">
+                                        <FaPlane />
+                                       </div>
+                                        <div className="ms-auto">Travel</div>
+                                        </Stack>
+                                      </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>

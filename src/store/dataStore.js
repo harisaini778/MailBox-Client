@@ -15,7 +15,7 @@ const initialState = {
   inboxMessages: [...messages],
   isMessageDetailOpen: false,
   unreadMessages: [],
-    inboxIsClicked: false,
+    inboxIsClicked: true,
     starIsClicked: false,
   archieveIsClicked : false,
     spamIsClicked: false,
