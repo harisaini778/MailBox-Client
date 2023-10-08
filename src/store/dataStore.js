@@ -272,6 +272,7 @@ export const {
   toggleStarred,
   deleteMessage,
   inboxMessages,
+  sentMessages,
   markAsSpam,
   markAsRead,
   markAsUnread,

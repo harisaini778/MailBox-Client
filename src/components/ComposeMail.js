@@ -58,6 +58,8 @@ function ComposeMail() {
   const handleHomeRender = () => {
     navigate("/Home");
   }
+
+  const uniqueId = Math.floor(Math.random() * 100 + 1);
      
 
 
@@ -80,6 +82,7 @@ function ComposeMail() {
                   ccBccValue,
                   subject,
                   message,
+                  id : uniqueId,
               })
           }).then(
               (response) => {
@@ -167,6 +170,7 @@ const deleteEmail = (dataId) => {
                   ccBccValue,
                   subject,
                   message,
+                  id  : uniqueId,
               })
     }).then(
               (response) => {
