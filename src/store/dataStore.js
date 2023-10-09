@@ -30,7 +30,7 @@ export const fetchSentMessages = createAsyncThunk(
   async (userName, thunkAPI) => {
     try {
       const response = await fetch(
-        `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/store/${userName}.json`
+        `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${userName}.json`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch sent messages");

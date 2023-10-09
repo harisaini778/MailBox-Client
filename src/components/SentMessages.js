@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, ListGroup, Row, Col, Stack } from 'react-bootstrap';
+import { Container, ListGroup, Row, Col, Stack,Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux'; 
 import { fetchSentMessages } from '../store/dataStore'; 
 import { toggleMessageDetail } from '../store/dataStore';
@@ -42,6 +42,40 @@ const SentMessages = () => {
     return tempDiv.textContent || tempDiv.innerText || '';
   }
 
+  const deleteSentHandler = (id, event) => {
+    const userName = localStorage.getItem("userName");
+    const emailKey = `email_${userName}_${id}`;
+  event.stopPropagation();
+
+  const sentMessageDeleteRequest = async (id) => {
+    try {
+      const url = `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${userName}/${emailKey}.json`;
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        // Successfully deleted
+        alert("Your message has been deleted successfully!");
+        console.log("Sent message deleted with ID:", id);
+        dispatch(fetchSentMessages(userName));
+      } else {
+        // Handle the error case here
+        console.log("Error deleting the sent message. Status:", response.status);
+        console.log("Error message:", response.statusText);
+      }
+    } catch (error) {
+      console.log("Error in deleting the sent message:", error);
+    }
+  };
+
+  sentMessageDeleteRequest(id);
+};
+
+
   return (
     <Container className="mt-3">
       
@@ -74,6 +108,11 @@ const SentMessages = () => {
     </Col>
     <Col className="truncate-text-sent">
       {stripHtmlTags(message.message)}
+    </Col>
+      <Col className="truncate-text-sent">
+                <Button onClick = {(event)=>deleteSentHandler(message.id,event)}>
+                  Delete
+                </Button>
     </Col>
   </Row>
 </ListGroup.Item>
