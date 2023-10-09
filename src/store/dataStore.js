@@ -5,6 +5,7 @@ import messages from "../components/Messages";
 const initialState = {
   searchQuery: "",
   selectAll : false,
+  isRead :  false,
   sentMessages: [],
   draftMessages: [],
   allMessages: [...messages], // You can populate this with the initial data
@@ -128,7 +129,7 @@ const dataStore = createSlice({
         (message) => message.id === messageId
       );
       if (messageIndex !== -1) {
-        state.allMessages[messageIndex].unread = false;
+        state.allMessages[messageIndex].unread = !state.allMessages[messageIndex].unread ;
       }
     },
     markAsUnread: (state, action) => {
@@ -246,7 +247,9 @@ const dataStore = createSlice({
            state.inboxIsClicked = false;
             state.archieveIsClicked = false;
       },
-      
+    toggleIsReadClicked:(state) => {
+      state.isRead = !state.isRead;
+       },
     toggleUnreadMessages: (state) => {
       state.unreadMessages = [];
     },
@@ -285,6 +288,7 @@ export const {
     deleteIsClicked,
    sentIsClicked,
    draftIsClicked,
+   isRead,
   toggleStarredMessages,
   toggleDeletedMessages,
   toggleSpamMessages,
@@ -301,6 +305,7 @@ export const {
     toggleDeleteIsClicked,
     toggleSentIsClicked,
     toggleDraftIsClicked,
+    toggleIsReadClicked,
   
 } = dataStore.actions;
 export default dataStore.reducer;
