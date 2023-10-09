@@ -14,7 +14,6 @@ import { toggleDeleteIsClicked } from "../store/dataStore";
 import { toggleSentIsClicked } from "../store/dataStore";
 import { toggleDraftIsClicked } from "../store/dataStore";
 import { setSearchQuery } from "../store/dataStore";
-import "./Home.css";
 
 
 const Home = () => {
@@ -29,7 +28,7 @@ const Home = () => {
   const draftMessages = useSelector((state) => state.dataStore.draftMessages);
   const draft = Object.values(draftMessages);
   const searchQuery = useSelector((state) => state.dataStore.searchQuery);
-  
+  const allMessages = useSelector((state) => state.dataStore.allMessages);
 
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
   const [show, setShow] = useState(false);
@@ -129,9 +128,7 @@ const Home = () => {
                     <Offcanvas show={show} onHide={toggleShow}>
                       <Offcanvas.Header closeButton onClose={handleClose}>
                         <Offcanvas.Title>
-                          <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
-                          <h1 style={{ fontFamily: "Dancing Script,cursive", fontSize: "3.0rem" }}
-                          className="text-primary">Hemrix Mail!</h1>
+                          Some Title
                         </Offcanvas.Title>
                       </Offcanvas.Header>
                       <Offcanvas.Body>
@@ -139,7 +136,7 @@ const Home = () => {
                           <div className="d-grid">
                             <Button variant="primary" size="md"
                               className="m-3" onClick={handleComposeRender}>
-                              <h1>Compose</h1>
+                              Compose
                             </Button>
                           </div>
                         </Container>
@@ -148,7 +145,7 @@ const Home = () => {
                             <div className="me-auto m-1" onClick={toggleInbox}>
                               Inbox
                             </div>
-                            <Badge className="ms-auto m-1">{inboxMessages.length}</Badge>
+                            <Badge className="ms-auto m-1">{allMessages.length}</Badge>
                           </Stack>
                             <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleStar}>
@@ -264,7 +261,7 @@ const Home = () => {
                       <div className="me-auto m-1" onClick={toggleInbox}>
                         Inbox
                       </div>
-                      <Badge className="ms-auto m-1">{inboxMessages.length}</Badge>
+                      <Badge className="ms-auto m-1">{allMessages.length}</Badge>
                     </Stack>
                             <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleStar}>
