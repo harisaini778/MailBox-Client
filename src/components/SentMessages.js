@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, ListGroup, Row, Col, Stack,Button } from 'react-bootstrap';
+import { Container, ListGroup, Row, Col, Stack,Button,Badge } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux'; 
 import { fetchSentMessages } from '../store/dataStore'; 
 import { toggleMessageDetail } from '../store/dataStore';
 import SentboxMessagesDetails from './SentboxMessagesDetail';
 import "./SentMessages.css";
+import { MdDelete } from 'react-icons/md';
+
 
 const SentMessages = () => {
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
@@ -59,7 +61,9 @@ const SentMessages = () => {
 
       if (response.status === 200) {
         // Successfully deleted
+        const data = response.json();
         alert("Your message has been deleted successfully!");
+        console.log("sent data deleted is :", data);
         console.log("Sent message deleted with ID:", id);
         dispatch(fetchSentMessages(userName));
       } else {
@@ -109,10 +113,10 @@ const SentMessages = () => {
     <Col className="truncate-text-sent">
       {stripHtmlTags(message.message)}
     </Col>
-      <Col className="truncate-text-sent">
-                <Button onClick = {(event)=>deleteSentHandler(message.id,event)}>
-                  Delete
-                </Button>
+              <Col className="truncate-text-sent">
+                <Badge className='bg bg-primary' onClick={(event) => deleteSentHandler(message.id, event)}>
+                <MdDelete  size={18} />    
+                </Badge>      
     </Col>
   </Row>
 </ListGroup.Item>

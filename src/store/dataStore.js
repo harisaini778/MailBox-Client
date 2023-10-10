@@ -48,7 +48,7 @@ export const fetchDraftMessages = createAsyncThunk(
   async (userName, thunkAPI) => {
     try {
       const response = await fetch(
-        `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/draft/${userName}.json`
+        `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/drafts/${userName}.json`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch draft messages");

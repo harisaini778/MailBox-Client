@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container, ListGroup, Row, Col, Stack } from 'react-bootstrap';
+import { Container, ListGroup, Row, Col, Stack,Badge } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux'; 
 import { fetchDraftMessages } from '../store/dataStore'; 
 import { toggleMessageDetail } from '../store/dataStore';
-import DraftboxMessages  from './DraftBoxMessages';
+import DraftboxMessages from './DraftBoxMessages';
+import { MdDelete } from 'react-icons/md';
 import "./SentMessages.css";
 
 const DraftMessages = () => {
@@ -42,6 +43,42 @@ const DraftMessages = () => {
     return tempDiv.textContent || tempDiv.innerText || '';
   }
 
+    const deleteDraftHandler = (id, event) => {
+    const userName = localStorage.getItem("userName");
+    const emailKey = `draft_${userName}_${id}`;
+     event.stopPropagation();
+
+  const draftMessageDeleteRequest = async (id) => {
+    try {
+      const url = `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/drafts/${userName}/${emailKey}.json`;
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        // Successfully deleted
+        const data = response.json();
+        alert("Your message has been deleted successfully!");
+        console.log("sent data deleted is :", data);
+        console.log("Sent message deleted with ID:", id);
+        dispatch(fetchDraftMessages(userName));
+      } else {
+        // Handle the error case here
+        console.log("Error deleting the sent message. Status:", response.status);
+        console.log("Error message:", response.statusText);
+      }
+    } catch (error) {
+      console.log("Error in deleting the sent message:", error);
+    }
+  };
+
+  draftMessageDeleteRequest(id);
+};
+
+
   return (
     <Container className="mt-3">
       
@@ -74,7 +111,12 @@ const DraftMessages = () => {
     </Col>
     <Col className="truncate-text-sent">
       {stripHtmlTags(message.message)}
-    </Col>
+              </Col>
+              <Col>
+                <Badge onClick={(event)=>deleteDraftHandler(message.id,event)}>
+                  <MdDelete size={18} />
+              </Badge>
+              </Col>
   </Row>
 </ListGroup.Item>
         ))}
