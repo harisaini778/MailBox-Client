@@ -78,7 +78,9 @@ function ComposeMail() {
   const isoDateTime = currentDateTime ? currentDateTime.toISOString() : null;
 
   const handleHomeRender = () => {
+    clearFormFields();
     navigate("/Home");
+    
   }
 
   const uniqueId = Math.floor(Math.random() * 100 + 1);
@@ -245,7 +247,7 @@ function ComposeMail() {
         <Row>
           <Col className="d-flex justify-content-between">
             <InputGroup>
-              <Button variant="light">
+              <Button variant="light" onClick={handleHomeRender}>
                 <MdDelete /> Delete
               </Button>
               <Button variant="light" onClick={handleDraftClick}>
