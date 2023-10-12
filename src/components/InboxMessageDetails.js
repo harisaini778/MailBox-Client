@@ -5,16 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; 
 import {
   markAsRead, 
-  toggleMessageDetail,
+  toggleMessageDetail,allMessages,
 } from "../store/dataStore"; 
 import "./InboxMessageDetail.css"; 
+
 const InboxMessageDetails = ({ messageId }) => {
   const dispatch = useDispatch(); 
   const navigate = useNavigate(); 
 
 
   const message = useSelector((state) =>
-    state.dataStore.inboxMessages.find((msg) => msg.id === messageId)
+    state.dataStore.allMessages.find((msg) => msg.id === messageId)
   );
 
   if (!message) {
@@ -26,6 +27,12 @@ const InboxMessageDetails = ({ messageId }) => {
     dispatch(toggleMessageDetail());
     dispatch(markAsRead(messageId));
     navigate("/Home"); 
+  };
+
+  const stripHtmlTags = (message) => {
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML = message;
+    return newDiv.textContent || newDiv.innerText;
   };
 
   return (
@@ -44,12 +51,17 @@ const InboxMessageDetails = ({ messageId }) => {
         </Row>
         <Row>
           <Col>
-            <h3>{message.subject}</h3>
+          <h5> Subject : {message.subject}</h5>
             <p className="message-sender">
-              From: {message.sender} -{" "}
+              From: {message.from} -{" "}
               {new Date(message.date).toLocaleString()}
             </p>
             <div className="message-body">{message.body}</div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+                 <div className="message-message">{stripHtmlTags(message.message)}</div>
           </Col>
         </Row>
       </Container>

@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux"; // Import Redux hooks
+import { useSelector, useDispatch } from "react-redux";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import OverlayDetails from "./Overlay";
-import "./InboxContent.css";
 import InboxMessageDetails from "./InboxMessageDetails";
-import { toggleMessageDetail } from "../store/dataStore";
-import { toggleStarred } from "../store/dataStore";
-import { searchQuery } from "../store/dataStore";
-import { setSearchQuery } from "../store/dataStore";
-import { selectAll } from "../store/dataStore";
-
-
+import { toggleMessageDetail, fetchAllMessages } from "../store/dataStore";
+import { setSearchQuery, toggleStarred } from "../store/dataStore";
+import "./InboxContent.css";
 
 const InboxContent = () => {
   const [isSmaller, setIsSmaller] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState(null);
+
   const searchQuery = useSelector((state) => state.dataStore.searchQuery);
   const selectAll = useSelector((state) => state.dataStore.selectAll);
-    const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
 
-  // Use Redux selectors to get data from the store
   const messages = useSelector((state) => state.dataStore.allMessages);
   const isMessageDetailOpen = useSelector((state) => state.dataStore.isMessageDetailOpen);
-
-  // Use Redux dispatch to dispatch actions
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchAllMessages());
+  }, [dispatch]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,33 +37,16 @@ const InboxContent = () => {
 
   const handleListItemClick = (messageId) => {
     setSelectedMessageId(messageId);
-    setSearchQuery("");
     dispatch(toggleMessageDetail());
   };
 
   const filteredMessages = messages.filter((message) => {
-    return (
-      message.sender.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  })
+    return message.to.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   const toggleStar = (messageId, event) => {
     event.stopPropagation();
-    // Dispatch the action to toggle message starred status
     dispatch(toggleStarred(messageId));
-  };
-
-  const toggleCheckBox = (messageId, event) => {
-    event.stopPropagation();
-    setSelectedCheckboxes((prevSelectedCheckboxes) => ({
-      ...prevSelectedCheckboxes,
-      [messageId]: !prevSelectedCheckboxes[messageId], // Toggle the checkbox state for the specific message
-    }));
-    
-  }
-
-  const preventListGroupClick = (event) => {
-    event.stopPropagation();
   };
 
   return (
@@ -86,7 +64,10 @@ const InboxContent = () => {
             >
               <Row>
                 <Col xs={1}>
-                  <input type="checkbox" checked={selectAll || selectedCheckboxes[message.id] || false} onClick={(event)=>toggleCheckBox(message.id,event)} />
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                  />
                 </Col>
                 {!isSmaller && (
                   <Col xs={1}>
@@ -95,7 +76,7 @@ const InboxContent = () => {
                       className="star-icon-container"
                     >
                       {message.starred ? (
-                        <FaStar className="starred-icon" style={{color:"gold",cursor:"pointer"}}/>
+                        <FaStar className="starred-icon" style={{ color: "gold", cursor: "pointer" }} />
                       ) : (
                         <FaRegStar className="starred-icon" />
                       )}
@@ -104,7 +85,7 @@ const InboxContent = () => {
                 )}
                 <Col className="truncate-text">
                   <h style={{ fontWeight: message.unread ? "normal" : "bold" }}>
-                    {message.sender}
+                    {message.from}
                   </h>
                 </Col>
                 <Col className="truncate-text">
@@ -112,25 +93,14 @@ const InboxContent = () => {
                     {message.subject}
                   </h>
                 </Col>
-                {!isSmaller && (
-                  <Col>
-                    {new Date(message.date).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </Col>
-                )}
-                {!isSmaller && (
-                  <Col>
-                    {message.labels.map((label) => (
-                      <span key={label} className="label">
-                        {label}
-                      </span>
-                    ))}
-                  </Col>
-                )}
                 <Col>
-                  <div onClick={(event) => preventListGroupClick(event)}>
+                  {new Date(message.date).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </Col>
+                <Col>
+                  <div onClick={(event) => event.stopPropagation()}>
                     <OverlayDetails messageId={message.id} />
                   </div>
                 </Col>

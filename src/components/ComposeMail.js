@@ -1,9 +1,14 @@
-import React, { useState,useEffect } from 'react';
+//ComposeMail.js 
+
+import React, { useRef, useEffect,useState } from 'react';
 import { Form, Container, Row, Col, InputGroup, Dropdown,Button } from 'react-bootstrap';
 import { MdDelete, MdDrafts, MdSend, MdArrowBack } from 'react-icons/md';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
+import { setToSent } from "../store/dataStore";
+import { setId } from '../store/dataStore';
+import { useSelector,useDispatch } from 'react-redux';
 //import { v4 as uuidv4 } from "uuid";
 
 // Define custom modules for the Quill toolbar
@@ -32,13 +37,13 @@ const formats = [
 
 function ComposeMail() {
 
-  const [to, setTo] = useState('');
-  const [ccBccOption, setCCBCCOption] = useState('cc'); // Default to CC
-  const [ccBccValue, setCcBccValue] = useState("");
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
+  const dispatch = useDispatch("");
+  const toRef = useRef(null);
+  const ccBccValueRef = useRef(null);
+  const ccBccOption = useRef(null);
+  const subjectRef = useRef(null);
+  const messageRef = useRef(null);
   const [userName, setUserName] = useState("");
-  const [currentDateTime, setCurrentDateTime] = useState(null);
   const navigate = useNavigate();
 
 
@@ -51,31 +56,7 @@ function ComposeMail() {
     localStorage.setItem("userName", Name); // Update local storage with the correct username
   }, []);
 
-  
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     return (
-  //       setCurrentDateTime( currentDateTime => currentDateTime || new Date())
-  //     );
-  //   }, 1000)
 
-  //   return (
-  //     clearInterval(intervalId)
-  //   );
-    
-  
-  //}, []);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-
-  const isoDateTime = currentDateTime ? currentDateTime.toISOString() : null;
 
   const handleHomeRender = () => {
     clearFormFields();
@@ -86,10 +67,27 @@ function ComposeMail() {
   const uniqueId = Math.floor(Math.random() * 100 + 1);
 
   const handleSendClick = () => {
-    // Generate a unique key for the new email
-    const emailKey = `email_${userName}_${uniqueId}`;
+    
+    const to = toRef.current.value;
+    const parts = to.split("@");
+    const recipientName = parts[0];
+    localStorage.setItem("recipientName", recipientName);
+    const ccBccOption = "cc"; // Default to CC
+    const ccBccValue = ccBccValueRef.current.value;
+    const subject = subjectRef.current.value;
+    const message = messageRef.current.value;
+    const userName = localStorage.getItem("userName");
+    const emailIdUser = localStorage.getItem("email");
+    const isoDateTime = new Date().toISOString();
+    
+      //dispatch(setToSent(to));
+     // dispatch(setId(uniqueId));
+    
+
+    const emailKey = `email_${recipientName}_${uniqueId}`;
 
     const emailData = {
+      from : emailIdUser,
       to,
       ccBccOption,
       ccBccValue,
@@ -100,7 +98,7 @@ function ComposeMail() {
     };
 
     // Save the email data in Firebase with the unique key
-    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${userName}/${emailKey}.json`, {
+    fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${recipientName}/${emailKey}.json`, {
       method: 'PUT', // Use PUT to ensure the same key is overwritten
       headers: {
         'Content-Type': 'application/json',
@@ -125,15 +123,24 @@ function ComposeMail() {
   };
 
   const clearFormFields = () => {
-    setTo('');
-    setCCBCCOption('cc');
-    setCcBccValue('');
-    setSubject('');
-    setMessage('');
+    toRef.current.value = '';
+    ccBccValueRef.current.value = '';
+    subjectRef.current.value = '';
+    messageRef.current.getEditor().setText('');
   };
     
   const handleDraftClick = () => {
-    // Generate a unique key for the draft email
+  
+     const to = toRef.current.value;
+    const ccBccOption = "cc"; // Default to CC
+    const ccBccValue = ccBccValueRef.current.value;
+    const subject = subjectRef.current.value;
+    const message = messageRef.current.getEditor().getContents();
+    //const userName = localStorage.getItem("userName");
+    const isoDateTime = new Date().toISOString();
+    const uniqueId = Math.floor(Math.random() * 100 + 1);
+
+
     const draftKey = `draft_${userName}_${uniqueId}`;
 
     const draftData = {
@@ -169,98 +176,93 @@ function ComposeMail() {
         console.error('Error saving draft:', error);
         alert('An error occurred while saving the draft. Please try again later.');
       });
-    
+  
     const clearFormFields = () => {
-      setTo('');
-      setCCBCCOption('cc');
-      setCcBccValue('');
-      setSubject('');
-      setMessage('');
+    toRef.current.value = '';
+    ccBccValueRef.current.value = '';
+    subjectRef.current.value = '';
+    messageRef.current.getEditor().setText('');
     };
-  }
+    
+}
 
     return (
-      <Container className="mt-3">
-        <Row className="mb-2">
-          <Col>
-            <Button variant="light" className="d-flex align-items-center" onClick={handleHomeRender}
-            >
-              <MdArrowBack /> Back to Inbox
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form >
-              <Form.Group controlId="to">
-                <Form.Label>To</Form.Label>
+    <Container className="mt-3">
+      <Row className="mb-2">
+        <Col>
+          <Button variant="light" className="d-flex align-items-center" onClick={handleHomeRender}>
+            <MdArrowBack /> Back to Inbox
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form>
+            <Form.Group controlId="to">
+              <Form.Label>To</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Recipient email"
+                ref={toRef}
+              />
+            </Form.Group>
+            <Form.Group controlId="ccBcc">
+              <Form.Label>CC/BCC</Form.Label>
+              <InputGroup>
+                <Dropdown onSelect={(eventKey) => { /* Handle CC/BCC change here */ }}>
+                  <Dropdown.Toggle variant="light">
+                    {ccBccOption === 'cc' ? 'CC' : 'BCC'}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item eventKey="cc">CC</Dropdown.Item>
+                    <Dropdown.Item eventKey="bcc">BCC</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
                 <Form.Control
                   type="email"
-                  placeholder="Recipient email"
-                  value={to}
-                  onChange={(e) => setTo(e.target.value)}
+                  placeholder={`${"CC"} email`}
+                  ref={ccBccValueRef}
                 />
-              </Form.Group>
-              <Form.Group controlId="ccBcc">
-                <Form.Label>CC/BCC</Form.Label>
-                <InputGroup>
-                  <Dropdown onSelect={(eventKey) => setCCBCCOption(eventKey)}>
-                    <Dropdown.Toggle variant="light">
-                      {ccBccOption === 'cc' ? 'CC' : 'BCC'}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item eventKey="cc">CC</Dropdown.Item>
-                      <Dropdown.Item eventKey="bcc">BCC</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <Form.Control
-                    type="email"
-                    placeholder={`${ccBccOption === 'cc' ? 'CC' : 'BCC'} email`}
-                    value={ccBccValue}
-                    onChange={(e) => setCcBccValue(e.target.value)}
-                  />
-                </InputGroup>
-              </Form.Group>
-              <Form.Group controlId="subject">
-                <Form.Label>Subject</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Email subject"
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <ReactQuill
-              theme="snow"
-              value={message}
-              onChange={setMessage}
-              modules={modules}
-              formats={formats}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col className="d-flex justify-content-between">
-            <InputGroup>
-              <Button variant="light" onClick={handleHomeRender}>
-                <MdDelete /> Delete
-              </Button>
-              <Button variant="light" onClick={handleDraftClick}>
-                <MdDrafts /> Save as Draft
-              </Button>
-              <Button variant="primary" onClick={handleSendClick}>
-                <MdSend /> Send
-              </Button>
-            </InputGroup>
-          </Col>
-        </Row>
-      </Container>
-    );
+              </InputGroup>
+            </Form.Group>
+            <Form.Group controlId="subject">
+              <Form.Label>Subject</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Email subject"
+                ref={subjectRef}
+              />
+            </Form.Group>
+          </Form>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ReactQuill
+            theme="snow"
+            ref={messageRef}
+            modules={modules}
+            formats={formats}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col className="d-flex justify-content-between">
+          <InputGroup>
+            <Button variant="light" onClick={handleHomeRender}>
+              <MdDelete /> Delete
+            </Button>
+            <Button variant="light" onClick={handleDraftClick}>
+              <MdDrafts /> Save as Draft
+            </Button>
+            <Button variant="primary" onClick={handleSendClick}>
+              <MdSend /> Send
+            </Button>
+          </InputGroup>
+        </Col>
+      </Row>
+    </Container>
+  );
   }
 
 export default ComposeMail;

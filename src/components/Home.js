@@ -4,6 +4,7 @@ import { Form, Navbar, Button, InputGroup, Row, Col, Container } from "react-boo
 import { Stack, Badge, Dropdown, Offcanvas } from "react-bootstrap";
 import { FaSearch, FaImages, FaFile, FaMoneyBill, FaTags, FaPlane } from "react-icons/fa";
 import { BsList } from "react-icons/bs";
+import { FaUser } from "react-icons/fa";
 import Mail from "./Mail";
 import { useNavigate } from "react-router-dom";
 import { toggleInboxIsClicked } from "../store/dataStore";
@@ -23,13 +24,13 @@ const Home = () => {
   const archieveMessages = useSelector((state) => state.dataStore.archiveMessages);
   const spamMessages = useSelector((state) => state.dataStore.spamMessages);
   const deletedItems = useSelector((state) => state.dataStore.deletedMessages);
-  const sentMessages = useSelector((state) => state.dataStore.sentMessages);
+  const sentMessages = useSelector((state) => state.dataStore.sentMessages );
   const sent = Object.values(sentMessages);
-  const draftMessages = useSelector((state) => state.dataStore.draftMessages);
+  const draftMessages = useSelector((state) => state.dataStore.draftMessages );
   const draft = Object.values(draftMessages);
   const searchQuery = useSelector((state) => state.dataStore.searchQuery);
   const allMessages = useSelector((state) => state.dataStore.allMessages);
-
+  const userName = localStorage.getItem("userName");
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -86,6 +87,13 @@ const Home = () => {
     dispatch(toggleDraftIsClicked()); 
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("email");
+    localStorage.removeItem("token");
+    navigate("/Login");
+  }
+
   return (
     <div style={{ minHeight: "100vh", overflowX: "hidden" }}>
       <Navbar variant="dark" className="bg-primary" expand="lg">
@@ -96,7 +104,7 @@ const Home = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <div>
+            <Stack direction="horizontal" gap={5}>
               <Form inline>
                 <InputGroup>
                   <Form.Control
@@ -104,7 +112,7 @@ const Home = () => {
                     type="search"
                     value={searchQuery}
                     onChange={handleSearchQueryChange}
-                    style={{ width: isSmaller ? "70vw" : "40vw" }}
+                    style={{ width: isSmaller ? "60vw" : "35vw" }}
                   />
                   <InputGroup.Text className="justify-content-center" style={{ width: isSmaller ? "auto" : "5vw" }}>
                     {isSmaller && <Button onClick={toggleShow} variant="light">
@@ -114,7 +122,19 @@ const Home = () => {
                   </InputGroup.Text>
                 </InputGroup>
               </Form>
-            </div>
+              <div>
+                <Stack direction="horizontal" gap={2}>
+                  <FaUser size={24} style={{color:"white"}} />
+                  <div style={{color:"white",fontWeight:"bold"}}>{userName}</div>
+                </Stack>
+               
+              </div>
+              <div>
+                 <Button  onClick={logoutHandler} className="bg bg-warning">
+               Logout
+              </Button>
+              </div>
+            </Stack>
           </Navbar.Collapse>
         </Container>
       </Navbar>

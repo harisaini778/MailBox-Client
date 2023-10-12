@@ -5,6 +5,7 @@ import EmailVerify from './components/EmailVerify';
 import ComposeMail from './components/ComposeMail';
 import Home from './components/Home';
 import ProgressLoader from './components/ProgressLoader';
+import Messages from './components/Messages';
 //import MessageContextProvider from './components/MessageContextProvider';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
          <Route path="/ProgressLoader" element={<ProgressLoader />} />
          <Route path="/Home" element={<Home />} />
         <Route path="/ComposeMail" element={<ComposeMail />} />
+          <Route path="/Messages" element={<Messages />} />
         
         </Routes>
       </Router>

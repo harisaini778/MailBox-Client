@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-email/render": "^0.0.7",
     "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.17.0",
@@ -14,6 +15,7 @@
     "html-to-draftjs": "^1.5.0",
     "lottie-react": "^2.4.0",
     "lottie-web": "^5.12.2",
+    "os-browserify": "^0.3.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
@@ -26,6 +28,9 @@
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",
     "react-spring": "^9.7.2",
+    "stream-browserify": "^3.0.0",
+    "url": "^0.11.3",
+    "util": "^0.12.5",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -52,5 +57,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.11",
+    "@webpack-cli/generators": "^3.0.7"
   }
 }

@@ -1,19 +1,25 @@
+//dataStore.js
+
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import messages from "../components/Messages";
+
 
 const initialState = {
+  users : ["harisaini607","khushisaini1729"],
+  id : "",
+  toSent : "",
+  userName : "",
   searchQuery: "",
   selectAll : false,
   isRead :  false,
   sentMessages: [],
   draftMessages: [],
-  allMessages: [...messages], // You can populate this with the initial data
+  allMessages: [], // You can populate this with the initial data
   starredMessages: [],
   deletedMessages: [],
   spamMessages: [],
   archiveMessages: [],
-  inboxMessages: [...messages],
+  inboxMessages: [],
   isMessageDetailOpen: false,
   unreadMessages: [],
     inboxIsClicked: true,
@@ -24,6 +30,51 @@ const initialState = {
     sentIsClicked : false,
     draftIsClicked : false,
 };
+
+export const fetchAllMessages = createAsyncThunk(
+  'dataStore/fetchAllMessages',
+  async (_, thunkAPI) => {
+    const currentUserName = localStorage.getItem('userName'); // Get the current user's name
+
+    //const senderName = initialState.users.find(user => user !== currentUserName);
+    //localStorage.setItem("prevUser", senderName);
+
+    try {
+      const response = await fetch(
+        `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${currentUserName}.json`
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch messages');
+      }
+
+      const data = await response.json();
+      const messagesArray = data ? Object.values(data) : [];
+
+      return messagesArray;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+
+// Set up a function to periodically fetch data
+export const startFetchingAllMessages = (dispatch) => {
+  const fetchInterval = 2000; // 2 seconds (in milliseconds)
+
+  // Define a function to fetch data and dispatch the action
+  const fetchDataAndDispatch = () => {
+    dispatch(fetchAllMessages());
+  };
+
+  // Fetch data immediately (when this function is called) and then at regular intervals
+  fetchDataAndDispatch();
+  setInterval(fetchDataAndDispatch, fetchInterval);
+};
+
+
+
 
 export const fetchSentMessages = createAsyncThunk(
   "dataStore/fetchSentMessages",
@@ -253,6 +304,30 @@ const dataStore = createSlice({
     toggleUnreadMessages: (state) => {
       state.unreadMessages = [];
     },
+    setToSent: (state,action) => {
+      state.toSent = action.payload;
+      const parts = state.toSent.split("@");
+      const name = parts[0];
+      state.userName = name;
+      localStorage.setItem("senderName", name);
+    },
+    setId: (state, action) => {
+      state.id = action.payload;
+      localStorage.setItem("senderMessageId", state.id);
+    },
+   setAllMessages: (state, action) => {
+  // Since you're fetching an object from Firebase, you need to convert it into an array
+  // Assuming the data structure in Firebase is an object with keys as message IDs
+  const data = action.payload; // This should be an object with message IDs as keys
+
+  // Convert the object into an array
+  const messagesArray = Object.keys(data).map((messageId) => {
+    return data[messageId];
+  });
+
+  state.allMessages = messagesArray;
+  console.log(state.allMessages);
+},
 },
   extraReducers: (builder) => {
     builder
@@ -261,11 +336,20 @@ const dataStore = createSlice({
       })
       .addCase(fetchDraftMessages.fulfilled, (state, action) => {
         state.draftMessages = action.payload;
-      });
+      }).
+      addCase(fetchAllMessages.fulfilled, (state, action) => {
+        state.allMessages = action.payload;
+      })
   },
 });
 
 export const {
+  setId,
+  setToSent,
+  id,
+  toSent,
+  userName,
+  setAllMessages,
   selectAll,
   searchQuery,
   setSelectAll,

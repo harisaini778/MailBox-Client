@@ -1,105 +1,40 @@
-const messages = [
-  {
-    id: 1,
-    sender: 'John Doe',
-    subject: 'Hello',
-    body: 'Hi there, how are you?',
-    date: '2023-10-01T10:30:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Work'],
-  },
-  {
-    id: 2,
-    sender: 'Jane Smith',
-    subject: 'Meeting Tomorrow',
-    body: 'Don\'t forget our meeting at 10 AM.',
-    date: '2023-09-30T15:45:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Work'],
-  },
-  {
-    id: 3,
-    sender: 'Alice Johnson',
-    subject: 'Vacation Photos',
-    body: 'Check out the photos from our vacation!',
-    date: '2023-09-29T08:15:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Personal'],
-  },
-  // Add more messages here
-  {
-    id: 4,
-    sender: 'Bob Brown',
-    subject: 'Project Update',
-    body: 'The project is progressing well. Here is the latest update.',
-    date: '2023-09-28T16:20:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Work'],
-  },
-  {
-    id: 5,
-    sender: 'Eva White',
-    subject: 'Weekend Plans',
-    body: 'Let\'s catch up this weekend. What time works for you?',
-    date: '2023-09-28T09:45:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Personal'],
-  },
-  {
-    id: 6,
-    sender: 'David Lee',
-    subject: 'Important Announcement',
-    body: 'Please read this important announcement carefully.',
-    date: '2023-09-27T14:30:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Important'],
-  },
-  {
-    id: 7,
-    sender: 'Sarah Adams',
-    subject: 'Re: Reunion Party',
-    body: 'I can\'t wait for the reunion party. It\'s going to be so much fun!',
-    date: '2023-09-26T18:55:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Personal'],
-  },
-  {
-    id: 8,
-    sender: 'Michael Johnson',
-    subject: 'Monthly Report',
-    body: 'Attached is the monthly report for your review.',
-    date: '2023-09-26T11:10:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Work'],
-  },
-  {
-    id: 9,
-    sender: 'Emily Davis',
-    subject: 'Re: Weekend Getaway',
-    body: 'That sounds like a great plan! I\'m in!',
-    date: '2023-09-25T09:30:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Personal'],
-  },
-  {
-    id: 10,
-    sender: 'Mark Smith',
-    subject: 'Urgent: Meeting Rescheduled',
-    body: 'The meeting has been rescheduled to 2 PM today.',
-    date: '2023-09-24T15:00:00Z',
-    starred: false,
-    unread: false,
-    labels: ['Urgent'],
-  },
-  // Add more messages here
-];
-export default messages;
+// import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { setAllMessages } from '../store/dataStore'; // Import the action you want to dispatch
+
+// const Messages = () => {
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     const senderName = localStorage.getItem("senderName");
+//     const readInboxMessage = async () => {
+//       try {
+//         const response = await fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${senderName}.json`);
+//         if (response.ok) {
+//           const data = await response.json();
+
+//           if (data) {
+//             // Convert the object values to an array
+//             const messagesArray = Object.values(data);
+//             localStorage.setItem("messagesArray", messagesArray);
+
+//             dispatch(setAllMessages(messagesArray)); // Update state with the array
+//             console.log("In Inbox data is:", messagesArray);
+//           } else {
+//             console.log("No messages found in the inbox.");
+//           }
+//         } else {
+//           console.log("Failed to fetch messages data");
+//         }
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     }
+
+//     readInboxMessage();
+//   }, []);
+
+//   return null; // This component doesn't render anything; it's for data fetching only.
+// };
+
+// export default Messages;

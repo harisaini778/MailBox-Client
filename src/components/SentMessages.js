@@ -34,8 +34,9 @@ const SentMessages = () => {
   }, []);
 
   useEffect(() => {
-    const userName = localStorage.getItem("userName");
-    dispatch(fetchSentMessages(userName));
+    //const userName = localStorage.getItem("userName");
+    const recipientName = localStorage.getItem("recipientName");
+    dispatch(fetchSentMessages(recipientName));
   }, [dispatch]);
 
   function stripHtmlTags(html) {
@@ -45,13 +46,14 @@ const SentMessages = () => {
   }
 
   const deleteSentHandler = (id, event) => {
-    const userName = localStorage.getItem("userName");
-    const emailKey = `email_${userName}_${id}`;
+    //const userName = localStorage.getItem("userName");
+    const recipientName = localStorage.getItem("recipientName");
+    const emailKey = `email_${recipientName}_${id}`;
   event.stopPropagation();
 
   const sentMessageDeleteRequest = async (id) => {
     try {
-      const url = `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${userName}/${emailKey}.json`;
+      const url = `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${recipientName}/${emailKey}.json`;
       const response = await fetch(url, {
         method: "DELETE",
         headers: {
@@ -65,7 +67,7 @@ const SentMessages = () => {
         alert("Your message has been deleted successfully!");
         console.log("sent data deleted is :", data);
         console.log("Sent message deleted with ID:", id);
-        dispatch(fetchSentMessages(userName));
+        dispatch(fetchSentMessages(recipientName));
       } else {
         // Handle the error case here
         console.log("Error deleting the sent message. Status:", response.status);
