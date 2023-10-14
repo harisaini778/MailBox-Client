@@ -25,12 +25,13 @@ const Home = () => {
   const spamMessages = useSelector((state) => state.dataStore.spamMessages);
   const deletedItems = useSelector((state) => state.dataStore.deletedMessages);
   const sentMessages = useSelector((state) => state.dataStore.sentMessages );
-  const sent = Object.values(sentMessages);
+  const sent = sentMessages ? Object.values(sentMessages) : [];
+  const sentCount = sent ? sent.length : 0;
   const draftMessages = useSelector((state) => state.dataStore.draftMessages );
-  const draft = Object.values(draftMessages);
+  const draft = draftMessages ? Object.values(draftMessages) : [];
   const searchQuery = useSelector((state) => state.dataStore.searchQuery);
   const allMessages = useSelector((state) => state.dataStore.allMessages);
-  const userName = localStorage.getItem("userName");
+  const userEmail = localStorage.getItem("email");
   const [isSmaller, setIsSmaller] = useState(window.innerWidth <= 576);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -112,7 +113,7 @@ const Home = () => {
                     type="search"
                     value={searchQuery}
                     onChange={handleSearchQueryChange}
-                    style={{ width: isSmaller ? "60vw" : "35vw" }}
+                    style={{ width: isSmaller ? "50vw" : "25vw" }}
                   />
                   <InputGroup.Text className="justify-content-center" style={{ width: isSmaller ? "auto" : "5vw" }}>
                     {isSmaller && <Button onClick={toggleShow} variant="light">
@@ -125,7 +126,7 @@ const Home = () => {
               <div>
                 <Stack direction="horizontal" gap={2}>
                   <FaUser size={24} style={{color:"white"}} />
-                  <div style={{color:"white",fontWeight:"bold"}}>{userName}</div>
+                  <div style={{color:"white",fontWeight:"bold"}}>{userEmail}</div>
                 </Stack>
                
               </div>
@@ -165,7 +166,7 @@ const Home = () => {
                             <div className="me-auto m-1" onClick={toggleInbox}>
                               Inbox
                             </div>
-                            <Badge className="ms-auto m-1">{allMessages.length}</Badge>
+                            <Badge className="ms-auto m-1">{allMessages ? allMessages.length : 0}</Badge>
                           </Stack>
                             <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleStar}>
@@ -195,7 +196,7 @@ const Home = () => {
                             <div className="me-auto m-1" onClick={toggleSent}>
                               Sent
                             </div>
-                            <Badge className="ms-auto m-1">{sent.length || 0}</Badge>
+                            <Badge className="ms-auto m-1">{!!sentCount===true ? sentCount : 0}</Badge>
                           </Stack>
                             <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleDraft}>
@@ -281,32 +282,33 @@ const Home = () => {
                       <div className="me-auto m-1" onClick={toggleInbox}>
                         Inbox
                       </div>
-                      <Badge className="ms-auto m-1">{allMessages.length}</Badge>
-                    </Stack>
+                        <Badge className="ms-auto m-1">{allMessages.length}</Badge>
+                        </Stack>
+                    {/*
                             <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleStar}>
                               Starred
                             </div>
                             <Badge className="ms-auto m-1">{starMessages.length}</Badge>
-                      </Stack>
-                       <Stack direction="horizontal" className="menu-item">
+                      </Stack> */}
+                       {/* <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleArchieve}>
                               Archieve
                             </div>
                             <Badge className="ms-auto m-1">{archieveMessages.length}</Badge>
-                      </Stack>
-                       <Stack direction="horizontal" className="menu-item">
+                      </Stack> */}
+                       {/* <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleSpam}>
                               Spam
                             </div>
                             <Badge className="ms-auto m-1">{spamMessages.length}</Badge>
-                      </Stack>
-                              <Stack direction="horizontal" className="menu-item">
+                      </Stack> */}
+                              {/* <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleDelete}>
                               Deleted
                             </div>
                             <Badge className="ms-auto m-1">{deletedItems.length}</Badge>
-                      </Stack>
+                      </Stack> */}
                         <Stack direction="horizontal" className="menu-item">
                             <div className="me-auto m-1" onClick={toggleSent}>
                               Sent

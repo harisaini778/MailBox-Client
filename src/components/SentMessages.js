@@ -13,7 +13,7 @@ const SentMessages = () => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const isMessageDetailOpen = useSelector((state) => state.dataStore.isMessageDetailOpen);
   const sentMessages = useSelector((state) => state.dataStore.sentMessages); 
-  const sent = Object.values(sentMessages);
+  const sent = sentMessages ? Object.values(sentMessages) : [];
   const dispatch = useDispatch(); 
 
     const handleListItemClick = (messageId) => {
@@ -34,9 +34,9 @@ const SentMessages = () => {
   }, []);
 
   useEffect(() => {
-    //const userName = localStorage.getItem("userName");
-    const recipientName = localStorage.getItem("recipientName");
-    dispatch(fetchSentMessages(recipientName));
+    const userName = localStorage.getItem("userName");
+    //const recipientName = localStorage.getItem("recipientName");
+    dispatch(fetchSentMessages(userName));
   }, [dispatch]);
 
   function stripHtmlTags(html) {
@@ -46,14 +46,14 @@ const SentMessages = () => {
   }
 
   const deleteSentHandler = (id, event) => {
-    //const userName = localStorage.getItem("userName");
-    const recipientName = localStorage.getItem("recipientName");
-    const emailKey = `email_${recipientName}_${id}`;
-  event.stopPropagation();
+    const userName = localStorage.getItem("userName");
+    //const recipientName = localStorage.getItem("recipientName");
+    const sentKey = `email_${userName}_${id}`;
+    event.stopPropagation();
 
   const sentMessageDeleteRequest = async (id) => {
     try {
-      const url = `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/emails/${recipientName}/${emailKey}.json`;
+      const url = `https://mailbox-client-29c1e-default-rtdb.firebaseio.com/sent/${userName}/${sentKey}.json`;
       const response = await fetch(url, {
         method: "DELETE",
         headers: {
@@ -67,7 +67,7 @@ const SentMessages = () => {
         alert("Your message has been deleted successfully!");
         console.log("sent data deleted is :", data);
         console.log("Sent message deleted with ID:", id);
-        dispatch(fetchSentMessages(recipientName));
+        dispatch(fetchSentMessages(userName));
       } else {
         // Handle the error case here
         console.log("Error deleting the sent message. Status:", response.status);
@@ -89,7 +89,7 @@ const SentMessages = () => {
         <SentboxMessagesDetails messageId={selectedMessageId} sent={sent} />
       )}
       {!isMessageDetailOpen && <ListGroup>
-        {sent.map((message) => (
+        { !!sent.length===true && sent.map((message) => (
     <ListGroup.Item
     key={message.id}
   onClick={() => handleListItemClick(message.id)}
@@ -123,6 +123,7 @@ const SentMessages = () => {
   </Row>
 </ListGroup.Item>
         ))}
+        {!!sent.length===false && <Container>You do not have any sent messages yet!</Container>}
       </ListGroup>}
     </Container>
   );

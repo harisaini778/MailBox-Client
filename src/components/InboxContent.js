@@ -40,9 +40,9 @@ const InboxContent = () => {
     dispatch(toggleMessageDetail());
   };
 
-  const filteredMessages = messages.filter((message) => {
+  const filteredMessages = messages ?  messages.filter((message) => {
     return message.to.toLowerCase().includes(searchQuery.toLowerCase());
-  });
+  }) : [];
 
   const toggleStar = (messageId, event) => {
     event.stopPropagation();
@@ -56,7 +56,7 @@ const InboxContent = () => {
       )}
       {!isMessageDetailOpen && (
         <ListGroup className="message-list">
-          {filteredMessages.map((message) => (
+          {messages ? filteredMessages.map((message) => (
             <div
               key={message.id}
               className={message.unread ? "unread list-item" : "list-item"}
@@ -106,7 +106,8 @@ const InboxContent = () => {
                 </Col>
               </Row>
             </div>
-          ))}
+          )) : <Container>You do not have any inbox messages yet!</Container>
+        } 
         </ListGroup>
       )}
     </Container>

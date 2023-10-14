@@ -12,7 +12,7 @@ const DraftMessages = () => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const isMessageDetailOpen = useSelector((state) => state.dataStore.isMessageDetailOpen);
   const draftMessages = useSelector((state) => state.dataStore.draftMessages); 
-  const draft = Object.values(draftMessages);
+  const draft = draftMessages ? Object.values(draftMessages) : [];
   const dispatch = useDispatch(); 
 
     const handleListItemClick = (messageId) => {
@@ -86,7 +86,7 @@ const DraftMessages = () => {
         <DraftboxMessages messageId={selectedMessageId} draft={draft} />
       )}
       {!isMessageDetailOpen && <ListGroup>
-        {draft.map((message) => (
+        { draftMessages ? draft.map((message) => (
     <ListGroup.Item
     key={message.id}
   onClick={() => handleListItemClick(message.id)}
@@ -119,7 +119,7 @@ const DraftMessages = () => {
               </Col>
   </Row>
 </ListGroup.Item>
-        ))}
+        )) : <Container>You do not have any draft messages yet!</Container>}
       </ListGroup>}
     </Container>
   );

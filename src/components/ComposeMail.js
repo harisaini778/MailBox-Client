@@ -6,7 +6,7 @@ import { MdDelete, MdDrafts, MdSend, MdArrowBack } from 'react-icons/md';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
-import { setToSent } from "../store/dataStore";
+import { fetchSentMessages, setToSent } from "../store/dataStore";
 import { setId } from '../store/dataStore';
 import { useSelector,useDispatch } from 'react-redux';
 //import { v4 as uuidv4 } from "uuid";
@@ -111,6 +111,33 @@ function ComposeMail() {
           console.log('Error:', data.error.message);
           alert(data.error.message);
         } else {
+          //alert('Your mail has been sent successfully!');
+          //clearFormFields();
+          console.log('Email data sent to Firebase:', data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error sending email:', error);
+        alert('An error occurred while sending the email. Please try again later.');
+      });
+
+
+      
+    const sentKey = `email_${userName}_${uniqueId}`;
+    
+       fetch(`https://mailbox-client-29c1e-default-rtdb.firebaseio.com/sent/${userName}/${sentKey}.json`, {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(emailData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.hasOwnProperty('error')) {
+          console.log('Error:', data.error.message);
+          alert(data.error.message);
+        } else {
           alert('Your mail has been sent successfully!');
           clearFormFields();
           console.log('Email data sent to Firebase:', data);
@@ -120,6 +147,7 @@ function ComposeMail() {
         console.error('Error sending email:', error);
         alert('An error occurred while sending the email. Please try again later.');
       });
+    
   };
 
   const clearFormFields = () => {
@@ -135,7 +163,7 @@ function ComposeMail() {
     const ccBccOption = "cc"; // Default to CC
     const ccBccValue = ccBccValueRef.current.value;
     const subject = subjectRef.current.value;
-    const message = messageRef.current.getEditor().getContents();
+    const message = messageRef.current.value;
     //const userName = localStorage.getItem("userName");
     const isoDateTime = new Date().toISOString();
     const uniqueId = Math.floor(Math.random() * 100 + 1);
