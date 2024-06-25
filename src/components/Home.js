@@ -15,6 +15,8 @@ import { toggleDeleteIsClicked } from "../store/dataStore";
 import { toggleSentIsClicked } from "../store/dataStore";
 import { toggleDraftIsClicked } from "../store/dataStore";
 import { setSearchQuery } from "../store/dataStore";
+import { fetchSentMessages } from "../store/dataStore";
+import { fetchDraftMessages } from "../store/dataStore";
 
 
 const Home = () => {
@@ -44,7 +46,7 @@ const Home = () => {
 
   const handleSearchQueryChange = (e) => {
     const newSearchQuery = e.target.value;
-    setSearchQuery(newSearchQuery);
+    //setSearchQuery(newSearchQuery);
     dispatch(setSearchQuery(newSearchQuery));
   }
 
@@ -58,6 +60,17 @@ const Home = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    const userName = localStorage.getItem("email").split("@")[0];
+    //const recipientName = localStorage.getItem("recipientName");
+    dispatch(fetchSentMessages(userName));
+  }, []);
+
+  useEffect(() => {
+    const userName = localStorage.getItem("email").split("@")[0];
+    dispatch(fetchDraftMessages(userName));
   }, []);
 
   const toggleInbox = () => {
@@ -109,7 +122,7 @@ const Home = () => {
               <Form inline>
                 <InputGroup>
                   <Form.Control
-                    placeholder='Find messages, documents, photos or people'
+                    placeholder="Filter emails by sender's address"
                     type="search"
                     value={searchQuery}
                     onChange={handleSearchQueryChange}

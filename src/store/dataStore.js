@@ -34,7 +34,7 @@ const initialState = {
 export const fetchAllMessages = createAsyncThunk(
   'dataStore/fetchAllMessages',
   async (_, thunkAPI) => {
-    const currentUserName = localStorage.getItem('userName'); // Get the current user's name
+    const currentUserName = localStorage.getItem('email').split("@")[0]; // Get the current user's name
 
     //const senderName = initialState.users.find(user => user !== currentUserName);
     //localStorage.setItem("prevUser", senderName);
@@ -125,7 +125,7 @@ const dataStore = createSlice({
       state.searchQuery = action.payload;
     },
     setSentMessages: (state, action) => {
-      state.dataStore.sentMessages = action.payload;
+      state.sentMessages = action.payload;
     },
     setDraftMessages: (state, action) => {
       state.draftMessages = action.payload;

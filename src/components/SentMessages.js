@@ -34,10 +34,10 @@ const SentMessages = () => {
   }, []);
 
   useEffect(() => {
-    const userName = localStorage.getItem("userName");
+    const userName = localStorage.getItem("email").split("@")[0];
     //const recipientName = localStorage.getItem("recipientName");
     dispatch(fetchSentMessages(userName));
-  }, [dispatch]);
+  }, []);
 
   function stripHtmlTags(html) {
     const tempDiv = document.createElement('div');

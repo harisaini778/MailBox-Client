@@ -41,8 +41,13 @@ const InboxContent = () => {
   };
 
   const filteredMessages = messages ?  messages.filter((message) => {
-    return message.to.toLowerCase().includes(searchQuery.toLowerCase());
+    // console.log("searchQuery is : ",searchQuery);
+    // console.log("message.from is : ", message.from);
+    // console.log("inside the filtered messages : ", message.to.toLowerCase().includes(searchQuery.toLowerCase()));
+    return message.from.toLowerCase().includes(searchQuery.toLowerCase());
   }) : [];
+
+  console.log("filtered messages are : ",filteredMessages);
 
   const toggleStar = (messageId, event) => {
     event.stopPropagation();

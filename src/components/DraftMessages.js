@@ -33,9 +33,9 @@ const DraftMessages = () => {
   }, []);
 
   useEffect(() => {
-    const userName = localStorage.getItem("userName");
+    const userName = localStorage.getItem("email").split("@")[0];
     dispatch(fetchDraftMessages(userName));
-  }, [dispatch]);
+  }, []);
 
   function stripHtmlTags(html) {
     const tempDiv = document.createElement('div');

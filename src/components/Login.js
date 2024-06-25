@@ -66,6 +66,7 @@ const submitFormHandler = (e) => {
           enteredEmail.current.value = "";
           enteredPassword.current.value = "";
           confirmPassword.current.value = "";
+          navigate("/LogIn");
         } else {
           enteredEmail.current.value = "";
           enteredPassword.current.value = "";
