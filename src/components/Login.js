@@ -89,7 +89,7 @@ const submitFormHandler = (e) => {
         alert("An error occurred. Please try again later.");
         enteredEmail.current.value = "";
         enteredPassword.current.value = "";
-        confirmPassword.current.value = "";
+        //confirmPassword.current.value = "";
       });
     };
     
